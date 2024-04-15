@@ -10,7 +10,7 @@ import './index.css';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <BrowserRouter basename="PsychologistsServices">
+    <BrowserRouter basename="psychologists_services">
       <Provider store={store}>
         <PersistGate persistor={persistor}>
           <App />
