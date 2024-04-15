@@ -1,0 +1,21 @@
+.homeContainer {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.homeList {
+  width: 1184px;
+  font-weight: 400;
+  list-style: none;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  row-gap: 50px;
+  column-gap: calc((1184px - 274px * 4) / 3);
+  margin-inline-start: 0;
+  padding-inline-start: 0;
+  justify-content: center;
+  margin-block-end: 0;
+  margin-block-start: 0;
+}

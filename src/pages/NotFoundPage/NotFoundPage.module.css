@@ -1,0 +1,48 @@
+.goBack {
+  position: absolute;
+  top: 5px;
+  left: 5px;
+  display: inline-flex;
+  text-decoration: none;
+  border: 1px solid #e6eaed;
+  border-radius: 0 15px 15px 0;
+  width: 70px;
+  height: 20px;
+  margin-block-end: 0;
+  margin-block-start: 0;
+  justify-content: center;
+  align-items: center;
+  color: #e6eaed;
+  font-size: 14px;
+  transition: all 0.003s;
+  background-color: #af9e8e;
+}
+.goback:active,
+.goback:hover,
+.goback:focus {
+  background-color: #b1b9cc;
+  color: #af9e8e;
+}
+.errorMainTitle {
+  text-align: center;
+  margin: 0 auto;
+}
+.errorMainTitle {
+  padding-top: 20px;
+  color: #6e6662;
+  font-size: 36px;
+  padding-bottom: 100px;
+}
+
+.errorMainTitle:focus,
+.errorMainTitle:hover {
+  color: #e6eaed;
+}
+.errorAbout {
+  color: white;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 400px;
+}

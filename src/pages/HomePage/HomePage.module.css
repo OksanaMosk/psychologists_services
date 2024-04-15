@@ -1,0 +1,111 @@
+.homeContainer {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 30px;
+    margin: 0;
+    padding: 0;
+}
+
+.videoBackground {
+    position: absolute;
+    top: 60px;
+    left: 0;
+    width: 100vw;
+    height: calc(100vh - 140px);
+    object-fit: cover;
+}
+
+@keyframes slideLeft {
+    0% {
+        transform: translateX(0);
+        opacity: 0;
+    }
+    50% {
+        transform: translateX(20%);
+        opacity: 1;
+    }
+    100% {
+        transform: translateX(0);
+        opacity: 0;
+    }
+}
+
+@keyframes slideRight {
+    0% {
+        transform: translateX(0);
+        opacity: 0;
+    }
+    50% {
+        transform: translateX(-20%);
+        opacity: 1;
+    }
+    100% {
+        transform: translateX(0);
+        opacity: 0;
+    }
+}
+
+.about {
+    display: flex;
+    position: relative;
+    width: 100vw;
+    flex-direction: column;
+    height: 100%;
+    color: #f7f7fb;
+}
+
+.homeAbout:first-child {
+    position: absolute;
+    display: flex;
+    z-index: 1111;
+    color: #f7f7fb;
+    font-weight: 400;
+    font-size: 28px;
+    top: 20vh;
+    left: 50px;
+    width: 700px;
+    word-spacing: 100%;
+    text-align: justify;
+    opacity: 0;
+    animation: slideLeft 1s infinite;
+    animation-delay: 2s;
+    animation-duration: 40s;
+}
+
+.homeAbout:nth-child(2) {
+    position: absolute;
+    display: flex;
+    z-index: 1111;
+    color: #f7f7fb;
+    font-weight: 400;
+    font-size: 28px;
+    top: 40vh;
+    right: 50px;
+    width: 700px;
+    word-spacing: 100%;
+    opacity: 0;
+    text-align: justify;
+    animation: slideRight 2s infinite;
+    animation-delay: 5s;
+    animation-duration: 36s;
+}
+
+.homeAbout:nth-child(3) {
+    position: absolute;
+    display: flex;
+    z-index: 1111;
+    color: #f7f7fb;
+    font-weight: 400;
+    font-size: 28px;
+    top: 60vh;
+    left: 50px;
+    width: 700px;
+    word-spacing: 100%;
+    text-align: justify;
+    opacity: 0;
+    animation: slideLeft 10s infinite;
+    animation-delay: 8s;
+    animation-duration: 30s;
+}

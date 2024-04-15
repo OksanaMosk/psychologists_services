@@ -1,0 +1,125 @@
+:root {
+  --font-family: 'Manrope', sans-serif;
+  --primary-text-color: #121417;
+  --about-text-color: rgba(18, 20, 23, 0.5);
+  --secondary-text-color: #3470ff;
+  --button-active: #0b44cd;
+  --text-color: #fff;
+}
+.filterform {
+  margin: 150px auto 50px;
+  display: flex;
+  flex-direction: row;
+  gap: 18px;
+  align-items: center;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  width: 859px;
+  height: 74px;
+  border: none;
+  align-items: flex-end;
+}
+
+.filterList {
+  width: 224px;
+  height: 74px;
+  display: flex;
+  flex-direction: row;
+}
+
+.brandTitle {
+  font-family: var(--font-family);
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 129%;
+  color: #8a8a89;
+  padding-bottom: 8px;
+}
+
+.filterLink {
+  font-family: var(--font-family);
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 129%;
+}
+
+.filterByBrand {
+  border-radius: 14px;
+  padding: 14px 89px 14px 18px;
+  width: 224px;
+  height: 48px;
+  background: #f7f7fb;
+  border: none;
+
+  font-family: var(--font-family);
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 1.1;
+  color: #121417;
+}
+
+.filterByPrice {
+  border-radius: 14px;
+  padding: 14px 18px;
+  width: 125px;
+  height: 48px;
+  background: #f7f7fb;
+  border: none;
+  font-family: var(--font-family);
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 1.1;
+  color: #121417;
+}
+.filterLinkRarts {
+  display: flex;
+  flex-direction: row;
+}
+.filterFrom {
+  border: none;
+  border-right: 1px solid rgba(138, 138, 137, 0.2);
+  border-radius: 14px 0 0 14px;
+  width: 160px;
+  height: 48px;
+  background: #f7f7fb;
+  font-family: var(--font-family);
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 1.1;
+  color: #121417;
+  padding-left: 14px;
+}
+.filterTo {
+  border-radius: 0 14px 14px 0;
+  width: 160px;
+  height: 48px;
+  background: #f7f7fb;
+  border: none;
+  font-family: var(--font-family);
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 1.1;
+  color: #121417;
+  padding-left: 14px;
+}
+.filterButton {
+  display: flex;
+  border-radius: 12px;
+  padding: 14px 44px;
+  width: 130px;
+  height: 48px;
+  background: #3470ff;
+  border: none;
+  justify-content: center;
+  font-family: var(--font-family);
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 143%;
+  color: #fff;
+}
+.options {
+  font-family: var(--font-family);
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 125%;
+  color: rgba(18, 20, 23, 0.2);
+}

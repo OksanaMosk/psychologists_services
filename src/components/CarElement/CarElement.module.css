@@ -1,0 +1,121 @@
+:root {
+  --font-family: 'Manrope', sans-serif;
+  --primary-text-color: #121417;
+  --about-text-color: rgba(18, 20, 23, 0.5);
+  --secondary-text-color: #3470ff;
+  --button-active: #0b44cd;
+  --text-color: #fff;
+}
+
+.itemHome {
+  font-family: var(--font-family);
+  font-size: 16px;
+  width: 274px;
+  height: 426x;
+  border-radius: 20px;
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  color: var(--primary-text-color);
+}
+
+img {
+  border-radius: 14px;
+}
+
+.titlePart {
+  margin: 14px 0 8px;
+  font-family: var(--font-family);
+  display: flex;
+  justify-content: space-between;
+  padding-right: 9px;
+}
+
+.title {
+  display: inline;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 1.5;
+  height: 24px;
+}
+
+.title > span {
+  color: var(--secondary-text-color);
+}
+
+.aboutPart {
+  display: flex;
+  gap: 4px;
+  font-family: var(--font-family);
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 1.5;
+  color: var(--about-text-color);
+  height: 20px;
+}
+
+.address {
+  margin-block-end: 0;
+  margin-block-start: 0;
+}
+
+.aboutDetails {
+  display: flex;
+}
+
+.icon {
+  line-height: 0;
+  padding: 0 2px 0 0;
+}
+
+.button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: row;
+  border-radius: 12px;
+  width: 274px;
+  height: 44px;
+  background-color: var(--secondary-text-color);
+  cursor: pointer;
+  text-decoration: none;
+  margin-top: 28px;
+  font-family: var(--font-family);
+  font-weight: 600;
+  font-size: 14px;
+  color: var(--text-color);
+  border: none;
+}
+
+.button:focus,
+.button:hover {
+  background-color: var(--button-active);
+}
+
+.noFound {
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+  margin-top: 100px;
+  font-family: var(--font-family);
+  font-weight: 600;
+  font-size: 14px;
+  color: var(--about-text-color);
+}
+
+.noFavor {
+  position: relative;
+  z-index: 2;
+  top: 32px;
+  left: 244px;
+}
+
+.imgButton {
+  border: none;
+  background-color: transparent;
+  position: relative;
+
+  top: 32px;
+  left: 239px;
+}
