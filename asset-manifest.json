@@ -1,0 +1,14 @@
+{
+  "files": {
+    "main.css": "/PsychologistsServices/static/css/main.57a697ed.css",
+    "main.js": "/PsychologistsServices/static/js/main.3bde6438.js",
+    "static/media/111.mp4": "/PsychologistsServices/static/media/111.c2dff31127df48951a54.mp4",
+    "index.html": "/PsychologistsServices/index.html",
+    "main.57a697ed.css.map": "/PsychologistsServices/static/css/main.57a697ed.css.map",
+    "main.3bde6438.js.map": "/PsychologistsServices/static/js/main.3bde6438.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.57a697ed.css",
+    "static/js/main.3bde6438.js"
+  ]
+}
