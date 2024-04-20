@@ -1,7 +1,13 @@
 :root {
-  --primary-text-color: #121417;
-  --secondary-text-color: #3470ff;
-  --button-active: #0b44cd;
+  --primary-text-title-color: #191a15;
+
+  --primary-text-color: rgba(25, 26, 21, 0.3);
+  --secondary-text-color: #54be96;
+
+  --button-active: #36a379;
+
+  --background-color: rgba(84, 190, 150, 0.2);
+  --background-light-color: #fbfbfb;
 }
 
 .header {

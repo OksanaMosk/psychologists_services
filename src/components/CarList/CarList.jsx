@@ -7,7 +7,7 @@ export const CarList = ({ cars }) => {
     <div className={css.homeContainer}>
       <ul className={css.homeList}>
         {cars.map(car => (
-          <CarElement key={car.id} {...car} />
+          <CarElement key={car.name} {...car} />
         ))}
       </ul>
     </div>

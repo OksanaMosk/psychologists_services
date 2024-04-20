@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import makes from '../../json/makes.json';
 
 import css from './Filter.module.css';
 
@@ -46,11 +45,11 @@ const Filter = ({ onAllFilterChange, allCars }) => {
           onChange={handleMakeChange}
         >
           <option value="">All brands</option>
-          {makes.map((make, index) => (
-            <option className={css.options} key={index} value={make}>
+          {/* {makes.map(( index) => (
+            <option className={css.options} key={index} >
               {make.charAt(0).toUpperCase() + make.slice(1).toLowerCase()}
             </option>
-          ))}
+          ))} */}
         </select>
       </div>
 

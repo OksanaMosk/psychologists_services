@@ -17,7 +17,7 @@ const CatalogPage = () => {
   const backLinkRef = useRef(location.state?.from ?? '/');
   const [currentPage, setCurrentPage] = useState(1);
   const [hasMore, setHasMore] = useState(true);
-  const limit = 12;
+  const limit = 3;
   const [loading, setLoading] = useState(true);
   const [filteredCars, setFilteredCars] = useState([]);
   const data = useSelector(selectCars);

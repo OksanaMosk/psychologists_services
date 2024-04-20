@@ -1,66 +1,106 @@
 import css from './DetailsAboutCar.module.css';
 
-export const DetailsAboutCar = ({
-  id,
-  year,
-  make,
-  model,
-  type,
-  img,
-  description,
-  fuelConsumption,
-  engineSize,
-  accessories,
-  functionalities,
-  rentalPrice,
-  rentalCompany,
-  rentalConditions,
-  mileage,
-  address,
-}) => {
-  return (
-    <li className={css.itemHome} key={id}>
-      {img && (
-        <img
-          src={img}
-          alt={`Car ${id}`}
-          style={{ width: '274px', height: '268px' }}
-        />
-      )}
-      <div className={css.everyItem}>
-        <div className={css.about}>
-          <p className={css.price}>{year}</p>
-          <p className={css.price}>{make}</p>
-          <p className={css.price}>{model}</p>
-          <p className={css.price}>{type}</p>
+import React, { useState } from 'react';
+import { Formik, Form, Field, ErrorMessage } from 'formik';
+import * as Yup from 'yup';
 
-          <p className={css.price}>{description}</p>
-          <p className={css.price}>{fuelConsumption}</p>
-          <p className={css.price}>{engineSize}</p>
-          <p className={css.price}>{accessories}</p>
-          {Array.isArray(functionalities) &&
-            functionalities.map((func, index) => (
-              <p className={css.price} key={index}>
-                {func}
-              </p>
-            ))}
-          <p className={css.price}>{rentalPrice}</p>
-          <p className={css.price}>{rentalCompany}</p>
-          <p className={css.price}>{rentalConditions}</p>
-          <p className={css.price}>{mileage}</p>
-          <p
-            className={css.address}
-            style={{
-              whiteSpace: 'pre-wrap',
-              maxWidth: '25ch',
-              overflowWrap: 'break-word',
-            }}
-          >
-            {address.replace(/,([^,]{0,10})$/, ',\u00A0$1')}
-          </p>
-          <div className={css.aboutDetails}></div>
+const Modal = ({ onClose }) => {
+  const [showModal, setShowModal] = useState(true);
+
+  const handleClose = () => {
+    setShowModal(false);
+    onClose();
+  };
+
+  const handleBackdropClick = e => {
+    if (e.target === e.currentTarget) {
+      handleClose();
+    }
+  };
+
+  const handleKeyDown = e => {
+    if (e.key === 'Escape') {
+      handleClose();
+    }
+  };
+
+  return (
+    <>
+      {showModal && (
+        <div
+          className="modal-backdrop"
+          onClick={handleBackdropClick}
+          onKeyDown={handleKeyDown}
+        >
+          <div className="modal-content">
+            <button className="close-button" onClick={handleClose}>
+              ×
+            </button>
+            <h2>Registration / Login Form</h2>
+            <Formik
+              initialValues={{ email: '', password: '' }}
+              validationSchema={Yup.object({
+                email: Yup.string()
+                  .email('Invalid email address')
+                  .required('Required'),
+                password: Yup.string()
+                  .min(6, 'Password must be at least 6 characters')
+                  .required('Required'),
+              })}
+              onSubmit={(values, { setSubmitting }) => {
+                setTimeout(() => {
+                  alert(JSON.stringify(values, null, 2));
+                  setSubmitting(false);
+                  handleClose();
+                }, 400);
+              }}
+            >
+              <Form>
+                <div className="form-field">
+                  <label htmlFor="email">Email:</label>
+                  <Field type="email" name="email" />
+                  <ErrorMessage
+                    name="email"
+                    component="div"
+                    className="error"
+                  />
+                </div>
+                <div className="form-field">
+                  <label htmlFor="password">Password:</label>
+                  <Field type="password" name="password" />
+                  <ErrorMessage
+                    name="password"
+                    component="div"
+                    className="error"
+                  />
+                </div>
+                <button type="submit">Submit</button>
+              </Form>
+            </Formik>
+          </div>
         </div>
-      </div>
-    </li>
+      )}
+    </>
   );
 };
+
+const App = () => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const handleModalClose = () => {
+    setIsModalOpen(false);
+  };
+
+  const handleModalOpen = () => {
+    setIsModalOpen(true);
+  };
+
+  return (
+    <div className="App">
+      <button onClick={handleModalOpen}>Open Modal</button>
+      {isModalOpen && <Modal onClose={handleModalClose} />}
+    </div>
+  );
+};
+
+export default App;

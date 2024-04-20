@@ -30,13 +30,13 @@ const FavoritesPage = () => {
   }, [favoriteCarsRedux]);
 
   const handleAddToFavorites = carData => {
-    if (!favoriteCars.some(car => car.id === carData.id)) {
+    if (!favoriteCars.some(car => car.name === carData.name)) {
       setFavoriteCars(prevFavorites => [...prevFavorites, carData]);
     }
   };
 
   const uniqueFavoriteCars = favoriteCars.reduce((acc, current) => {
-    const isCarExists = acc.some(car => car.id === current.id);
+    const isCarExists = acc.some(car => car.name === current.name);
     if (!isCarExists) {
       return [...acc, current];
     }
@@ -57,7 +57,7 @@ const FavoritesPage = () => {
               {uniqueFavoriteCars.length > 0 ? (
                 uniqueFavoriteCars.map(car => (
                   <CarElement
-                    key={car.id}
+                    key={car.name}
                     {...car}
                     onAddToFavorites={() => handleAddToFavorites(car)}
                   />

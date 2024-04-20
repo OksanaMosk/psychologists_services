@@ -8,20 +8,24 @@
 }
 
 .itemHome {
-  font-family: var(--font-family);
-  font-size: 16px;
-  width: 274px;
-  height: 426x;
-  border-radius: 20px;
-  background-color: white;
   display: flex;
-  flex-direction: column;
-  flex-wrap: nowrap;
-  color: var(--primary-text-color);
+
+  font-family: var(--font-family);
+  border-radius: 24px;
+  width: 1184px;
+  height: 358px;
+  background: #fbfbfb;
 }
 
-img {
-  border-radius: 14px;
+.name {
+  border-radius: 15px;
+  width: 96px;
+  height: 96px;
+  background: #e0e0e0;
+  border: 2px solid rgba(84, 190, 150, 0.2);
+  border-radius: 30px;
+  width: 120px;
+  height: 120px;
 }
 
 .titlePart {
@@ -33,7 +37,8 @@ img {
 }
 
 .title {
-  display: inline;
+  display: flex;
+  flex-direction: column;
   font-weight: 500;
   font-size: 16px;
   line-height: 1.5;
@@ -46,6 +51,7 @@ img {
 
 .aboutPart {
   display: flex;
+
   gap: 4px;
   font-family: var(--font-family);
   font-weight: 400;
@@ -64,6 +70,10 @@ img {
   display: flex;
 }
 
+.details {
+  display: flex;
+  flex-direction: column;
+}
 .icon {
   line-height: 0;
   padding: 0 2px 0 0;
@@ -112,10 +122,10 @@ img {
 }
 
 .imgButton {
-  border: none;
+  /* border: none; */
   background-color: transparent;
   position: relative;
 
-  top: 32px;
-  left: 239px;
+  bottom: 0;
+  left: 0;
 }
