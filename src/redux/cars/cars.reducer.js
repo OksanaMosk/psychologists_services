@@ -24,7 +24,7 @@ export const fetchCars = createAsyncThunk(
       const databaseURL = firebaseConfig.databaseURL;
 
       const { data: allCars } = await axios.get(`${databaseURL}/.json`);
-      console.log('allCars: ', allCars);
+
       return { allCars };
     } catch (err) {
       return thunkApi.rejectWithValue({ errorMessage: err.message });
@@ -44,7 +44,7 @@ const carsSlice = createSlice({
   extraReducers: builder =>
     builder
       .addCase(fetchCars.fulfilled, (state, { payload }) => {
-        state.cars = payload;
+        state.cars = payload.allCars;
         state.isLoading = false;
         state.error = null;
       })

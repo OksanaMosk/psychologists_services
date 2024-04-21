@@ -37,21 +37,22 @@ const setToken = token => {
 export const registerThunk = createAsyncThunk(
   'auth/register',
   async (userData, thunkApi) => {
-    const { email, password } = userData;
+    const { email, password, uid } = userData;
 
     try {
       const auth = getAuth();
       const userCredential = await createUserWithEmailAndPassword(
         auth,
         email,
-        password
+        password,
+        uid
       );
       const user = userCredential.user;
 
       console.log('Registration successful:', user.email);
       // Додайте код для збереження токену або іншої необхідної інформації про користувача
 
-      return { user }; // Повертаємо успішну реєстрацію та дані користувача, якщо потрібно
+      return { email: user.email, password: user.password, uid: user.uid };
     } catch (error) {
       console.error('Registration error:', error);
       console.error('Error code:', error.code); // Код помилки
@@ -64,19 +65,20 @@ export const registerThunk = createAsyncThunk(
 export const loginThunk = createAsyncThunk(
   'auth/login',
   async (userData, thunkApi) => {
-    const { email, password } = userData;
+    const { email, password, uid } = userData;
     try {
       const auth = getAuth();
       const userCredential = await signInWithEmailAndPassword(
         auth,
         email,
-        password
+        password,
+        uid
       );
       const user = userCredential.user;
 
       console.log('User signed in:', user);
 
-      return { user };
+      return { email: user.email, password: user.password, uid: user.uid };
     } catch (error) {
       console.error('Login error:', error);
       console.error('Error code:', error.code); // Код помилки
