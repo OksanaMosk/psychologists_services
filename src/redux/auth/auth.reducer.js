@@ -2,6 +2,8 @@ import { createAsyncThunk, createSlice, isAnyOf } from '@reduxjs/toolkit';
 import axios from 'axios';
 import { initializeApp } from 'firebase/app';
 
+import 'firebase/auth';
+
 import {
   getAuth,
   createUserWithEmailAndPassword,
@@ -52,6 +54,8 @@ export const registerThunk = createAsyncThunk(
       return { user }; // Повертаємо успішну реєстрацію та дані користувача, якщо потрібно
     } catch (error) {
       console.error('Registration error:', error);
+      console.error('Error code:', error.code); // Код помилки
+      console.error('Error message:', error.message); // Повідомлення про помилку
       return thunkApi.rejectWithValue('Registration failed');
     }
   }
@@ -60,25 +64,24 @@ export const registerThunk = createAsyncThunk(
 export const loginThunk = createAsyncThunk(
   'auth/login',
   async (userData, thunkApi) => {
+    const { email, password } = userData;
     try {
-      const response = await axios.post(
-        `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyC2ORNd2-m6x_zOTq36zeaulONhSWUtib4`,
-        userData,
-        {
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        }
+      const auth = getAuth();
+      const userCredential = await signInWithEmailAndPassword(
+        auth,
+        email,
+        password
       );
+      const user = userCredential.user;
 
-      const { data } = response;
-      setToken(data.token);
-      // Виводимо відповідь у консоль
-      console.log(data);
+      console.log('User signed in:', user);
 
-      return data; // Повертаємо відповідь з сервера
+      return { user };
     } catch (error) {
       console.error('Login error:', error);
+      console.error('Error code:', error.code); // Код помилки
+      console.error('Error message:', error.message);
+      console.error('Error message:', error.name); // Повідомлення про помилку
       return thunkApi.rejectWithValue('Login failed');
     }
   }
@@ -109,6 +112,8 @@ export const refreshThunk = createAsyncThunk(
       return data;
     } catch (error) {
       console.error('Refresh error:', error);
+      console.error('Error code:', error.code); // Код помилки
+      console.error('Error message:', error.message); // Повідомлення про помилку
       return thunkApi.rejectWithValue('Refresh failed');
     }
   }

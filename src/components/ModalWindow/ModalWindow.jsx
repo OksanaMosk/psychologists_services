@@ -7,7 +7,6 @@ import { loginThunk } from 'redux/auth/auth.reducer';
 import Notiflix from 'notiflix';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 
-import { getAuth, fetchSignInMethodsForEmail } from 'firebase/auth';
 import * as Yup from 'yup';
 import css from './ModalWindow.module.css';
 
@@ -18,60 +17,73 @@ const ModalWindow = ({ isOpen, onClose, type }) => {
     try {
       console.log('Form values:', values);
       if (type === 'register') {
-        console.log('Register values:', values);
+        try {
+          console.log('Register values:', values);
 
-        const auth = getAuth();
+          const { name, ...loginValues } = values;
+          console.log('Dispatching registerThunk:', loginValues);
+          const registerResult = await dispatch(registerThunk(values));
 
-        const signInMethods = await fetchSignInMethodsForEmail(
-          auth,
-          values.email
-        );
-
-        if (signInMethods.length > 0) {
-          Notiflix.Notify.failure('User with this email already exists.');
-          console.log('User with this email already exists:', values.email);
-          return;
+          if (
+            registerResult.error &&
+            (registerResult.error.code = 'auth/email-already-in-use')
+          ) {
+            Notiflix.Notify.failure('This email is already in use.');
+          } else {
+            Notiflix.Notify.success(`Welcome ${values.name}!`);
+            console.log('Registration successful:', values.email);
+          }
+        } catch (error) {
+          console.error('Registration error:', error);
+          Notiflix.Notify.failure('ХУЙНЯЯКАСЬ');
         }
-
-        const { name, ...loginValues } = values;
-        console.log('Dispatching registerThunk:', loginValues);
-        await dispatch(registerThunk(values));
-        Notiflix.Notify.success(`Welcome ${values.name}!`);
-        console.log('Registration successful:', values.email);
       } else if (type === 'login') {
-        console.log('Login values:', values);
-        const { name, ...loginValues } = values;
-        console.log('Dispatching loginThunk:', loginValues);
+        try {
+          console.log('Login values:', values);
+          const { name, ...loginValues } = values;
+          console.log('Dispatching loginThunk:', loginValues);
 
-        // Діспатч loginThunk і перевірка результату
-        const loginResult = await dispatch(loginThunk(loginValues));
-        if (loginResult.error) {
-          // Якщо діспатч loginThunk викликав помилку, показати повідомлення про неправильний пароль
-          Notiflix.Notify.failure(
-            'Incorrect email or password. Please try again.'
-          );
-          console.error('Login failed:', loginResult.error.message);
-        } else {
-          // Успішний вхід - показати повідомлення про успішний вхід
-          Notiflix.Notify.success(`Welcome back, ${values.name}!`);
-          console.log('Login successful:', values.name);
+          // Діспатч loginThunk і перевірка результату
+          const loginResult = await dispatch(loginThunk(loginValues));
+          if (loginResult.error) {
+            if (loginResult.error) {
+              if ((loginResult.error.code = 'auth/invalid-credential')) {
+                Notiflix.Notify.failure(
+                  'Incorrect email or password. Please try again.'
+                );
+                console.error('Error code:', loginResult.error.message);
+              } else if ((loginResult.error.code = 'auth')) {
+                Notiflix.Notify.failure(
+                  'Invalid credentials. Please check your email and password.'
+                );
+                console.error('Error code:', loginResult.error.message);
+              } else {
+                Notiflix.Notify.failure(
+                  'Something went wrong... User login failed.'
+                );
+                console.error('Login failed:', loginResult.error.message);
+              }
+            }
+            console.error('Login failed:', loginResult.error.message);
+          } else {
+            // Успішний вхід - показати повідомлення про успішний вхід
+            Notiflix.Notify.success(`Welcome back, ${values.name}!`);
+            console.log('Login successful:', values.name);
+          }
+        } catch (error) {
+          Notiflix.Notify.failure('Something went wrong... User login failed.');
         }
       }
+
       onClose();
       if (form && form.resetForm) {
         form.resetForm();
       }
     } catch (error) {
       console.error('Authentication error:', error);
-      if (error.code === 'auth/email-already-in-use') {
-        Notiflix.Notify.failure('This email is already in use.');
-      } else if (error.code === 'auth/wrong-password') {
-        Notiflix.Notify.failure('Incorrect password. Please try again.');
-      } else {
-        Notiflix.Notify.failure(
-          'Something went wrong... User registration/login failed.'
-        );
-      }
+      Notiflix.Notify.failure(
+        'Something went wrong... User registration/login failed.'
+      );
     }
   };
 
