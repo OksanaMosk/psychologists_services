@@ -22,18 +22,15 @@ const ModalWindow = ({ isOpen, onClose, type }) => {
 
         const auth = getAuth();
 
-        // Отримання списку методів входу для вказаного електронного адресу
         const signInMethods = await fetchSignInMethodsForEmail(
           auth,
           values.email
         );
 
-        // Перевірка, чи є користувач з вказаним електронним адресом
         if (signInMethods.length > 0) {
-          // Якщо signInMethods містить методи входу, це означає, що користувач з таким електронним листом вже існує
           Notiflix.Notify.failure('User with this email already exists.');
           console.log('User with this email already exists:', values.email);
-          return; // Перервати обробку
+          return;
         }
 
         const { name, ...loginValues } = values;
@@ -43,14 +40,24 @@ const ModalWindow = ({ isOpen, onClose, type }) => {
         console.log('Registration successful:', values.email);
       } else if (type === 'login') {
         console.log('Login values:', values);
-        // Видалення поля "ім'я" з даних, переданих для входу
         const { name, ...loginValues } = values;
         console.log('Dispatching loginThunk:', loginValues);
-        await dispatch(loginThunk(loginValues));
-        Notiflix.Notify.success(`Welcome back, ${values.name}!`);
-        console.log('Login successful:', values.name);
+
+        // Діспатч loginThunk і перевірка результату
+        const loginResult = await dispatch(loginThunk(loginValues));
+        if (loginResult.error) {
+          // Якщо діспатч loginThunk викликав помилку, показати повідомлення про неправильний пароль
+          Notiflix.Notify.failure(
+            'Incorrect email or password. Please try again.'
+          );
+          console.error('Login failed:', loginResult.error.message);
+        } else {
+          // Успішний вхід - показати повідомлення про успішний вхід
+          Notiflix.Notify.success(`Welcome back, ${values.name}!`);
+          console.log('Login successful:', values.name);
+        }
       }
-      onClose(); // Закриття форми в будь-якому випадку, коли операція завершена
+      onClose();
       if (form && form.resetForm) {
         form.resetForm();
       }
@@ -58,9 +65,11 @@ const ModalWindow = ({ isOpen, onClose, type }) => {
       console.error('Authentication error:', error);
       if (error.code === 'auth/email-already-in-use') {
         Notiflix.Notify.failure('This email is already in use.');
+      } else if (error.code === 'auth/wrong-password') {
+        Notiflix.Notify.failure('Incorrect password. Please try again.');
       } else {
         Notiflix.Notify.failure(
-          'Something went wrong... User registration failed.'
+          'Something went wrong... User registration/login failed.'
         );
       }
     }
