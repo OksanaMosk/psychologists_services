@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import { NavLink, useLocation } from 'react-router-dom';
+
 import { selectFavorites } from 'redux/favorites/favorites.selector';
 import { CarElement } from '../../components/CarElement/CarElement';
 import Loader from '../../components/Loader/Loader';
@@ -9,9 +9,6 @@ import css from './FavoritesPage.module.css';
 const FavoritesPage = () => {
   const [loading, setLoading] = useState(true);
   const [favoriteCars, setFavoriteCars] = useState([]);
-
-  const location = useLocation();
-  const backLinkRef = location.state?.from ?? '/';
 
   const favoriteCarsRedux = useSelector(selectFavorites);
 
@@ -35,6 +32,12 @@ const FavoritesPage = () => {
     }
   };
 
+  const handleRemoveFromFavorites = name => {
+    const updatedFavoriteCars = favoriteCars.filter(car => car.name !== name);
+    setFavoriteCars(updatedFavoriteCars);
+    localStorage.setItem('favorites', JSON.stringify(updatedFavoriteCars));
+  };
+
   const uniqueFavoriteCars = favoriteCars.reduce((acc, current) => {
     const isCarExists = acc.some(car => car.name === current.name);
     if (!isCarExists) {
@@ -45,9 +48,6 @@ const FavoritesPage = () => {
 
   return (
     <>
-      <NavLink className={css.goBack} to={backLinkRef}>
-        Go back
-      </NavLink>
       <div className={css.homeContainer}>
         <div className={css.homeList}>
           {loading ? (
@@ -60,6 +60,9 @@ const FavoritesPage = () => {
                     key={car.name}
                     {...car}
                     onAddToFavorites={() => handleAddToFavorites(car)}
+                    onRemoveFromFavorites={() =>
+                      handleRemoveFromFavorites(car.name)
+                    } // додайте цей рядок
                   />
                 ))
               ) : (

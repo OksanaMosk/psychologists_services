@@ -30,12 +30,16 @@ const ModalWindow = ({ isOpen, onClose, type }) => {
           ) {
             Notiflix.Notify.failure('This email is already in use.');
           } else {
+            onClose();
+            if (form && form.resetForm) {
+              form.resetForm();
+            }
             Notiflix.Notify.success(`Welcome ${values.name}!`);
             console.log('Registration successful:', values.email);
           }
         } catch (error) {
           console.error('Registration error:', error);
-          Notiflix.Notify.failure('ХУЙНЯЯКАСЬ');
+          Notiflix.Notify.failure('Something went wrong ');
         }
       } else if (type === 'login') {
         try {
@@ -43,41 +47,28 @@ const ModalWindow = ({ isOpen, onClose, type }) => {
           const { name, ...loginValues } = values;
           console.log('Dispatching loginThunk:', loginValues);
 
-          // Діспатч loginThunk і перевірка результату
           const loginResult = await dispatch(loginThunk(loginValues));
-          if (loginResult.error) {
-            if (loginResult.error) {
-              if ((loginResult.error.code = 'auth/invalid-credential')) {
-                Notiflix.Notify.failure(
-                  'Incorrect email or password. Please try again.'
-                );
-                console.error('Error code:', loginResult.error.message);
-              } else if ((loginResult.error.code = 'auth')) {
-                Notiflix.Notify.failure(
-                  'Invalid credentials. Please check your email and password.'
-                );
-                console.error('Error code:', loginResult.error.message);
-              } else {
-                Notiflix.Notify.failure(
-                  'Something went wrong... User login failed.'
-                );
-                console.error('Login failed:', loginResult.error.message);
-              }
-            }
-            console.error('Login failed:', loginResult.error.message);
+
+          if (
+            loginResult.error &&
+            (loginResult.error.code = 'auth/invalid-credential')
+          ) {
+            Notiflix.Notify.failure(
+              'Incorrect email or password. Please try again.'
+            );
+            console.error('Error code:', loginResult.error.message);
           } else {
+            onClose();
+            if (form && form.resetForm) {
+              form.resetForm();
+            }
             // Успішний вхід - показати повідомлення про успішний вхід
             Notiflix.Notify.success(`Welcome back, ${values.name}!`);
             console.log('Login successful:', values.name);
           }
         } catch (error) {
-          Notiflix.Notify.failure('Something went wrong... User login failed.');
+          Notiflix.Notify.failure('Something went wrong... ');
         }
-      }
-
-      onClose();
-      if (form && form.resetForm) {
-        form.resetForm();
       }
     } catch (error) {
       console.error('Authentication error:', error);

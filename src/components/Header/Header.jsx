@@ -45,9 +45,7 @@ export const Header = ({ values }) => {
         <NavLink className={css.toLink} to="/catalog">
           Catalog
         </NavLink>
-        <NavLink className={css.toLink} to="/favorites">
-          Faforites cars
-        </NavLink>
+
         <div className={css.mainTit}>
           <h1 className={css.mainTitle}>Phonebook</h1>
         </div>
@@ -56,20 +54,8 @@ export const Header = ({ values }) => {
           <>
             <div className={css.menu}>
               <NavLink state={{ from: location }} to="/"></NavLink>
-
-              <NavLink
-                state={{ from: location }}
-                className={css.title}
-                to="/add"
-              >
-                Add contact
-              </NavLink>
-              <NavLink
-                state={{ from: location }}
-                className={css.title}
-                to="/contacts"
-              >
-                My contacts
+              <NavLink className={css.toLink} to="/favorites">
+                Faforites cars
               </NavLink>
             </div>
             <span className={css.nameLogOutButton}>Hello, {userData.name}</span>

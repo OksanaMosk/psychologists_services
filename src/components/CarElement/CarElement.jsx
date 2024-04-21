@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-
+import { selectAuthenticated } from 'redux/auth/auth.selector';
 import { selectFavorites } from 'redux/favorites/favorites.selector';
+import Notiflix from 'notiflix';
 import {
   addFavorite,
   removeFavorite,
@@ -23,10 +24,12 @@ export const CarElement = ({
   initial_consultation,
   about,
   data,
+  onRemoveFromFavorites, // Додано обробник подій для видалення зі списку фаворитів
 }) => {
   const dispatch = useDispatch();
   const [imageLoaded, setImageLoaded] = useState(false);
   const [isFavorite, setIsFavorite] = useState(false);
+  const authenticated = useSelector(selectAuthenticated);
 
   const favorites = useSelector(selectFavorites);
 
@@ -51,36 +54,43 @@ export const CarElement = ({
   };
 
   const handleToggleFavorite = () => {
-    const carData = {
-      name,
-      avatar_url,
-      experience,
-      reviews,
-      price_per_hour,
-      rating,
-      license,
-      specialization,
-      initial_consultation,
-      about,
-      data,
-    };
+    if (authenticated) {
+      const carData = {
+        name,
+        avatar_url,
+        experience,
+        reviews,
+        price_per_hour,
+        rating,
+        license,
+        specialization,
+        initial_consultation,
+        about,
+        data,
+      };
 
-    if (isFavorite) {
-      dispatch(removeFavorite(name));
-      setIsFavorite(false);
+      if (isFavorite) {
+        dispatch(removeFavorite(name));
+        setIsFavorite(false);
+        onRemoveFromFavorites(name); // Викликаємо обробник подій для видалення зі списку фаворитів
+      } else {
+        dispatch(addFavorite(carData));
+        setIsFavorite(true);
+      }
+
+      const favoritesFromLocalStorage =
+        JSON.parse(localStorage.getItem('favorites')) || [];
+
+      const updatedFavorites = isFavorite
+        ? favoritesFromLocalStorage.filter(car => car.name !== name)
+        : [...favoritesFromLocalStorage, carData];
+
+      localStorage.setItem('favorites', JSON.stringify(updatedFavorites));
     } else {
-      dispatch(addFavorite(carData));
-      setIsFavorite(true);
+      Notiflix.Notify.warning(
+        'Welcome! Functionality is available only for authorized users.'
+      );
     }
-
-    const favoritesFromLocalStorage =
-      JSON.parse(localStorage.getItem('favorites')) || [];
-
-    const updatedFavorites = isFavorite
-      ? favoritesFromLocalStorage.filter(car => car.name !== name)
-      : [...favoritesFromLocalStorage, carData];
-
-    localStorage.setItem('favorites', JSON.stringify(updatedFavorites));
   };
 
   const [showFullDescription, setShowFullDescription] = useState(false);
@@ -105,8 +115,8 @@ export const CarElement = ({
         <div className={css.titlePart}>
           <span>Psychologist</span>
           <div className={css.aboutPart}>
-            <p className={css.title}>Rating:{rating}</p>
-            <p className={css.price}>Price / 1 hour:{price_per_hour}$</p>
+            <p className={css.title}>Rating: {rating}</p>
+            <p className={css.price}>Price / 1 hour: {price_per_hour}$</p>
 
             <button
               className={css.imgButton}
@@ -125,11 +135,11 @@ export const CarElement = ({
         </div>
         <h3 className={css.title}>{name}</h3>
         <div className={css.aboutPart}>
-          <p className={css.price}>Experience:{experience}</p>
-          <p className={css.price}>License:{license}</p>
+          <p className={css.price}>Experience: {experience}</p>
+          <p className={css.price}>License: {license}</p>
           <p className={css.price}>Specialization: {specialization}</p>
           <p className={css.price}>
-            Initial_consultation: {initial_consultation}
+            Initial Consultation: {initial_consultation}
           </p>
         </div>
         <div>{about}</div>
