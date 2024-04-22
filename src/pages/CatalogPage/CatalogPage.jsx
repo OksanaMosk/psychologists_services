@@ -6,7 +6,7 @@ import { useLocation } from 'react-router-dom';
 import { Navigate, NavLink } from 'react-router-dom';
 import Filter from 'components/Filter/Filter';
 import Loader from 'components/Loader/Loader';
-import { selectCars, selectError } from 'redux/cars/cars.selector';
+import { selectError } from 'redux/cars/cars.selector';
 
 import css from './CatalogPage.module.css';
 
@@ -20,7 +20,6 @@ const CatalogPage = () => {
   const limit = 3;
   const [loading, setLoading] = useState(true);
   const [filteredCars, setFilteredCars] = useState([]);
-  const data = useSelector(selectCars);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -30,6 +29,8 @@ const CatalogPage = () => {
           fetchCars({ page: currentPage, limit })
         );
         const allCars = totalItemsResponse.payload.allCars;
+        console.log('allCars:', allCars);
+        console.log('allCars.name:', allCars[1].name);
 
         setLoading(false);
         setFilteredCars(allCars);
@@ -58,39 +59,41 @@ const CatalogPage = () => {
   };
 
   const handleAllFilterChange = filters => {
-    let filtered = data.allCars;
+    let filtered = [...filteredCars];
 
-    if (filters.make) {
+    if (filters && filters.name === 'asc') {
+      // Перевірка, чи існує властивість name у newFilters та чи вона дорівнює 'asc'
+      filtered = filtered.sort((a, b) => a.name.localeCompare(b.name)); // Сортування за зростанням імені
+    } else if (filters && filters.item === 'desc') {
+      filtered = filtered.sort((a, b) => b.name.localeCompare(a.name));
+    } else if (filters.name === '<10' && filters.minPrice !== '') {
+      const minPrice = parseFloat(filters.minPrice);
       filtered = filtered.filter(
-        car => car.make.toLowerCase() === filters.make.toLowerCase()
+        car => parseFloat(car.price_per_hour) >= minPrice
       );
-    }
-
-    if (filters.price) {
-      const numericPrice = parseFloat(filters.price);
+    } else if (filters.name === '>10' && filters.maxPrice !== '') {
+      const maxPrice = parseFloat(filters.maxPrice);
       filtered = filtered.filter(
-        car => parseFloat(car.rentalPrice.replace('$', '')) <= numericPrice
+        car => parseFloat(car.price_per_hour) <= maxPrice
       );
-    }
-
-    if (filters.minMileage) {
-      const minMileageNumber = parseFloat(filters.minMileage);
+    } else if (filters.name == '') {
+      const minRatingNumber = parseFloat(filters.minRating);
       filtered = filtered.filter(
-        car => parseFloat(car.mileage) >= minMileageNumber
+        car => parseFloat(car.rating) >= minRatingNumber
       );
-    }
-
-    if (filters.maxMileage) {
-      const maxMileageNumber = parseFloat(filters.maxMileage);
+    } else if (filters.name == '') {
+      const maxRatingNumber = parseFloat(filters.maxRating);
       filtered = filtered.filter(
-        car => parseFloat(car.mileage) <= maxMileageNumber
+        car => parseFloat(car.rating) <= maxRatingNumber
       );
+    } else {
+      setFilteredCars(filtered);
+      console.log('setFilteredCars:', filtered);
+      setCurrentPage(1);
     }
-
-    setFilteredCars(filtered);
-    setCurrentPage(1);
   };
 
+  console.log('filteredCars', filteredCars);
   if (loading) {
     return (
       <div className={css.loader}>
@@ -109,11 +112,7 @@ const CatalogPage = () => {
       >
         Go back
       </NavLink>
-
-      <Filter
-        onAllFilterChange={handleAllFilterChange}
-        allCars={data.allCars}
-      />
+      <Filter onAllFilterChange={handleAllFilterChange} />
 
       <CarList
         cars={filteredCars.slice(
@@ -121,7 +120,6 @@ const CatalogPage = () => {
           currentPage * limit
         )}
       />
-
       {hasMore && filteredCars.length > currentPage * limit && (
         <button className={css.button} onClick={handleLoadMore}>
           Load more
