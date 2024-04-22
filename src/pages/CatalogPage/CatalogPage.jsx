@@ -6,6 +6,7 @@ import { useLocation } from 'react-router-dom';
 import { Navigate, NavLink } from 'react-router-dom';
 import Filter from 'components/Filter/Filter';
 import Loader from 'components/Loader/Loader';
+
 import { selectError } from 'redux/cars/cars.selector';
 
 import css from './CatalogPage.module.css';
@@ -29,9 +30,10 @@ const CatalogPage = () => {
           fetchCars({ page: currentPage, limit })
         );
         const allCars = totalItemsResponse.payload.allCars;
-        console.log('allCars:', allCars);
-        console.log('allCars.name:', allCars[1].name);
-
+        if (!allCars) {
+          console.error('allCars is missing');
+          return;
+        }
         setLoading(false);
         setFilteredCars(allCars);
         const totalPages = Math.ceil(allCars.length / limit);
@@ -39,8 +41,8 @@ const CatalogPage = () => {
           setCurrentPage(totalPages);
         }
         setHasMore(currentPage < totalPages);
-        setLoading(false);
       } catch (error) {
+        console.error('Error fetching cars:', error);
         setLoading(false);
       }
     };
@@ -48,6 +50,63 @@ const CatalogPage = () => {
     fetchData();
   }, [dispatch, currentPage, limit]);
 
+  let filtered = [...filteredCars];
+  const handleAllFilterChange = filters => {
+    if (filters.nameDec) {
+      console.log('Applying A to Z filter');
+      filtered = filtered
+        .map(car => ({
+          ...car,
+          name: car.name.replace('Dr. ', '').toLowerCase(),
+        }))
+        .sort((a, b) => a.name.localeCompare(b.name));
+    } else if (filters.nameInc) {
+      console.log('Applying Z to A filter');
+      filtered = filtered
+        .map(car => ({
+          ...car,
+          name: car.name.replace('Dr. ', '').toLowerCase(),
+        }))
+        .sort((a, b) => b.name.localeCompare(a.name));
+    }
+
+    // Фільтруємо за ціною
+    if (filters.lessPrice) {
+      console.log('Applying filter for prices less than $180');
+      filtered = filtered.filter(car => parseFloat(car.price_per_hour) < 180);
+    } else if (filters.morePrice) {
+      console.log('Applying filter for prices more than $180');
+      filtered = filtered.filter(car => parseFloat(car.price_per_hour) > 180);
+    }
+
+    // Сортуємо за рейтингом
+    if (filters.maxRating) {
+      console.log('Applying filter for max rating');
+      filtered = filtered.sort(
+        (a, b) => parseFloat(b.rating) - parseFloat(a.rating)
+      );
+    } else if (filters.minRating) {
+      console.log('Applying filter for min rating');
+      filtered = filtered.sort(
+        (a, b) => parseFloat(a.rating) - parseFloat(b.rating)
+      );
+    }
+
+    setFilteredCars(filtered);
+    console.log('Filtered cars after sorting:', filtered);
+    console.log('🚀 ~ handleAllFilterChange ~ filteredCars:', filteredCars);
+    setCurrentPage(1); // Скидаємо сторінку на першу при зміні фільтра
+
+    return filtered;
+  };
+
+  if (loading) {
+    return (
+      <div className={css.loader}>
+        <Loader />
+      </div>
+    );
+  }
   const handleLoadMore = () => {
     if (hasMore) {
       setCurrentPage(prevPage => prevPage + 1);
@@ -57,51 +116,6 @@ const CatalogPage = () => {
       });
     }
   };
-
-  const handleAllFilterChange = filters => {
-    let filtered = [...filteredCars];
-
-    if (filters && filters.name === 'asc') {
-      // Перевірка, чи існує властивість name у newFilters та чи вона дорівнює 'asc'
-      filtered = filtered.sort((a, b) => a.name.localeCompare(b.name)); // Сортування за зростанням імені
-    } else if (filters && filters.item === 'desc') {
-      filtered = filtered.sort((a, b) => b.name.localeCompare(a.name));
-    } else if (filters.name === '<10' && filters.minPrice !== '') {
-      const minPrice = parseFloat(filters.minPrice);
-      filtered = filtered.filter(
-        car => parseFloat(car.price_per_hour) >= minPrice
-      );
-    } else if (filters.name === '>10' && filters.maxPrice !== '') {
-      const maxPrice = parseFloat(filters.maxPrice);
-      filtered = filtered.filter(
-        car => parseFloat(car.price_per_hour) <= maxPrice
-      );
-    } else if (filters.name == '') {
-      const minRatingNumber = parseFloat(filters.minRating);
-      filtered = filtered.filter(
-        car => parseFloat(car.rating) >= minRatingNumber
-      );
-    } else if (filters.name == '') {
-      const maxRatingNumber = parseFloat(filters.maxRating);
-      filtered = filtered.filter(
-        car => parseFloat(car.rating) <= maxRatingNumber
-      );
-    } else {
-      setFilteredCars(filtered);
-      console.log('setFilteredCars:', filtered);
-      setCurrentPage(1);
-    }
-  };
-
-  console.log('filteredCars', filteredCars);
-  if (loading) {
-    return (
-      <div className={css.loader}>
-        <Loader />
-      </div>
-    );
-  }
-
   return (
     <div className={css.contactsContainer}>
       {error !== null && <Navigate to="/catalog/404" replace={true} />}
@@ -112,15 +126,15 @@ const CatalogPage = () => {
       >
         Go back
       </NavLink>
-      <Filter onAllFilterChange={handleAllFilterChange} />
 
-      <CarList
-        cars={filteredCars.slice(
-          (currentPage - 1) * limit,
-          currentPage * limit
-        )}
+      <Filter
+        allCars={[...filteredCars]}
+        onAllFilterChange={handleAllFilterChange}
       />
-      {hasMore && filteredCars.length > currentPage * limit && (
+      <CarList
+        cars={filtered.slice((currentPage - 1) * limit, currentPage * limit)}
+      />
+      {hasMore && filtered.length > currentPage * limit && (
         <button className={css.button} onClick={handleLoadMore}>
           Load more
         </button>
