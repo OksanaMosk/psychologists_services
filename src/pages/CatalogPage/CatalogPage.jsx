@@ -10,7 +10,6 @@ import Loader from 'components/Loader/Loader';
 import { selectError } from 'redux/cars/cars.selector';
 
 import css from './CatalogPage.module.css';
-
 const CatalogPage = () => {
   const dispatch = useDispatch();
   const error = useSelector(selectError);
@@ -21,6 +20,14 @@ const CatalogPage = () => {
   const limit = 3;
   const [loading, setLoading] = useState(true);
   const [filteredCars, setFilteredCars] = useState([]);
+  const [filters, setFilters] = useState({
+    nameDec: false,
+    nameInc: false,
+    lessPrice: false,
+    morePrice: false,
+    maxRating: false,
+    minRating: false,
+  });
 
   useEffect(() => {
     const fetchData = async () => {
@@ -50,63 +57,45 @@ const CatalogPage = () => {
     fetchData();
   }, [dispatch, currentPage, limit]);
 
-  let filtered = [...filteredCars];
-  const handleAllFilterChange = filters => {
-    if (filters.nameDec) {
-      console.log('Applying A to Z filter');
-      filtered = filtered
-        .map(car => ({
-          ...car,
-          name: car.name.replace('Dr. ', '').toLowerCase(),
-        }))
-        .sort((a, b) => a.name.localeCompare(b.name));
-    } else if (filters.nameInc) {
-      console.log('Applying Z to A filter');
-      filtered = filtered
-        .map(car => ({
-          ...car,
-          name: car.name.replace('Dr. ', '').toLowerCase(),
-        }))
-        .sort((a, b) => b.name.localeCompare(a.name));
-    }
-
-    // Фільтруємо за ціною
-    if (filters.lessPrice) {
-      console.log('Applying filter for prices less than $180');
-      filtered = filtered.filter(car => parseFloat(car.price_per_hour) < 180);
-    } else if (filters.morePrice) {
-      console.log('Applying filter for prices more than $180');
-      filtered = filtered.filter(car => parseFloat(car.price_per_hour) > 180);
-    }
-
-    // Сортуємо за рейтингом
-    if (filters.maxRating) {
-      console.log('Applying filter for max rating');
-      filtered = filtered.sort(
-        (a, b) => parseFloat(b.rating) - parseFloat(a.rating)
-      );
-    } else if (filters.minRating) {
-      console.log('Applying filter for min rating');
-      filtered = filtered.sort(
-        (a, b) => parseFloat(a.rating) - parseFloat(b.rating)
-      );
-    }
-
-    setFilteredCars(filtered);
-    console.log('Filtered cars after sorting:', filtered);
-    console.log('🚀 ~ handleAllFilterChange ~ filteredCars:', filteredCars);
+  const handleAllFilterChange = newFilters => {
+    setFilters(prevFilters => ({ ...prevFilters, ...newFilters }));
     setCurrentPage(1); // Скидаємо сторінку на першу при зміні фільтра
-
-    return filtered;
   };
 
-  if (loading) {
-    return (
-      <div className={css.loader}>
-        <Loader />
-      </div>
-    );
+  const filtered = [...filteredCars];
+
+  if (filters.nameDec) {
+    console.log('Applying A to Z filter');
+    filtered.sort((a, b) => a.name.localeCompare(b.name));
+    console.log('Applying A to Z filter');
+  } else if (filters.nameInc) {
+    console.log('Applying Z to A filter');
+    filtered.sort((a, b) => b.name.localeCompare(a.name));
   }
+
+  // Filter by price
+  if (filters.lessPrice) {
+    console.log('Applying filter for prices less than $180');
+    filtered.filter(car => parseFloat(car.price_per_hour) < 180);
+  } else if (filters.morePrice) {
+    console.log('Applying filter for prices more than $180');
+    filtered.filter(car => parseFloat(car.price_per_hour) > 180);
+  }
+
+  // Filter by rating
+  if (filters.maxRating) {
+    console.log('Applying filter for max rating');
+    filtered.sort((a, b) => parseFloat(b.rating) - parseFloat(a.rating));
+  } else if (filters.minRating) {
+    console.log('Applying filter for min rating');
+    filtered.sort((a, b) => parseFloat(a.rating) - parseFloat(b.rating));
+  }
+
+  const filteredPaginatedCars = filtered.slice(
+    (currentPage - 1) * limit,
+    currentPage * limit
+  );
+
   const handleLoadMore = () => {
     if (hasMore) {
       setCurrentPage(prevPage => prevPage + 1);
@@ -116,6 +105,15 @@ const CatalogPage = () => {
       });
     }
   };
+
+  if (loading) {
+    return (
+      <div className={css.loader}>
+        <Loader />
+      </div>
+    );
+  }
+
   return (
     <div className={css.contactsContainer}>
       {error !== null && <Navigate to="/catalog/404" replace={true} />}
@@ -128,12 +126,10 @@ const CatalogPage = () => {
       </NavLink>
 
       <Filter
-        allCars={[...filteredCars]}
+        allCars={filteredCars}
         onAllFilterChange={handleAllFilterChange}
       />
-      <CarList
-        cars={filtered.slice((currentPage - 1) * limit, currentPage * limit)}
-      />
+      <CarList cars={filteredPaginatedCars} />
       {hasMore && filtered.length > currentPage * limit && (
         <button className={css.button} onClick={handleLoadMore}>
           Load more
