@@ -11,8 +11,8 @@ const Filter = ({ onAllFilterChange }) => {
     const newFilters = {
       nameDec: selectedValue === 'A to Z',
       nameInc: selectedValue === 'Z to A',
-      lessPrice: selectedValue === 'Less than 10$',
-      morePrice: selectedValue === 'More than 10$',
+      lessPrice: selectedValue === 'Lowest price per hour',
+      morePrice: selectedValue === 'Highest price per hour',
       maxRating: selectedValue === 'Popular',
       minRating: selectedValue === 'Not popular',
     };
@@ -32,8 +32,8 @@ const Filter = ({ onAllFilterChange }) => {
           <option value="">Select Filter</option>
           <option value="A to Z">A to Z</option>
           <option value="Z to A">Z to A</option>
-          <option value="Less than 10$">Less than 10$</option>
-          <option value="More than 10$">Greater than 10$</option>
+          <option value="Lowest price per hour">Lowest price per hour</option>
+          <option value="Highest price per hour">Highest price per hour</option>
           <option value="Popular">Popular</option>
           <option value="Not popular">Not popular</option>
           <option value="Show all">Show all</option>

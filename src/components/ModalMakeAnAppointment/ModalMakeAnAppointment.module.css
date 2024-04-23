@@ -1,0 +1,85 @@
+:root {
+  --font-family: 'Manrope', sans-serif;
+  --primary-text-color: #121417;
+  --about-text-color: rgba(18, 20, 23, 0.5);
+  --secondary-text-color: #3470ff;
+  --button-active: #0b44cd;
+  --text-color: #fff;
+}
+
+.backdrop.open {
+  display: block;
+}
+
+/* Стилі для самого модального вікна */
+.modal {
+  position: fixed;
+  top: 50%; /* Розташовуємо вікно відносно верхньої межі */
+  left: 50%; /* Розташовуємо вікно відносно лівої межі */
+  transform: translate(
+    -50%,
+    -50%
+  ); /* Зсуваємо вікно на 50% від його власних розмірів */
+  background-color: #fff; /* Колір фону вікна */
+  padding: 20px; /* Відступи від країв вікна */
+  border-radius: 8px; /* Закругленість кутів */
+  z-index: 1000; /* Забезпечує, що вікно розташоване поверх фону */
+  display: none;
+}
+
+.modal.open {
+  display: block;
+}
+
+/* Стилі для кнопки закриття */
+.closeButton {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: transparent;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+/* Стилі для контролів форми */
+.form {
+  margin-bottom: 10px;
+}
+
+.makeAnAppointment {
+  width: 274px;
+  height: 44px;
+}
+.errorMessage {
+  color: red;
+}
+
+/* Стилі для кнопки відправки форми */
+.submiButton {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+/* Зберігаємо вікно по центру сторінки, навіть коли вміст великий */
+@media (min-width: 768px) {
+  modal {
+    width: 50%; /* Ширина вікна на планшетах і більш */
+  }
+}
+
+@media (min-width: 992px) {
+  modal {
+    width: 40%; /* Ширина вікна на десктопах і більш */
+  }
+}
+
+@media (min-width: 1200px) {
+  modal {
+    width: 30%; /* Ширина вікна на великих екранах */
+  }
+}

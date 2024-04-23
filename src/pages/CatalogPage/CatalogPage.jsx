@@ -67,28 +67,36 @@ const CatalogPage = () => {
   if (filters.nameDec) {
     console.log('Applying A to Z filter');
     filtered.sort((a, b) => a.name.localeCompare(b.name));
-    console.log('Applying A to Z filter');
+    console.log('Applying A to Z filter', filtered);
   } else if (filters.nameInc) {
     console.log('Applying Z to A filter');
     filtered.sort((a, b) => b.name.localeCompare(a.name));
+    console.log('Applying Z to A filter', filtered);
   }
 
   // Filter by price
   if (filters.lessPrice) {
-    console.log('Applying filter for prices less than $180');
-    filtered.filter(car => parseFloat(car.price_per_hour) < 180);
+    filtered.sort(
+      (a, b) => parseFloat(a.price_per_hour) - parseFloat(b.price_per_hour)
+    );
+    console.log('Lowest price per hour', filtered);
   } else if (filters.morePrice) {
-    console.log('Applying filter for prices more than $180');
-    filtered.filter(car => parseFloat(car.price_per_hour) > 180);
+    filtered.sort(
+      (a, b) => parseFloat(b.price_per_hour) - parseFloat(a.price_per_hour)
+    );
+    console.log('Highest price per hour', filtered);
   }
 
   // Filter by rating
+
   if (filters.maxRating) {
     console.log('Applying filter for max rating');
     filtered.sort((a, b) => parseFloat(b.rating) - parseFloat(a.rating));
+    console.log('Рейтинг  Від найменшого', filtered);
   } else if (filters.minRating) {
     console.log('Applying filter for min rating');
     filtered.sort((a, b) => parseFloat(a.rating) - parseFloat(b.rating));
+    console.log('Рейтинг від найменшого', filtered);
   }
 
   const filteredPaginatedCars = filtered.slice(

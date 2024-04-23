@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { selectAuthenticated } from 'redux/auth/auth.selector';
 import { selectFavorites } from 'redux/favorites/favorites.selector';
+import ModalMakeAnAppointment from '../ModalMakeAnAppointment/ModalMakeAnAppointment';
 import Notiflix from 'notiflix';
 import {
   addFavorite,
@@ -27,8 +28,11 @@ export const CarElement = ({
   onRemoveFromFavorites, // Додано обробник подій для видалення зі списку фаворитів
 }) => {
   const dispatch = useDispatch();
+
   const [imageLoaded, setImageLoaded] = useState(false);
   const [isFavorite, setIsFavorite] = useState(false);
+  const [isMakeAnAppointment, setIsMakeAnAppointment] = useState(false);
+
   const authenticated = useSelector(selectAuthenticated);
 
   const favorites = useSelector(selectFavorites);
@@ -99,6 +103,16 @@ export const CarElement = ({
     setShowFullDescription(!showFullDescription);
   };
 
+  const openMakeAnAppointment = () => {
+    if (!isMakeAnAppointment) {
+      setIsMakeAnAppointment(true);
+    }
+  };
+
+  const closeMakeAnAppointment = () => {
+    setIsMakeAnAppointment(false);
+  };
+
   return (
     <li
       className={`${css.itemHome} ${imageLoaded ? css.imageLoaded : ''}`}
@@ -144,7 +158,7 @@ export const CarElement = ({
         </div>
         <div>{about}</div>
 
-        <button onClick={toggleDescription}>
+        <div className={css.moreDescription} onClick={toggleDescription}>
           {showFullDescription ? (
             <div>
               <h4>Reviews:</h4>
@@ -161,7 +175,24 @@ export const CarElement = ({
           ) : (
             'Read more'
           )}
-        </button>
+        </div>
+        {showFullDescription && (
+          <button
+            type="button"
+            className={css.makeAnAppointment}
+            onClick={openMakeAnAppointment}
+          >
+            {isMakeAnAppointment ? (
+              <ModalMakeAnAppointment
+                isOpen={isMakeAnAppointment}
+                onClose={closeMakeAnAppointment}
+                name={name}
+              />
+            ) : (
+              'Make an appointment'
+            )}
+          </button>
+        )}
       </div>
     </li>
   );
