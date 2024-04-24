@@ -54,8 +54,10 @@ const ModalMakeAnAppointment = ({ isOpen, onClose, name }) => {
           <button className={css.closeButton} onClick={closeModal}>
             &times;
           </button>
-          <h3>Make an appointment with a psychologist</h3>
-          <p>
+          <h3 className={css.formTitle}>
+            Make an appointment with a psychologist
+          </h3>
+          <p className={css.formWelcome}>
             You are on the verge of changing your life for the better. Fill out
             the short form below to book your personal appointment with a
             professional psychologist. We guarantee confidentiality and respect
@@ -90,26 +92,39 @@ const ModalMakeAnAppointment = ({ isOpen, onClose, name }) => {
             }}
           >
             <Form>
-              <div>
+              <div className={css.form}>
                 <ErrorMessage
+                  className={css.errorMessage}
                   name="comment"
                   component="div"
-                  className="error"
                 />
-                <label htmlFor="name">Name</label>
-                <Field type="text" id="name" name="name" />
+                <label htmlFor="name"></label>
+                <Field
+                  placeholder="Name"
+                  className={css.formInput}
+                  type="text"
+                  id="name"
+                  name="name"
+                />
               </div>
+
               <div>
-                <label htmlFor="email">Email</label>
-                <Field type="email" id="email" name="email" />
-              </div>
-              <div>
-                <label htmlFor="phone">Phone</label>
-                <Field type="phone" id="phone" name="phone" />
+                <label htmlFor="phone"></label>
+                <Field
+                  placeholder="+380"
+                  className={css.formIn}
+                  type="phone"
+                  id="phone"
+                  name="phone"
+                />
               </div>
               <div>
                 <h5>Meeting time</h5>
-                <select value={selectedFilter} onChange={handleFilterChange}>
+                <select
+                  value={selectedFilter}
+                  className={css.formIn}
+                  onChange={handleFilterChange}
+                >
                   <option value="">00 : 00</option>
                   {[
                     'Meeting time',
@@ -138,9 +153,27 @@ const ModalMakeAnAppointment = ({ isOpen, onClose, name }) => {
                 </select>
               </div>
               <div>
-                <label htmlFor="comment">Comment</label>
-                <Field as="textarea" id="comment" name="comment" />
+                <label htmlFor="email"></label>
+                <Field
+                  placeholder="Email"
+                  className={css.formInput}
+                  type="email"
+                  id="email"
+                  name="email"
+                />
               </div>
+
+              <div>
+                <label htmlFor="comment"></label>
+                <Field
+                  placeholder="Comment"
+                  className={css.formInput}
+                  as="textarea"
+                  id="comment"
+                  name="comment"
+                />
+              </div>
+              <button type="button" className={css.submitButton}></button>
             </Form>
           </Formik>
         </div>

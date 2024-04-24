@@ -1,20 +1,20 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { fetchCars } from 'redux/cars/cars.reducer';
 import { useSelector, useDispatch } from 'react-redux';
 import { CarList } from 'components/CarList/CarList';
-import { useLocation } from 'react-router-dom';
-import { Navigate, NavLink } from 'react-router-dom';
+
+import { Navigate } from 'react-router-dom';
 import Filter from 'components/Filter/Filter';
 import Loader from 'components/Loader/Loader';
 
 import { selectError } from 'redux/cars/cars.selector';
 
-import css from './CatalogPage.module.css';
-const CatalogPage = () => {
+import css from './Psychologists.module.css';
+
+const Psychologists = () => {
   const dispatch = useDispatch();
   const error = useSelector(selectError);
-  const location = useLocation();
-  const backLinkRef = useRef(location.state?.from ?? '/');
+
   const [currentPage, setCurrentPage] = useState(1);
   const [hasMore, setHasMore] = useState(true);
   const limit = 3;
@@ -125,13 +125,6 @@ const CatalogPage = () => {
   return (
     <div className={css.contactsContainer}>
       {error !== null && <Navigate to="/catalog/404" replace={true} />}
-      <NavLink
-        state={{ from: location }}
-        className={css.goBack}
-        to={backLinkRef.current}
-      >
-        Go back
-      </NavLink>
 
       <Filter
         allCars={filteredCars}
@@ -147,4 +140,4 @@ const CatalogPage = () => {
   );
 };
 
-export default CatalogPage;
+export default Psychologists;

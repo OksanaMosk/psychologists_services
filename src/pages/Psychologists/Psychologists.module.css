@@ -2,9 +2,6 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  margin: 0 auto 30px;
-  width: 100vw;
-  background: #f3f3f3;
 }
 
 .goBack {

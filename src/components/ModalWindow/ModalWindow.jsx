@@ -63,7 +63,7 @@ const ModalWindow = ({ isOpen, onClose, type }) => {
               form.resetForm();
             }
             // Успішний вхід - показати повідомлення про успішний вхід
-            Notiflix.Notify.success(`Welcome back, ${values.name}!`);
+            Notiflix.Notify.success(`Welcome back ${values.name}!`);
             console.log('Login successful:', values.name);
           }
         } catch (error) {
@@ -125,14 +125,9 @@ const ModalWindow = ({ isOpen, onClose, type }) => {
               password: '',
             }}
             validationSchema={Yup.object({
-              name:
-                type === 'register'
-                  ? Yup.string().required('Name is required')
-                  : null,
-              email: Yup.string()
-                .email('Invalid email format')
-                .required('Email is required'),
-              password: Yup.string().required('Password is required'),
+              name: type === 'register' ? Yup.string().required() : null,
+              email: Yup.string().email('Invalid email format').required(),
+              password: Yup.string().required('more then 8 symbols'),
             })}
             onSubmit={(values, formikProps) => {
               handleSubmit(values, formikProps);
@@ -140,30 +135,69 @@ const ModalWindow = ({ isOpen, onClose, type }) => {
           >
             {formikProps => (
               <Form>
-                <h3>{type === 'register' ? 'Registration' : 'Log In'}</h3>
+                <h3 className={css.formTitle}>
+                  {type === 'register' ? 'Registration' : 'Log In'}
+                </h3>
                 {type === 'register' && (
-                  <p>
+                  <p className={css.formWelcome}>
                     Thank you for your interest in our platform! In order to
                     register, we need some information. Please provide us with
                     the following information.
                   </p>
                 )}
+                {type === 'login' && (
+                  <p className={css.formWelcome}>
+                    Welcome back! Please enter your credentials to access your
+                    account and continue your search for a psychologist.
+                  </p>
+                )}
+
                 <div className={css.form}>
                   {type === 'register' && (
                     <>
-                      <label htmlFor="name">Name</label>
-                      <Field type="text" id="name" name="name" />
-                      <ErrorMessage name="name" component="div" />
+                      <label htmlFor="name"></label>
+                      <Field
+                        className={css.formInput}
+                        type="text"
+                        id="name"
+                        name="name"
+                        placeholder="Name"
+                      />
+                      <ErrorMessage
+                        className={css.errorMessage}
+                        name="name"
+                        component="div"
+                      />
                     </>
                   )}
-                  <label htmlFor="email">Email</label>
-                  <Field type="email" id="email" name="email" />
-                  <ErrorMessage name="email" component="div" />
+                  <label htmlFor="email"></label>
+                  <Field
+                    className={css.formInput}
+                    type="email"
+                    id="email"
+                    name="email"
+                    placeholder="Email"
+                  />
+                  <ErrorMessage
+                    name="email"
+                    className={css.errorMessage}
+                    component="div"
+                  />
                 </div>
                 <div className={css.form}>
-                  <label htmlFor="password">Password</label>
-                  <Field type="password" id="password" name="password" />
-                  <ErrorMessage name="password" component="div" />
+                  <label htmlFor="password"></label>
+                  <Field
+                    className={css.formInput}
+                    type="password"
+                    id="password"
+                    name="password"
+                    placeholder="Password"
+                  />
+                  <ErrorMessage
+                    className={css.errorMessage}
+                    name="password"
+                    component="div"
+                  />
                 </div>
                 <button type="submit" className={css.submitButton}>
                   {type === 'register' ? 'Sign up' : 'Log In'}

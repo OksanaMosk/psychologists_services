@@ -1,37 +1,39 @@
-:root {
-  --font-family: 'Manrope', sans-serif;
-  --primary-text-color: #121417;
-  --about-text-color: rgba(18, 20, 23, 0.5);
-  --secondary-text-color: #3470ff;
-  --button-active: #0b44cd;
-  --text-color: #fff;
+.modalContainer {
 }
 
 .backdrop.open {
   display: block;
 }
 
-/* Стилі для самого модального вікна */
 .modal {
   position: fixed;
-  top: 50%; /* Розташовуємо вікно відносно верхньої межі */
-  left: 50%; /* Розташовуємо вікно відносно лівої межі */
-  transform: translate(
-    -50%,
-    -50%
-  ); /* Зсуваємо вікно на 50% від його власних розмірів */
-  background-color: #fff; /* Колір фону вікна */
-  padding: 20px; /* Відступи від країв вікна */
-  border-radius: 8px; /* Закругленість кутів */
-  z-index: 1000; /* Забезпечує, що вікно розташоване поверх фону */
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  padding: 64px;
+  box-sizing: border-box;
+
+  z-index: 1000;
   display: none;
+  border-radius: 30px;
+  border-radius: 30px;
+
+  display: flex;
+  flex-direction: column;
+  height: auto;
+  min-height: 700px;
+  background: #fbfbfb;
 }
 
 .modal.open {
-  display: block;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 599px;
+  padding: 64px;
 }
 
-/* Стилі для кнопки закриття */
 .closeButton {
   position: absolute;
   top: 10px;
@@ -42,44 +44,79 @@
   cursor: pointer;
 }
 
-/* Стилі для контролів форми */
 .form {
-  margin-bottom: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
 }
 
-.makeAnAppointment {
-  width: 274px;
-  height: 44px;
+.formTitle {
+  font-weight: 500;
+  font-size: 40px;
+  line-height: 120%;
+  letter-spacing: -0.02em;
+  color: var(--primary-text-color);
+  padding-bottom: 20px;
+}
+.formWelcome {
+  font-family: var(--font-family);
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 125%;
+  color: rgba(25, 26, 21, 0.5);
+  padding-bottom: 40px;
+}
+
+.formInput {
+  padding-left: 18px;
+  border: 1px solid rgba(25, 26, 21, 0.1);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+
+  justify-content: flex-start;
+  flex-direction: column;
+  column-gap: 9px;
+  width: 472px;
+  box-sizing: border-box;
+  height: 52px;
+  color: var(--button-background-color-active);
+}
+.formInput::placeholder {
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 125%;
+  color: var(--primary-text-color);
+}
+.formIn {
+  box-sizing: border-box;
+  border: 1px solid rgba(25, 26, 21, 0.1);
+  border-radius: 12px;
+  padding: 16px 173px 16px 18px;
+  width: 232px;
+  height: 52px;
 }
 .errorMessage {
-  color: red;
-}
+  font-size: 12px;
 
-/* Стилі для кнопки відправки форми */
-.submiButton {
-  background-color: #007bff;
-  color: #fff;
+  color: rgba(25, 26, 21, 0.5);
+}
+.submitButton {
+  border-radius: 30px;
   border: none;
-  padding: 10px 20px;
-  border-radius: 5px;
+  width: 438px;
+  height: 52px;
+  margin-top: 22px;
+  background: var(--button-background-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fbfbfb;
+  font-weight: 500;
+  font-size: 16px;
   cursor: pointer;
 }
-
-/* Зберігаємо вікно по центру сторінки, навіть коли вміст великий */
-@media (min-width: 768px) {
-  modal {
-    width: 50%; /* Ширина вікна на планшетах і більш */
-  }
-}
-
-@media (min-width: 992px) {
-  modal {
-    width: 40%; /* Ширина вікна на десктопах і більш */
-  }
-}
-
-@media (min-width: 1200px) {
-  modal {
-    width: 30%; /* Ширина вікна на великих екранах */
-  }
+.submitButton:hover,
+.submitButton:focus {
+  background: var(--button-background-color-active);
 }

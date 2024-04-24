@@ -1,6 +1,9 @@
 .container {
-  /* display: flex;
-  justify-content: center; */
-  width: 100dvw;
-  height: 100vh;
+  height: 100%;
+}
+.firstPage {
+  background: var(--background-home);
+}
+.otherPage {
+  background: #f3f3f3;
 }

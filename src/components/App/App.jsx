@@ -1,7 +1,7 @@
 import { Route, Routes } from 'react-router-dom';
 
 import HomePage from 'pages/HomePage/HomePage';
-import CatalogPage from 'pages/CatalogPage/CatalogPage';
+import Psychologists from 'pages/Psychologists/Psychologists ';
 import FavoritesPage from 'pages/FavoritesPage/FavoritesPage';
 import Layout from 'components/Layout/Layout';
 import Page404 from 'pages/Page404/Page404';
@@ -20,8 +20,8 @@ const appRoutes = [
     element: <FavoritesPage />,
   },
   {
-    path: ROUTES.CATALOG_ROUTE,
-    element: <CatalogPage />,
+    path: ROUTES.PSYCHOLOGISTS_ROUTE,
+    element: <Psychologists />,
   },
 
   {
