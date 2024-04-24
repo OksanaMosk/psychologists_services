@@ -1,63 +1,66 @@
-:root {
-  --primary-text-title-color: #191a15;
-
-  --primary-text-color: rgba(25, 26, 21, 0.3);
-  --secondary-text-color: #54be96;
-
-  --button-active: #36a379;
-
-  --background-color: rgba(84, 190, 150, 0.2);
-  --background-light-color: #fbfbfb;
-}
-
+@import '../../index.css';
 .header {
-  background-color: white;
   display: flex;
   align-items: center;
   cursor: pointer;
-  position: fixed;
-  z-index: 1;
-  height: 60px;
+  height: 96px;
   width: 100vw;
   justify-content: center;
-  border-bottom: 0.2px solid rgba(0, 0, 0, 0.1);
+  border-bottom: 2px solid rgba(25, 26, 21, 0.1);
+}
+
+.mainTit {
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 120%;
+  letter-spacing: -0.02em;
+}
+
+.mainTitle {
+}
+
+.mainTitleSpan {
+  color: var(--button-background-color);
+}
+
+.pagesEndSign {
+  margin-left: 9%;
+  display: flex;
+  flex-direction: row;
 }
 
 .links {
-  position: absolute;
+  /* position: absolute;
   top: 21px;
   left: 30px;
   display: flex;
   flex-wrap: nowrap;
-  gap: 30px;
-  color: var(--primary-text-color);
+  gap: 30px; */
 }
 
 .toLink {
-  display: flex;
+  /* display: flex;
   justify-content: flex-start;
   align-items: center;
   border-radius: 10px;
   font-size: 18px;
   text-decoration: none;
-  text-transform: capitalize;
+  text-transform: capitalize; */
   cursor: pointer;
 }
 
 .toLink:hover,
 .toLink:focus,
 .toLink:active {
-  color: var(--secondary-text-color);
+  color: var(--button-background-color-active);
   transition: all 0.3s allow-discrete;
 }
 
-.mainTit {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+.titleAuthorization {
+  background: var(--button-background-color);
 }
 
-.mainTitle {
-  font-size: 36px;
-  color: var(--primary-text-color);
+.titleAuthorization:hover,
+.titleAuthorization:focus {
+  background: var(--button-background-color-active);
 }

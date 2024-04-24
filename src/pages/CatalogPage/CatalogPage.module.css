@@ -1,11 +1,10 @@
 .contactsContainer {
-  margin-bottom: 80px;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
   margin: 0 auto 30px;
-  width: 100%;
-  overflow: auto;
+  width: 100vw;
+  background: #f3f3f3;
 }
 
 .goBack {

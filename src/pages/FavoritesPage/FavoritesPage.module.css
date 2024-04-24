@@ -1,7 +1,9 @@
 .homeContainer {
   display: flex;
   justify-content: center;
-  width: 100%;
+  background: #f3f3f3;
+  width: 100vw;
+  height: 100vh;
 }
 
 .homeList {
@@ -40,6 +42,7 @@
   font-size: 12px;
   transition: all 0.003s;
 }
+
 .goback:active,
 .goback:hover,
 .goback:focus {
