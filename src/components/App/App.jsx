@@ -4,7 +4,6 @@ import HomePage from 'pages/HomePage/HomePage';
 import Psychologists from 'pages/Psychologists/Psychologists ';
 import FavoritesPage from 'pages/FavoritesPage/FavoritesPage';
 import Layout from 'components/Layout/Layout';
-import Page404 from 'pages/Page404/Page404';
 import css from './App.module.css';
 
 import NotFoundPage from 'pages/NotFoundPage/NotFoundPage';
@@ -24,10 +23,6 @@ const appRoutes = [
     element: <Psychologists />,
   },
 
-  {
-    path: ROUTES.ERROR_ROUTE,
-    element: <Page404 />,
-  },
   {
     path: ROUTES.NOTFOUNDPPAGE_ROUTE,
     element: <NotFoundPage />,

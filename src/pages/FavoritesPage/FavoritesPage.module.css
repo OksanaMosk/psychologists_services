@@ -5,4 +5,15 @@
 }
 
 .homeList {
+  gap: 32px;
+  overflow-y: hidden;
+  margin-inline-start: 0;
+  padding-inline-start: 0;
+  font-weight: 400;
+  list-style: none;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  margin: 0 auto;
+  justify-content: center;
 }

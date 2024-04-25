@@ -74,7 +74,6 @@ const Psychologists = () => {
     console.log('Applying Z to A filter', filtered);
   }
 
-  // Filter by price
   if (filters.lessPrice) {
     filtered.sort(
       (a, b) => parseFloat(a.price_per_hour) - parseFloat(b.price_per_hour)
@@ -86,8 +85,6 @@ const Psychologists = () => {
     );
     console.log('Highest price per hour', filtered);
   }
-
-  // Filter by rating
 
   if (filters.maxRating) {
     console.log('Applying filter for max rating');
@@ -124,7 +121,7 @@ const Psychologists = () => {
 
   return (
     <div className={css.contactsContainer}>
-      {error !== null && <Navigate to="/catalog/404" replace={true} />}
+      {error !== null && <Navigate to="psychologists/404" replace={true} />}
 
       <Filter
         allCars={filteredCars}

@@ -16,7 +16,7 @@ export const Header = ({ values }) => {
 
   const dispatch = useDispatch();
   const authenticated = useSelector(selectAuthenticated);
-  const { theme, setTheme } = useTheme();
+  const { setTheme } = useTheme();
 
   const onLogOut = () => {
     dispatch(logOutThunk());

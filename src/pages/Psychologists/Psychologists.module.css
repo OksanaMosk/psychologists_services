@@ -2,33 +2,11 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-}
-
-.goBack {
-  position: absolute;
-  top: 70px;
-  left: 5px;
-  display: inline-flex;
-  text-decoration: none;
-  border: 1px solid #e6eaed;
-  border-radius: 0 15px 15px 0;
-  width: 70px;
-  height: 15px;
-  margin-block-end: 0;
-  margin-block-start: 0;
-  justify-content: center;
-  align-items: center;
-  color: #e6eaed;
-  font-size: 12px;
-  transition: all 0.003s;
-  background-color: #af9e8e;
-}
-
-.goback:active,
-.goback:hover,
-.goback:focus {
-  background-color: #b1b9cc;
-  color: #af9e8e;
+  flex-direction: column;
+  min-height: 100vh;
+  margin: 0 auto;
+  padding: 0;
+  overflow-y: hidden;
 }
 
 .loader {
@@ -40,13 +18,23 @@
 
 .button {
   display: flex;
-  align-items: center;
   justify-content: center;
-  text-decoration: underline;
-  text-decoration-skip-ink: none;
-  color: #3470ff;
+  align-items: center;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 125%;
+  letter-spacing: -0.01em;
+  color: #fbfbfb;
+  border-radius: 30px;
+  width: 176px;
+  height: 48px;
+  background: var(--button-background-color);
   border: none;
-  background-color: transparent;
-  text-decoration: none;
-  margin: 100px auto 150px;
+  outline: none;
+  outline-offset: 0;
+  margin: 5% auto 10%;
+}
+.button:hover,
+.button:focus {
+  background: var(--button-background-color-active);
 }

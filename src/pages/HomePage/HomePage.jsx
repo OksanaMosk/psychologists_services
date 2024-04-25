@@ -13,19 +13,15 @@ const HomePage = () => {
       return Math.floor(Math.random() * (max - min + 1)) + min;
     }
 
-    // Список доступних кольорів, крім основних
     const colors = ['#3470ff', '#fc832c', '#54be96']; // Оранжевий, бірюзовий, світло-зелений
 
-    // Генеруємо випадковий індекс зі списку кольорів
     const randomIndex1 = getRandomInt(0, colors.length - 1);
     let randomIndex2 = getRandomInt(0, colors.length - 1);
 
-    // Перевірка на різність randomColor1 і randomColor2
     while (randomIndex2 === randomIndex1) {
       randomIndex2 = getRandomInt(0, colors.length - 1);
     }
 
-    // Встановлюємо випадковий колір для кожного елемента
     const randomColor1 = colors[randomIndex1];
     const randomColor2 = colors[randomIndex2];
     setRandomColor1(randomColor1);

@@ -1,15 +1,21 @@
 .homeContainer {
   display: flex;
   justify-content: center;
-  width: 100%;
+  flex-direction: column;
+
+  margin: 0 auto;
 }
 
 .homeList {
-  width: 1184px;
+  gap: 32px;
+  overflow-y: hidden;
+  margin-inline-start: 0;
+  padding-inline-start: 0;
   font-weight: 400;
   list-style: none;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  row-gap: 32px;
+  margin: 0 auto;
+  justify-content: center;
 }

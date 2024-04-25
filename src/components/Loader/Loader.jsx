@@ -11,9 +11,9 @@ const Loader = () => {
       wrapperClass=""
       visible={true}
       ariaLabel="three-circles-rotating"
-      outerCircleColor="rgba(18, 20, 23, 0.5)"
-      innerCircleColor="#3470ff"
-      middleCircleColor="rgba(18, 20, 23, 0.5)"
+      outerCircleColor="var(--button-background-color)"
+      innerCircleColor="rgba(84, 190, 150, 0.2)"
+      middleCircleColor="#191a15"
     />
   );
 };

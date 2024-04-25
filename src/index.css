@@ -39,7 +39,7 @@ code {
 
 :root {
   --primary-text-color: #191a15;
-  --secondary-text-color: rgba(25, 26, 21, 0.3);
+  --secondary-text-color: rgba(25, 26, 21, 0.5);
 }
 
 html[data-theme='green'] {
@@ -50,6 +50,7 @@ html[data-theme='green'] {
   );
   --button-background-color: #54be96;
   --button-background-color-active: #36a379;
+  --light: rgba(84, 190, 150, 0.2);
 }
 
 html[data-theme='blue'] {
@@ -60,6 +61,7 @@ html[data-theme='blue'] {
   );
   --button-background-color: #3470ff;
   --button-background-color-active: #255ee8;
+  --light: rgba(52, 112, 255, 0.2);
 }
 
 html[data-theme='orange'] {
@@ -70,4 +72,5 @@ html[data-theme='orange'] {
   );
   --button-background-color: #fc832c;
   --button-background-color-active: #f37113;
+  --light: rgba(252, 131, 44, 0.2);
 }

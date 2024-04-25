@@ -40,6 +40,7 @@ span {
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-direction: row;
   border-radius: 30px;
   margin-bottom: auto;
   margin-top: 40px;
@@ -50,7 +51,7 @@ span {
 }
 
 .toSvg {
-  padding-left: 18px;
+  padding-left: 8px;
 }
 
 .hero {
@@ -83,12 +84,11 @@ span {
   justify-content: center;
   align-items: center;
 }
+
 .heroImg {
   display: flex;
   flex-direction: column;
   gap: 8px;
-
-  align-items: center;
 }
 .heroImgTitle {
   font-weight: 400;

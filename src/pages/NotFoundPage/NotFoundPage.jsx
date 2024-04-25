@@ -10,7 +10,7 @@ const NotFoundPage = () => {
   const location = useLocation();
   const backLinkRef = useRef('/');
   return (
-    <div>
+    <div className={css.contactsContainer}>
       <NavLink
         state={{ from: location }}
         className={css.goBack}
@@ -20,10 +20,7 @@ const NotFoundPage = () => {
       </NavLink>
       <h2 className={css.errorMainTitle}>Opssss...Error...</h2>
       <div className={css.errorAbout}>
-        <div className={css.errorSection}>
-          <img src={error1} alt="{svgDelete}" width={200} height={200}></img>
-        </div>
-        <div className={css.errorSection}></div>
+        <img src={error1} alt="{svgDelete}" width={200} height={200}></img>
       </div>
     </div>
   );

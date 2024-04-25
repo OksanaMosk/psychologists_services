@@ -7,7 +7,7 @@ import Backdrop from '../Backdrop/Backdrop';
 
 import css from './ModalMakeAnAppointment.module.css';
 
-const ModalMakeAnAppointment = ({ isOpen, onClose, name }) => {
+const ModalMakeAnAppointment = ({ isOpen, onClose, avatar_url, name }) => {
   const [selectedFilter, setSelectedFilter] = useState('');
 
   const handleFilterChange = event => {
@@ -63,9 +63,12 @@ const ModalMakeAnAppointment = ({ isOpen, onClose, name }) => {
             professional psychologist. We guarantee confidentiality and respect
             for your privacy.
           </p>
-          <div>
-            <h4>Your psychologist</h4>
-            <p>{name}</p>
+          <div className={css.name}>
+            <img className={css.nameImg} src={avatar_url} alt={`${name}`} />
+            <div className={css.about}>
+              <h4 className={css.nameTitle}>Your psychologist</h4>
+              <p className={css.nameAbout}>{name}</p>
+            </div>
           </div>
           <Formik
             initialValues={{
@@ -98,7 +101,7 @@ const ModalMakeAnAppointment = ({ isOpen, onClose, name }) => {
                   name="comment"
                   component="div"
                 />
-                <label htmlFor="name"></label>
+
                 <Field
                   placeholder="Name"
                   className={css.formInput}
@@ -107,53 +110,80 @@ const ModalMakeAnAppointment = ({ isOpen, onClose, name }) => {
                   name="name"
                 />
               </div>
-
-              <div>
-                <label htmlFor="phone"></label>
+              <div className={css.formInform}>
                 <Field
+                  className={css.formFild}
                   placeholder="+380"
-                  className={css.formIn}
                   type="phone"
                   id="phone"
                   name="phone"
                 />
+
+                <div className={css.formSelect}>
+                  <select
+                    className={css.select}
+                    value={selectedFilter || '00:00'} // Встановлюємо "00:00" як значення за замовчуванням
+                    onChange={handleFilterChange}
+                  >
+                    {[
+                      'Meeting time',
+                      '09:00',
+                      '09:30',
+                      '10:00',
+                      '10:30',
+                      '11:00',
+                      '11:30',
+                      '12:00',
+                      '12:30',
+                      '13:00',
+                      '13:30',
+                      '14:00',
+                      '14:30',
+                      '15:00',
+                      '15:30',
+                      '16:00',
+                      '16:30',
+                      '17:00',
+                    ].map((time, index) => (
+                      <option className={css.options} key={index} value={time}>
+                        {time}
+                      </option>
+                    ))}
+                  </select>
+                  <svg
+                    className={css.optionSvg}
+                    width="20"
+                    height="20"
+                    viewBox="0 0 20 20"
+                    fill="var(--button-background-color)"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <g clip-path="url(#clip0_29_439)">
+                      <path
+                        d="M9.99984 18.3333C14.6022 18.3333 18.3332 14.6024 18.3332 10C18.3332 5.39763 14.6022 1.66667 9.99984 1.66667C5.39746 1.66667 1.6665 5.39763 1.6665 10C1.6665 14.6024 5.39746 18.3333 9.99984 18.3333Z"
+                        stroke="#191A15"
+                        strokeWidth="1.5"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
+                      <path
+                        d="M10 5V10L13.3333 11.6667"
+                        stroke="#191A15"
+                        strokeWidth="1.5"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
+                    </g>
+                    <defs>
+                      <clipPath id="clip0_29_439">
+                        <rect width="20" height="20" fill="white" />
+                      </clipPath>
+                    </defs>
+                  </svg>
+                </div>
               </div>
+
               <div>
-                <h5>Meeting time</h5>
-                <select
-                  value={selectedFilter}
-                  className={css.formIn}
-                  onChange={handleFilterChange}
-                >
-                  <option value="">00 : 00</option>
-                  {[
-                    'Meeting time',
-                    '09:00',
-                    '09:30',
-                    '10:00',
-                    '10:30',
-                    '11:00',
-                    '11:30',
-                    '12:00',
-                    '12:30',
-                    '13:00',
-                    '13:30',
-                    '14:00',
-                    '14:30',
-                    '15:00',
-                    '15:30',
-                    '16:00',
-                    '16:30',
-                    '17:00',
-                  ].map((time, index) => (
-                    <option className={css.options} key={index} value={time}>
-                      {time}
-                    </option>
-                  ))}
-                </select>
-              </div>
-              <div>
-                <label htmlFor="email"></label>
                 <Field
                   placeholder="Email"
                   className={css.formInput}
@@ -162,18 +192,19 @@ const ModalMakeAnAppointment = ({ isOpen, onClose, name }) => {
                   name="email"
                 />
               </div>
-
               <div>
                 <label htmlFor="comment"></label>
                 <Field
                   placeholder="Comment"
-                  className={css.formInput}
+                  className={css.textarea}
                   as="textarea"
                   id="comment"
                   name="comment"
                 />
               </div>
-              <button type="button" className={css.submitButton}></button>
+              <button type="button" className={css.submitButton}>
+                Send
+              </button>
             </Form>
           </Formik>
         </div>

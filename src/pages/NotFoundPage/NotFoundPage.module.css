@@ -1,7 +1,14 @@
+.contactsContainer {
+  height: 100vh;
+  margin: 0;
+  padding: 0;
+  background: var(--button-background-color);
+}
+
 .goBack {
   position: absolute;
-  top: 5px;
-  left: 5px;
+  top: 120px;
+  left: 20px;
   display: inline-flex;
   text-decoration: none;
   border: 1px solid #e6eaed;
@@ -15,7 +22,7 @@
   color: #e6eaed;
   font-size: 14px;
   transition: all 0.003s;
-  background-color: #af9e8e;
+  background: var(--button-background-color);
 }
 .goback:active,
 .goback:hover,
@@ -26,8 +33,6 @@
 .errorMainTitle {
   text-align: center;
   margin: 0 auto;
-}
-.errorMainTitle {
   padding-top: 20px;
   color: #6e6662;
   font-size: 36px;
@@ -44,5 +49,4 @@
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;
-  gap: 400px;
 }

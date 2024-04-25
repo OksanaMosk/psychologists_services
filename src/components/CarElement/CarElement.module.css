@@ -1,54 +1,90 @@
-.itemHome {
+.item {
   display: flex;
-
-  font-family: var(--font-family);
   border-radius: 24px;
   width: 1184px;
-  height: 358px;
+  height: auto;
   background: #fbfbfb;
+  flex-direction: row;
+  justify-content: center;
+  box-sizing: border-box;
+  padding-top: 24px;
+  padding-bottom: 24px;
 }
-
-.name {
-  border-radius: 15px;
-  width: 96px;
-  height: 96px;
-  background: #e0e0e0;
+.board {
+  position: relative;
   border: 2px solid rgba(84, 190, 150, 0.2);
   border-radius: 30px;
   width: 120px;
   height: 120px;
-}
-
-.titlePart {
-  margin: 14px 0 8px;
-  font-family: var(--font-family);
+  background: inherit;
   display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.name {
+  border-radius: 15px;
+  width: 96px;
+  height: 96px;
+}
+.svgName {
+  position: absolute;
+  z-index: 5;
+  bottom: 6.2em;
+  left: 6em;
+}
+.titlePart {
+  padding-right: 24px;
+  display: flex;
+  flex-direction: row;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 150%;
+  color: #8a8a89;
+  align-items: center;
   justify-content: space-between;
-  padding-right: 9px;
+}
+.titleSpan {
+  font-style: normal;
+  color: var(--secondary-text-color);
 }
 
 .title {
-  display: flex;
-  flex-direction: column;
   font-weight: 500;
   font-size: 16px;
-  line-height: 1.5;
-  height: 24px;
+  line-height: 150%;
+  color: var(--primary-text-color);
 }
 
-.title > span {
-  color: var(--secondary-text-color);
+.svgRating {
+  position: static;
+}
+
+.price {
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 150%;
+  color: var(--primary-text-color);
+}
+.priceSpan {
+  color: #38cd3e;
+  font-style: normal;
+}
+.maneName {
+  font-weight: 500;
+  font-size: 24px;
+  line-height: 100%;
+  margin-top: 8px;
+  color: var(--primary-text-color);
 }
 
 .aboutPart {
   display: flex;
-
   gap: 4px;
-  font-family: var(--font-family);
   font-weight: 400;
   font-size: 12px;
   line-height: 1.5;
-  color: var(--about-text-color);
+  justify-content: center;
+  align-items: center;
   height: 20px;
 }
 
@@ -62,8 +98,11 @@
 }
 
 .details {
+  max-width: 992px;
+  margin-left: 24px;
   display: flex;
   flex-direction: column;
+  width: 80%;
 }
 
 .button {
@@ -78,7 +117,6 @@
   cursor: pointer;
   text-decoration: none;
   margin-top: 28px;
-  font-family: var(--font-family);
   font-weight: 600;
   font-size: 14px;
 
@@ -101,19 +139,147 @@
 .favorIcon {
   fill: var(--button-background-color);
 }
-.noFavor {
-  position: relative;
-  fill: black;
-  /* z-index: 2; */
-  top: 32px;
-  left: 244px;
-}
 
 .imgButton {
   border: none;
   position: relative;
   background: inherit;
+  bottom: 1em;
+  left: 4em;
+}
 
-  bottom: 0;
-  left: 0;
+.aboutPart2 {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 24px;
+}
+.about1 {
+  display: flex;
+  flex-direction: row;
+  gap: 4px;
+}
+
+.experience {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 24px;
+  padding: 8px;
+  width: auto;
+  height: 40px;
+  background: #f3f3f3;
+  font-weight: 500;
+  font-size: 16px;
+  color: #8a8a89;
+  flex-direction: row;
+  flex-wrap: nowrap;
+}
+.experienceSpan {
+  font-style: normal;
+  font-weight: 500;
+  color: var(--primary-text-color);
+}
+.article {
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 125%;
+  color: var(--secondary-text-color);
+  margin-top: 24px;
+  margin-bottom: 14px;
+}
+
+.makeAnAppointment {
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 150%;
+  text-decoration: underline;
+  text-decoration-skip-ink: none;
+  color: var(--primary-text-color);
+}
+
+.comments {
+  width: 1184px;
+  display: flex;
+  justify-content: center;
+  box-sizing: border-box;
+}
+.reviewList {
+  padding-left: 0;
+  width: 100%;
+  margin-top: 48px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  list-style: none;
+  gap: 25px;
+}
+
+.itemRewiew {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-bottom: 16px;
+}
+.firstLet {
+  border-radius: 100px;
+  width: 44px;
+  height: 44px;
+  background: var(--light);
+  color: var(--button-background-color);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.let {
+  padding-left: 12px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 0;
+}
+.reviewName {
+  font-weight: 500;
+  font-size: 16px;
+}
+.reviewRating {
+  font-weight: 500;
+  font-size: 16px;
+}
+.svgReview {
+  position: static;
+}
+.letRat {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+}
+.reviewComments {
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 125%;
+  color: var(--secondary-text-color);
+}
+.makeAnAppointment {
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 125%;
+  letter-spacing: -0.01em;
+  color: #fbfbfb;
+  border-radius: 30px;
+  padding: 14px 32px;
+  width: 227px;
+  height: 48px;
+  background: var(--button-background-color);
+  outline: none;
+  outline-offset: 0;
+  border: none;
+  text-decoration: none;
+  margin-top: 40px;
+}
+
+.makeAnAppointment:hover,
+.makeAnAppointment:focus {
+  background: var(--button-background-color-active);
 }

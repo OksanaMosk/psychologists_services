@@ -113,22 +113,58 @@ export const CarElement = ({
 
   return (
     <li
-      className={`${css.itemHome} ${imageLoaded ? css.imageLoaded : ''}`}
+      className={`${css.item} ${imageLoaded ? css.imageLoaded : ''}`}
       key={name}
     >
-      <img
-        className={css.name}
-        src={avatar_url}
-        alt={`Car ${name}`}
-        onLoad={handleImageLoad}
-      />
-
+      <div className={css.board}>
+        <img
+          className={css.name}
+          src={avatar_url}
+          alt={`Car ${name}`}
+          onLoad={handleImageLoad}
+        />{' '}
+        <svg
+          className={css.svgName}
+          width="10"
+          height="10"
+          viewBox="0 0 10 10"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <circle
+            cx="4.99992"
+            cy="5.00009"
+            r="4.66667"
+            fill="#38CD3E"
+            stroke="#FFF"
+            strokeWidth="1"
+          />
+        </svg>
+      </div>{' '}
       <div className={css.details}>
         <div className={css.titlePart}>
-          <span>Psychologist</span>
+          <span className={css.titleSpan}>Psychologist</span>
           <div className={css.aboutPart}>
-            <p className={css.title}>Rating: {rating}</p>
-            <p className={css.price}>Price / 1 hour: {price_per_hour}$</p>
+            <svg
+              className={css.svgRating}
+              width="16"
+              height="15"
+              viewBox="0 0 16 15"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M6.20021 4.69703L8 1.28579L9.79979 4.69703C9.95896 4.9987 10.2491 5.20947 10.5851 5.26762L14.3856 5.92519L11.6975 8.69103C11.4598 8.93563 11.3489 9.27666 11.3975 9.61427L11.9465 13.4319L8.48537 11.7301C8.17929 11.5795 7.82071 11.5795 7.51463 11.7301L4.05348 13.4319L4.6025 9.61427C4.65105 9.27666 4.54024 8.93563 4.30252 8.69103L1.6144 5.92519L5.41486 5.26762C5.75095 5.20947 6.04104 4.9987 6.20021 4.69703Z"
+                fill="#FFC531"
+                stroke="#FFC531"
+                strokeWidth="1.2"
+              />
+            </svg>
+            <p className={css.title}>Rating: {rating} | </p>
+            <p className={css.price}>
+              Price / 1 hour:<span> </span>
+              <span className={css.priceSpan}>{price_per_hour}$</span>
+            </p>
 
             <button
               className={css.imgButton}
@@ -154,27 +190,65 @@ export const CarElement = ({
             </button>
           </div>
         </div>
-        <h3 className={css.title}>{name}</h3>
-        <div className={css.aboutPart}>
-          <p className={css.price}>Experience: {experience}</p>
-          <p className={css.price}>License: {license}</p>
-          <p className={css.price}>Specialization: {specialization}</p>
-          <p className={css.price}>
-            Initial Consultation: {initial_consultation}
-          </p>
+        <h3 className={css.maneName}>{name}</h3>
+        <div className={css.aboutPart2}>
+          <div className={css.about1}>
+            <p className={css.experience}>
+              Experience:{' '}
+              <span className={css.experienceSpan}>{experience}</span>
+            </p>
+            <p className={css.experience}>
+              License:<span className={css.experienceSpan}>{license}</span>
+            </p>
+          </div>
+          <div className={css.about1}>
+            <p className={css.experience}>
+              Specialization:{' '}
+              <span className={css.experienceSpan}>{specialization}</span>
+            </p>
+            <p className={css.experience}>
+              Initial Consultation:{' '}
+              <span className={css.experienceSpan}>{initial_consultation}</span>
+            </p>
+          </div>
         </div>
-        <div>{about}</div>
+        <article className={css.article}>{about}</article>
 
         <div className={css.moreDescription} onClick={toggleDescription}>
           {showFullDescription ? (
-            <div>
-              <h4>Reviews:</h4>
-              <ul>
+            <div className={css.comments}>
+              <ul className={css.reviewList}>
                 {reviews.map((review, index) => (
                   <li key={index}>
-                    <p>Reviewer: {review.reviewer}</p>
-                    <p>Rating: {review.rating}</p>
-                    <p>Comment: {review.comment}</p>
+                    <div className={css.itemRewiew}>
+                      <div className={css.firstLet}>
+                        {review.reviewer.slice(0, 1)}
+                      </div>
+                      <div className={css.let}>
+                        {' '}
+                        <h4 className={css.reviewName}> {review.reviewer}</h4>
+                        <div className={css.letRat}>
+                          {' '}
+                          <svg
+                            className={css.svgReview}
+                            width="16"
+                            height="15"
+                            viewBox="0 0 16 15"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path
+                              d="M6.20021 4.69703L8 1.28579L9.79979 4.69703C9.95896 4.9987 10.2491 5.20947 10.5851 5.26762L14.3856 5.92519L11.6975 8.69103C11.4598 8.93563 11.3489 9.27666 11.3975 9.61427L11.9465 13.4319L8.48537 11.7301C8.17929 11.5795 7.82071 11.5795 7.51463 11.7301L4.05348 13.4319L4.6025 9.61427C4.65105 9.27666 4.54024 8.93563 4.30252 8.69103L1.6144 5.92519L5.41486 5.26762C5.75095 5.20947 6.04104 4.9987 6.20021 4.69703Z"
+                              fill="#FFC531"
+                              stroke="#FFC531"
+                              strokeWidth="1.2"
+                            />
+                          </svg>{' '}
+                          <p className={css.reviewRating}> {review.rating}</p>
+                        </div>
+                      </div>{' '}
+                    </div>
+                    <p className={css.reviewComments}> {review.comment}</p>
                   </li>
                 ))}
               </ul>
@@ -194,6 +268,7 @@ export const CarElement = ({
                 isOpen={isMakeAnAppointment}
                 onClose={closeMakeAnAppointment}
                 name={name}
+                avatar_url={avatar_url}
               />
             ) : (
               'Make an appointment'
