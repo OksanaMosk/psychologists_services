@@ -1,9 +1,37 @@
+import React, { useEffect, useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import css from './HomePage.module.css';
 
 import hero from '../../images/image (2).png';
 
 const HomePage = () => {
+  const [randomColor1, setRandomColor1] = useState('');
+  const [randomColor2, setRandomColor2] = useState('');
+
+  useEffect(() => {
+    function getRandomInt(min, max) {
+      return Math.floor(Math.random() * (max - min + 1)) + min;
+    }
+
+    // Список доступних кольорів, крім основних
+    const colors = ['#3470ff', '#fc832c', '#54be96']; // Оранжевий, бірюзовий, світло-зелений
+
+    // Генеруємо випадковий індекс зі списку кольорів
+    const randomIndex1 = getRandomInt(0, colors.length - 1);
+    let randomIndex2 = getRandomInt(0, colors.length - 1);
+
+    // Перевірка на різність randomColor1 і randomColor2
+    while (randomIndex2 === randomIndex1) {
+      randomIndex2 = getRandomInt(0, colors.length - 1);
+    }
+
+    // Встановлюємо випадковий колір для кожного елемента
+    const randomColor1 = colors[randomIndex1];
+    const randomColor2 = colors[randomIndex2];
+    setRandomColor1(randomColor1);
+    setRandomColor2(randomColor2);
+  }, []);
+
   return (
     <div className={css.homeContainer}>
       <div className={css.left}>
@@ -47,8 +75,8 @@ const HomePage = () => {
               xmlns="http://www.w3.org/2000/svg"
             >
               <path
-                fill-rule="evenodd"
-                clip-rule="evenodd"
+                fillRule="evenodd"
+                clipRule="evenodd"
                 d="M2.5 5.5L0 8L7.5 15.5L20 3L17.5 0.5L7.5 10.5L2.5 5.5Z"
                 fill="var(--button-background-color)"
               />
@@ -59,8 +87,10 @@ const HomePage = () => {
             <p className={css.heroImgP}>15,000</p>
           </div>
         </div>
-        <div className={css.heroImgDet}>?</div>
-        <div className={css.heroImgDet2}>
+        <div style={{ background: randomColor1 }} className={css.heroImgDet}>
+          ?
+        </div>
+        <div style={{ background: randomColor2 }} className={css.heroImgDet2}>
           <svg
             width="17"
             height="16"
