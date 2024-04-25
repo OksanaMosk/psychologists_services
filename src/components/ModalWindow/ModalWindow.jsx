@@ -15,13 +15,10 @@ const ModalWindow = ({ isOpen, onClose, type }) => {
 
   const handleSubmit = async (values, form) => {
     try {
-      console.log('Form values:', values);
       if (type === 'register') {
         try {
-          console.log('Register values:', values);
-
           const { name, ...loginValues } = values;
-          console.log('Dispatching registerThunk:', loginValues);
+          console.log('loginValues:', loginValues);
           const registerResult = await dispatch(registerThunk(values));
 
           if (
@@ -35,17 +32,14 @@ const ModalWindow = ({ isOpen, onClose, type }) => {
               form.resetForm();
             }
             Notiflix.Notify.success(`Welcome ${values.name}!`);
-            console.log('Registration successful:', values.email);
           }
         } catch (error) {
-          console.error('Registration error:', error);
           Notiflix.Notify.failure('Something went wrong ');
         }
       } else if (type === 'login') {
         try {
-          console.log('Login values:', values);
           const { name, ...loginValues } = values;
-          console.log('Dispatching loginThunk:', loginValues);
+          console.log('loginValues:', loginValues);
 
           const loginResult = await dispatch(loginThunk(loginValues));
 
@@ -56,22 +50,19 @@ const ModalWindow = ({ isOpen, onClose, type }) => {
             Notiflix.Notify.failure(
               'Incorrect email or password. Please try again.'
             );
-            console.error('Error code:', loginResult.error.message);
           } else {
             onClose();
             if (form && form.resetForm) {
               form.resetForm();
             }
-            // Успішний вхід - показати повідомлення про успішний вхід
+
             Notiflix.Notify.success(`Welcome back ${values.name}!`);
-            console.log('Login successful:', values.name);
           }
         } catch (error) {
           Notiflix.Notify.failure('Something went wrong... ');
         }
       }
     } catch (error) {
-      console.error('Authentication error:', error);
       Notiflix.Notify.failure(
         'Something went wrong... User registration/login failed.'
       );

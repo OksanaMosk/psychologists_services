@@ -13,7 +13,7 @@ const HomePage = () => {
       return Math.floor(Math.random() * (max - min + 1)) + min;
     }
 
-    const colors = ['#3470ff', '#fc832c', '#54be96']; // Оранжевий, бірюзовий, світло-зелений
+    const colors = ['#3470ff', '#fc832c', '#54be96'];
 
     const randomIndex1 = getRandomInt(0, colors.length - 1);
     let randomIndex2 = getRandomInt(0, colors.length - 1);
@@ -42,7 +42,7 @@ const HomePage = () => {
           We help you to reveal your potential, overcome challenges and find a
           guide in your own life with the help of our experienced psychologists.
         </p>
-        <NavLink className={css.toLink} to="/catalog">
+        <NavLink className={css.toLink} to="/psychologists">
           Get started
           <svg
             className={css.toSvg}

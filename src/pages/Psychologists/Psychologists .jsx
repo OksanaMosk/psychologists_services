@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { fetchCars } from 'redux/cars/cars.reducer';
 import { useSelector, useDispatch } from 'react-redux';
 import { CarList } from 'components/CarList/CarList';
-
 import { Navigate } from 'react-router-dom';
 import Filter from 'components/Filter/Filter';
 import Loader from 'components/Loader/Loader';
@@ -38,7 +37,6 @@ const Psychologists = () => {
         );
         const allCars = totalItemsResponse.payload.allCars;
         if (!allCars) {
-          console.error('allCars is missing');
           return;
         }
         setLoading(false);
@@ -49,7 +47,6 @@ const Psychologists = () => {
         }
         setHasMore(currentPage < totalPages);
       } catch (error) {
-        console.error('Error fetching cars:', error);
         setLoading(false);
       }
     };
@@ -65,35 +62,25 @@ const Psychologists = () => {
   const filtered = [...filteredCars];
 
   if (filters.nameDec) {
-    console.log('Applying A to Z filter');
     filtered.sort((a, b) => a.name.localeCompare(b.name));
-    console.log('Applying A to Z filter', filtered);
   } else if (filters.nameInc) {
-    console.log('Applying Z to A filter');
     filtered.sort((a, b) => b.name.localeCompare(a.name));
-    console.log('Applying Z to A filter', filtered);
   }
 
   if (filters.lessPrice) {
     filtered.sort(
       (a, b) => parseFloat(a.price_per_hour) - parseFloat(b.price_per_hour)
     );
-    console.log('Lowest price per hour', filtered);
   } else if (filters.morePrice) {
     filtered.sort(
       (a, b) => parseFloat(b.price_per_hour) - parseFloat(a.price_per_hour)
     );
-    console.log('Highest price per hour', filtered);
   }
 
   if (filters.maxRating) {
-    console.log('Applying filter for max rating');
     filtered.sort((a, b) => parseFloat(b.rating) - parseFloat(a.rating));
-    console.log('Рейтинг  Від найменшого', filtered);
   } else if (filters.minRating) {
-    console.log('Applying filter for min rating');
     filtered.sort((a, b) => parseFloat(a.rating) - parseFloat(b.rating));
-    console.log('Рейтинг від найменшого', filtered);
   }
 
   const filteredPaginatedCars = filtered.slice(

@@ -90,7 +90,6 @@ const ModalMakeAnAppointment = ({ isOpen, onClose, avatar_url, name }) => {
               comment: Yup.string().required('Required'),
             })}
             onSubmit={(values, { setSubmitting }) => {
-              console.log('Form data:', values);
               setSubmitting(false);
             }}
           >
@@ -122,7 +121,7 @@ const ModalMakeAnAppointment = ({ isOpen, onClose, avatar_url, name }) => {
                 <div className={css.formSelect}>
                   <select
                     className={css.select}
-                    value={selectedFilter || '00:00'} // Встановлюємо "00:00" як значення за замовчуванням
+                    value={selectedFilter || '00:00'}
                     onChange={handleFilterChange}
                   >
                     {[
@@ -158,7 +157,7 @@ const ModalMakeAnAppointment = ({ isOpen, onClose, avatar_url, name }) => {
                     fill="var(--button-background-color)"
                     xmlns="http://www.w3.org/2000/svg"
                   >
-                    <g clip-path="url(#clip0_29_439)">
+                    <g clipPath="url(#clip0_29_439)">
                       <path
                         d="M9.99984 18.3333C14.6022 18.3333 18.3332 14.6024 18.3332 10C18.3332 5.39763 14.6022 1.66667 9.99984 1.66667C5.39746 1.66667 1.6665 5.39763 1.6665 10C1.6665 14.6024 5.39746 18.3333 9.99984 18.3333Z"
                         stroke="#191A15"

@@ -30,7 +30,6 @@ export const instance = axios.create({
 });
 
 const setToken = token => {
-  console.log('Setting token:', token);
   instance.defaults.headers.common.Authorization = `Bearer ${token}`;
 };
 
@@ -49,14 +48,8 @@ export const registerThunk = createAsyncThunk(
       );
       const user = userCredential.user;
 
-      console.log('Registration successful:', user.email);
-      // Додайте код для збереження токену або іншої необхідної інформації про користувача
-
       return { email: user.email, password: user.password, uid: user.uid };
     } catch (error) {
-      console.error('Registration error:', error);
-      console.error('Error code:', error.code); // Код помилки
-      console.error('Error message:', error.message); // Повідомлення про помилку
       return thunkApi.rejectWithValue('Registration failed');
     }
   }
@@ -76,14 +69,8 @@ export const loginThunk = createAsyncThunk(
       );
       const user = userCredential.user;
 
-      console.log('User signed in:', user);
-
       return { email: user.email, password: user.password, uid: user.uid };
     } catch (error) {
-      console.error('Login error:', error);
-      console.error('Error code:', error.code); // Код помилки
-      console.error('Error message:', error.message);
-      console.error('Error message:', error.name); // Повідомлення про помилку
       return thunkApi.rejectWithValue('Login failed');
     }
   }
@@ -100,7 +87,6 @@ export const refreshThunk = createAsyncThunk(
       const token = await user.getIdToken();
       setToken(token);
 
-      // Відправляємо запит на сервер для оновлення даних користувача
       const response = await axios.post(
         `https://identitytoolkit.googleapis.com/v1/accounts:lookup?key=AIzaSyC2ORNd2-m6x_zOTq36zeaulONhSWUtib4`,
         {
@@ -110,12 +96,8 @@ export const refreshThunk = createAsyncThunk(
 
       const { data } = response;
 
-      // Повертаємо отримані дані користувача
       return data;
     } catch (error) {
-      console.error('Refresh error:', error);
-      console.error('Error code:', error.code); // Код помилки
-      console.error('Error message:', error.message); // Повідомлення про помилку
       return thunkApi.rejectWithValue('Refresh failed');
     }
   }
@@ -128,11 +110,8 @@ export const logOutThunk = createAsyncThunk(
       const auth = getAuth();
       await signOut(auth);
 
-      // Очищення токену і даних користувача зі стану
-      console.log('Logout successful');
       return { success: true };
     } catch (error) {
-      console.error('Logout error:', error);
       return thunkApi.rejectWithValue('Logout failed');
     }
   }

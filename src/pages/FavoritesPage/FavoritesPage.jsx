@@ -1,10 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
-
 import { selectFavorites } from 'redux/favorites/favorites.selector';
-
 import { CarElement } from '../../components/CarElement/CarElement';
-
 import Loader from '../../components/Loader/Loader';
 
 import css from './FavoritesPage.module.css';

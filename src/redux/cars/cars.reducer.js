@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice, isAnyOf } from '@reduxjs/toolkit';
 
-import axios from 'axios'; // Import the functions you need from the SDKs you need
+import axios from 'axios';
 import { initializeApp } from 'firebase/app';
 
 const firebaseConfig = {

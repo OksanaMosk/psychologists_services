@@ -23,7 +23,7 @@ export const CarElement = ({
   initial_consultation,
   about,
   data,
-  onRemoveFromFavorites, // Додано обробник подій для видалення зі списку фаворитів
+  onRemoveFromFavorites,
 }) => {
   const dispatch = useDispatch();
 
@@ -74,7 +74,7 @@ export const CarElement = ({
       if (isFavorite) {
         dispatch(removeFavorite(name));
         setIsFavorite(false);
-        onRemoveFromFavorites(name); // Викликаємо обробник подій для видалення зі списку фаворитів
+        onRemoveFromFavorites(name);
       } else {
         dispatch(addFavorite(carData));
         setIsFavorite(true);
