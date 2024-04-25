@@ -3,11 +3,11 @@
 This is a web application for a car rental company providing car rental
 services. The application consists of three main pages:
 
-1. **HomePage**: Provides a general description of the services offered by the
-   company.
-2. **Psychologists**: Displays a catalog of cars with different configurations,
-   which users can filter by brand, hourly rental price, and mileage.
-3. **FavoritesPage**: Displays advertisements that have been added to favorites
+1. **HomePage**: Offers an overview of the services provided by the company.
+2. **Psychologists**:Presents a catalog of psychologists with various
+   attributes, such as experience, rating, specialization, and hourly
+   consultation fee, which users can filter by.
+3. **FavoritesPage**: Exhibits psychologists that have been added to favorites
    by the user.
 
 ## Technical Specifications
