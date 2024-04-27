@@ -1,6 +1,5 @@
 .homeContainer {
   display: flex;
-  justify-content: center;
   margin: 0 auto;
   min-height: 100vh;
   flex-direction: column;
@@ -22,10 +21,9 @@
 }
 .empty {
   display: flex;
-  justify-content: center;
+  align-items: center;
   font-weight: 500;
   font-size: 54px;
-  line-height: 125%;
   color: var(--button-background-color);
 }
 .button {
