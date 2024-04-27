@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import { fetchCars } from 'redux/cars/cars.reducer';
+import { fetchDoctors } from 'redux/doctors/doctors.reducer';
 import { useSelector, useDispatch } from 'react-redux';
-import { CarList } from 'components/CarList/CarList';
+import { PsychologistsList } from 'components/PsychologistsList/PsychologistsList';
 import { Navigate } from 'react-router-dom';
 import Filter from 'components/Filter/Filter';
 import Loader from 'components/Loader/Loader';
 
 import { selectAuthenticated } from '../../redux/auth/auth.selector';
 
-import { selectError } from 'redux/cars/cars.selector';
+import { selectError } from 'redux/doctors/doctors.selector';
 
 import css from './Psychologists.module.css';
 
@@ -20,7 +20,7 @@ const Psychologists = (handleRemoveFromFavorites, handleAddToFavorites) => {
   const [hasMore, setHasMore] = useState(true);
   const limit = 3;
   const [loading, setLoading] = useState(true);
-  const [filteredCars, setFilteredCars] = useState([]);
+  const [filteredDoctors, setFilteredDoctors] = useState([]);
   const [filters, setFilters] = useState({
     nameDec: false,
     nameInc: false,
@@ -42,15 +42,15 @@ const Psychologists = (handleRemoveFromFavorites, handleAddToFavorites) => {
       try {
         setLoading(true);
         const totalItemsResponse = await dispatch(
-          fetchCars({ page: currentPage, limit })
+          fetchDoctors({ page: currentPage, limit })
         );
-        const allCars = totalItemsResponse.payload.allCars;
-        if (!allCars) {
+        const allDoctors = totalItemsResponse.payload.allDoctors;
+        if (!allDoctors) {
           return;
         }
         setLoading(false);
-        setFilteredCars(allCars);
-        const totalPages = Math.ceil(allCars.length / limit);
+        setFilteredDoctors(allDoctors);
+        const totalPages = Math.ceil(allDoctors.length / limit);
         if (currentPage > totalPages) {
           setCurrentPage(totalPages);
         }
@@ -68,7 +68,7 @@ const Psychologists = (handleRemoveFromFavorites, handleAddToFavorites) => {
     setCurrentPage(1); // Скидаємо сторінку на першу при зміні фільтра
   };
 
-  const filtered = [...filteredCars];
+  const filtered = [...filteredDoctors];
 
   if (filters.nameDec) {
     filtered.sort((a, b) => a.name.localeCompare(b.name));
@@ -92,7 +92,7 @@ const Psychologists = (handleRemoveFromFavorites, handleAddToFavorites) => {
     filtered.sort((a, b) => parseFloat(a.rating) - parseFloat(b.rating));
   }
 
-  const filteredPaginatedCars = filtered.slice(
+  const filteredPaginatedDoctors = filtered.slice(
     (currentPage - 1) * limit,
     currentPage * limit
   );
@@ -120,11 +120,11 @@ const Psychologists = (handleRemoveFromFavorites, handleAddToFavorites) => {
       {error !== null && <Navigate to="psychologists/404" replace={true} />}
 
       <Filter
-        allCars={filteredCars}
+        allDoctors={filteredDoctors}
         onAllFilterChange={handleAllFilterChange}
       />
-      <CarList
-        cars={filteredPaginatedCars}
+      <PsychologistsList
+        doctors={filteredPaginatedDoctors}
         handleAddToFavorites={handleAddToFavorites}
         handleRemoveFromFavorites={handleRemoveFromFavorites}
       />

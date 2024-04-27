@@ -13,7 +13,7 @@ import {
 import storage from 'redux-persist/lib/storage';
 import { authReducer } from './auth/auth.reducer';
 
-import { carsReducer } from './cars/cars.reducer';
+import { doctorsReducer } from './doctors/doctors.reducer';
 import favoritesReducer from './favorites/favorites.reducer';
 
 const authConfig = {
@@ -22,10 +22,10 @@ const authConfig = {
   whitelist: ['token'],
 };
 
-const carsConfig = {
-  key: 'cars',
+const doctorsConfig = {
+  key: 'doctors',
   storage,
-  whitelist: ['cars'],
+  whitelist: ['doctors'],
 };
 
 const favoritesConfig = {
@@ -37,7 +37,7 @@ const favoritesConfig = {
 
 export const store = configureStore({
   reducer: {
-    carsStore: persistReducer(carsConfig, carsReducer),
+    doctorsStore: persistReducer(doctorsConfig, doctorsReducer),
     favoritesStore: (favoritesConfig, favoritesReducer),
     auth: persistReducer(authConfig, authReducer),
   },

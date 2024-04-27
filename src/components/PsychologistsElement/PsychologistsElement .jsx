@@ -9,9 +9,9 @@ import {
   removeFavorite,
 } from '../../redux/favorites/favorites.reducer';
 
-import css from './CarElement.module.css';
+import css from './PsychologistsElement.module.css';
 
-export const CarElement = ({
+export const PsychologistsElement = ({
   name,
   avatar_url,
   experience,

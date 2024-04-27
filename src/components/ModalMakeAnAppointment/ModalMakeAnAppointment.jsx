@@ -89,7 +89,7 @@ const ModalMakeAnAppointment = ({ isOpen, onClose, avatar_url, name }) => {
               phone: Yup.string().required('Required'),
               comment: Yup.string().required('Required'),
             })}
-            onSubmit={(values, { setSubmitting }) => {
+            onSubmit={({ setSubmitting }) => {
               setSubmitting(false);
             }}
           >

@@ -17,15 +17,15 @@ const firebaseConfig = {
 
 initializeApp(firebaseConfig, '[PSYCHOLOGISTS_APP]');
 
-export const fetchCars = createAsyncThunk(
-  'cars/fetchAll',
+export const fetchDoctors = createAsyncThunk(
+  'doctors/fetchAll',
   async (_, thunkApi) => {
     try {
       const databaseURL = firebaseConfig.databaseURL;
 
-      const { data: allCars } = await axios.get(`${databaseURL}/.json`);
+      const { data: allDoctors } = await axios.get(`${databaseURL}/.json`);
 
-      return { allCars };
+      return { allDoctors };
     } catch (err) {
       return thunkApi.rejectWithValue({ errorMessage: err.message });
     }
@@ -33,31 +33,31 @@ export const fetchCars = createAsyncThunk(
 );
 
 const initialState = {
-  cars: [],
+  doctors: [],
   isLoading: false,
   error: null,
 };
 
-const carsSlice = createSlice({
-  name: 'cars',
+const doctorsSlice = createSlice({
+  name: 'doctors',
   initialState,
   extraReducers: builder =>
     builder
-      .addCase(fetchCars.fulfilled, (state, { payload }) => {
-        state.cars = payload.allCars;
+      .addCase(fetchDoctors.fulfilled, (state, { payload }) => {
+        state.doctors = payload.allDoctors;
         state.isLoading = false;
         state.error = null;
       })
 
-      .addMatcher(isAnyOf(fetchCars.pending), state => {
+      .addMatcher(isAnyOf(fetchDoctors.pending), state => {
         state.isLoading = true;
         state.error = null;
       })
 
-      .addMatcher(isAnyOf(fetchCars.rejected), (state, { payload }) => {
+      .addMatcher(isAnyOf(fetchDoctors.rejected), (state, { payload }) => {
         state.isLoading = false;
         state.error = payload;
       }),
 });
 
-export const carsReducer = carsSlice.reducer;
+export const doctorsReducer = doctorsSlice.reducer;

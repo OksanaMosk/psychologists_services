@@ -91,7 +91,7 @@ export const Header = removeItem => {
             }`}
             to="/favorites"
           >
-            Faforites cars
+            Faforites
           </NavLink>
         )}
       </div>

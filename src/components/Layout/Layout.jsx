@@ -3,7 +3,7 @@ import { Header } from '../Header/Header';
 import css from './Layout.module.css';
 
 import React from 'react';
-import { useLocation } from 'react-router-dom'; // Імпорт хука з react-router-dom
+import { useLocation } from 'react-router-dom';
 
 const Layout = ({ children }) => {
   const location = useLocation();
