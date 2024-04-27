@@ -6,11 +6,13 @@ import { Navigate } from 'react-router-dom';
 import Filter from 'components/Filter/Filter';
 import Loader from 'components/Loader/Loader';
 
+import { selectAuthenticated } from '../../redux/auth/auth.selector';
+
 import { selectError } from 'redux/cars/cars.selector';
 
 import css from './Psychologists.module.css';
 
-const Psychologists = () => {
+const Psychologists = (handleRemoveFromFavorites, handleAddToFavorites) => {
   const dispatch = useDispatch();
   const error = useSelector(selectError);
 
@@ -27,6 +29,13 @@ const Psychologists = () => {
     maxRating: false,
     minRating: false,
   });
+  const authenticated = useSelector(selectAuthenticated);
+
+  useEffect(() => {
+    if (!authenticated) {
+      localStorage.removeItem('favorites');
+    }
+  }, [authenticated]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -114,7 +123,11 @@ const Psychologists = () => {
         allCars={filteredCars}
         onAllFilterChange={handleAllFilterChange}
       />
-      <CarList cars={filteredPaginatedCars} />
+      <CarList
+        cars={filteredPaginatedCars}
+        handleAddToFavorites={handleAddToFavorites}
+        handleRemoveFromFavorites={handleRemoveFromFavorites}
+      />
       {hasMore && filtered.length > currentPage * limit && (
         <button className={css.button} onClick={handleLoadMore}>
           Load more

@@ -6,20 +6,22 @@ import { logOutThunk } from 'redux/auth/auth.reducer';
 import { selectUserData, selectAuthenticated } from 'redux/auth/auth.selector';
 import ModalWindow from '../ModalWindow/ModalWindow';
 import { useTheme } from '../Themes/Themes';
-
+import { useNavigate } from 'react-router-dom';
 import css from './Header.module.css';
 
-export const Header = ({ values }) => {
+export const Header = removeItem => {
   const [isRegisterModalOpen, setIsRegisterModalOpen] = useState(false);
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
   const userData = useSelector(selectUserData);
-
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const authenticated = useSelector(selectAuthenticated);
   const { setTheme } = useTheme();
 
   const onLogOut = () => {
     dispatch(logOutThunk());
+    localStorage.removeItem('favorites');
+    navigate('/');
   };
 
   const openRegisterModal = () => {

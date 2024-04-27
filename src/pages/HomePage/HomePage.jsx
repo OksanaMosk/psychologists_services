@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { NavLink } from 'react-router-dom';
+
 import css from './HomePage.module.css';
 
 import hero from '../../images/image (2).png';
@@ -12,7 +13,6 @@ const HomePage = () => {
     function getRandomInt(min, max) {
       return Math.floor(Math.random() * (max - min + 1)) + min;
     }
-
     const colors = ['#3470ff', '#fc832c', '#54be96'];
 
     const randomIndex1 = getRandomInt(0, colors.length - 1);

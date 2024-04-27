@@ -24,6 +24,7 @@ export const CarElement = ({
   about,
   data,
   onRemoveFromFavorites,
+  car,
 }) => {
   const dispatch = useDispatch();
 
@@ -69,12 +70,16 @@ export const CarElement = ({
         initial_consultation,
         about,
         data,
+        car,
       };
-
       if (isFavorite) {
         dispatch(removeFavorite(name));
         setIsFavorite(false);
-        onRemoveFromFavorites(name);
+        if (car && car.name) {
+          onRemoveFromFavorites(name);
+        }
+
+        // console.log(name);
       } else {
         dispatch(addFavorite(carData));
         setIsFavorite(true);

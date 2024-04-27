@@ -3,6 +3,7 @@
   justify-content: center;
   margin: 0 auto;
   min-height: 100vh;
+  flex-direction: column;
 }
 
 .homeList {
@@ -17,4 +18,5 @@
   flex-wrap: wrap;
   margin: 0 auto;
   justify-content: center;
+  flex-direction: column;
 }
