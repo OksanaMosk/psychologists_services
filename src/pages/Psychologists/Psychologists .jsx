@@ -124,6 +124,7 @@ const Psychologists = (handleRemoveFromFavorites, handleAddToFavorites) => {
         onAllFilterChange={handleAllFilterChange}
       />
       <PsychologistsList
+        className={css.filter}
         doctors={filteredPaginatedDoctors}
         handleAddToFavorites={handleAddToFavorites}
         handleRemoveFromFavorites={handleRemoveFromFavorites}

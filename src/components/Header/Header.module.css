@@ -160,3 +160,6 @@
   align-items: center;
   gap: 1%;
 }
+.body-no-scroll {
+  overflow: hidden;
+}

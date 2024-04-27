@@ -10,6 +10,11 @@
   border: none;
   align-items: flex-end;
 }
+
+.filterByBrand:hover,
+.filterByBrand:focus {
+  background: var(--button-background-color-active);
+}
 .brandTitle {
   font-weight: 500;
   font-size: 14px;

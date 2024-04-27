@@ -142,9 +142,9 @@ const FavoritesPage = () => {
 
   const handleLoadMore = () => {
     if (currentPage < totalPages) {
-      setCurrentPage(prevPage => prevPage);
+      setCurrentPage(prevPage => prevPage + 1); // оновлення currentPage
       window.scrollTo({
-        bottom: 0,
+        top: document.documentElement.scrollHeight, // прокрутка до низу сторінки
         behavior: 'smooth',
       });
     }
@@ -174,10 +174,14 @@ const FavoritesPage = () => {
                   />
                 ))
               ) : (
-                <p>Your favorites are currently empty...</p>
+                <p className={css.empty}>
+                  Your favorites are currently empty...
+                </p>
               )}
               {currentPage < totalPages && (
-                <button onClick={handleLoadMore}>Load More</button>
+                <button className={css.button} onClick={handleLoadMore}>
+                  Load More
+                </button>
               )}
             </>
           )}

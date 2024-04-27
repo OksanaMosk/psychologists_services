@@ -50,6 +50,11 @@ span {
   background: var(--button-background-color);
 }
 
+.toLink:hover,
+.toLink:focus {
+  background: var(--button-background-color-active);
+}
+
 .toSvg {
   padding-left: 8px;
 }

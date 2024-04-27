@@ -27,21 +27,25 @@ export const Header = removeItem => {
   const openRegisterModal = () => {
     if (!isLoginModalOpen) {
       setIsRegisterModalOpen(true);
+      document.body.classList.add('body-no-scroll');
     }
   };
 
   const openLoginModal = () => {
     if (!isRegisterModalOpen) {
       setIsLoginModalOpen(true);
+      document.body.classList.add('body-no-scroll');
     }
   };
 
   const closeRegisterModal = () => {
     setIsRegisterModalOpen(false);
+    document.body.classList.remove('body-no-scroll');
   };
 
   const closeLoginModal = () => {
     setIsLoginModalOpen(false);
+    document.body.classList.remove('body-no-scroll');
   };
 
   const handleGreenThemeClick = () => {

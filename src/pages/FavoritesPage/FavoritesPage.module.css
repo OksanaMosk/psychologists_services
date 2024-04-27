@@ -20,3 +20,33 @@
   justify-content: center;
   flex-direction: column;
 }
+.empty {
+  display: flex;
+  justify-content: center;
+  font-weight: 500;
+  font-size: 54px;
+  line-height: 125%;
+  color: var(--button-background-color);
+}
+.button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 125%;
+  letter-spacing: -0.01em;
+  color: #fbfbfb;
+  border-radius: 30px;
+  width: 176px;
+  height: 48px;
+  background: var(--button-background-color);
+  border: none;
+  outline: none;
+  outline-offset: 0;
+  margin: 5% auto 10%;
+}
+.button:hover,
+.button:focus {
+  background: var(--button-background-color-active);
+}

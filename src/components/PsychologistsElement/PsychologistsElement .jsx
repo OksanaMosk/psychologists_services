@@ -78,8 +78,6 @@ export const PsychologistsElement = ({
         if (car && car.name) {
           onRemoveFromFavorites(name);
         }
-
-        // console.log(name);
       } else {
         dispatch(addFavorite(carData));
         setIsFavorite(true);
@@ -109,11 +107,13 @@ export const PsychologistsElement = ({
   const openMakeAnAppointment = () => {
     if (!isMakeAnAppointment) {
       setIsMakeAnAppointment(true);
+      document.body.classList.add('body-no-scroll');
     }
   };
 
   const closeMakeAnAppointment = () => {
     setIsMakeAnAppointment(false);
+    document.body.classList.remove('body-no-scroll');
   };
 
   return (

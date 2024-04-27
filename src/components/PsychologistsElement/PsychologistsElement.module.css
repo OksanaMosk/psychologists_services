@@ -283,3 +283,7 @@
 .makeAnAppointment:focus {
   background: var(--button-background-color-active);
 }
+
+.body-no-scroll {
+  overflow: hidden;
+}
