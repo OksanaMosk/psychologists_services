@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { fetchDoctors } from 'redux/doctors/doctors.reducer';
 import { useSelector, useDispatch } from 'react-redux';
 import { PsychologistsList } from 'components/PsychologistsList/PsychologistsList';
@@ -15,12 +15,13 @@ import css from './Psychologists.module.css';
 const Psychologists = (handleRemoveFromFavorites, handleAddToFavorites) => {
   const dispatch = useDispatch();
   const error = useSelector(selectError);
-
+  const contactContainerRef = useRef(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [hasMore, setHasMore] = useState(true);
   const limit = 3;
   const [loading, setLoading] = useState(true);
   const [filteredDoctors, setFilteredDoctors] = useState([]);
+  const [shouldScroll, setShouldScroll] = useState(false);
   const [filters, setFilters] = useState({
     nameDec: false,
     nameInc: false,
@@ -49,11 +50,13 @@ const Psychologists = (handleRemoveFromFavorites, handleAddToFavorites) => {
           return;
         }
         setLoading(false);
-        setFilteredDoctors(allDoctors);
-        const totalPages = Math.ceil(allDoctors.length / limit);
-        if (currentPage > totalPages) {
-          setCurrentPage(totalPages);
+        if (currentPage === 1) {
+          setFilteredDoctors(allDoctors);
+        } else {
+          setFilteredDoctors(allDoctors);
         }
+
+        const totalPages = Math.ceil(allDoctors.length / limit);
         setHasMore(currentPage < totalPages);
       } catch (error) {
         setLoading(false);
@@ -65,7 +68,7 @@ const Psychologists = (handleRemoveFromFavorites, handleAddToFavorites) => {
 
   const handleAllFilterChange = newFilters => {
     setFilters(prevFilters => ({ ...prevFilters, ...newFilters }));
-    setCurrentPage(1); // Скидаємо сторінку на першу при зміні фільтра
+    setCurrentPage(1);
   };
 
   const filtered = [...filteredDoctors];
@@ -93,18 +96,42 @@ const Psychologists = (handleRemoveFromFavorites, handleAddToFavorites) => {
   }
 
   const filteredPaginatedDoctors = filtered.slice(
-    (currentPage - 1) * limit,
-    currentPage * limit
+    0,
+    Math.min(filtered.length, currentPage * limit)
   );
 
-  const handleLoadMore = () => {
-    if (hasMore) {
-      setCurrentPage(prevPage => prevPage + 1);
-      window.scrollTo({
-        top: 0,
+  useEffect(() => {
+    if (shouldScroll && contactContainerRef.current) {
+      const container = contactContainerRef.current;
+      const containerHeight = container.clientHeight;
+
+      const additionalScroll = 0.5 * containerHeight;
+      const scrollPosition = container.scrollTop + additionalScroll;
+
+      setTimeout(() => {
+        container.scrollTo({
+          top: scrollPosition,
+          behavior: 'smooth',
+        });
+        setShouldScroll(false);
+      }, 0);
+
+      container.scrollIntoView({
         behavior: 'smooth',
+        block: 'end',
       });
     }
+  }, [shouldScroll]);
+
+  const handleLoadMore = () => {
+    setCurrentPage(prevPage => prevPage + 1);
+    setShouldScroll(true);
+  };
+
+  const handleNotLoadMore = () => {
+    window.scrollTo({
+      top: 0,
+    });
   };
 
   if (loading) {
@@ -116,7 +143,7 @@ const Psychologists = (handleRemoveFromFavorites, handleAddToFavorites) => {
   }
 
   return (
-    <div className={css.contactsContainer}>
+    <div ref={contactContainerRef} className={css.contactsContainer}>
       {error !== null && <Navigate to="psychologists/404" replace={true} />}
 
       <Filter
@@ -129,9 +156,17 @@ const Psychologists = (handleRemoveFromFavorites, handleAddToFavorites) => {
         handleAddToFavorites={handleAddToFavorites}
         handleRemoveFromFavorites={handleRemoveFromFavorites}
       />
-      {hasMore && filtered.length > currentPage * limit && (
-        <button className={css.button} onClick={handleLoadMore}>
+      {hasMore && filtered.length > currentPage * limit ? (
+        <button type="button" className={css.button} onClick={handleLoadMore}>
           Load more
+        </button>
+      ) : (
+        <button
+          type="button"
+          className={css.buttonNot}
+          onClick={handleNotLoadMore}
+        >
+          Go top
         </button>
       )}
     </div>

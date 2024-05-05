@@ -142,9 +142,9 @@ const FavoritesPage = () => {
 
   const handleLoadMore = () => {
     if (currentPage < totalPages) {
-      setCurrentPage(prevPage => prevPage + 1); // оновлення currentPage
+      setCurrentPage(prevPage => prevPage + 1);
       window.scrollTo({
-        top: document.documentElement.scrollHeight, // прокрутка до низу сторінки
+        top: document.documentElement.scrollHeight,
         behavior: 'smooth',
       });
     }
