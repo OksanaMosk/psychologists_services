@@ -38,7 +38,7 @@ const favoritesConfig = {
 export const store = configureStore({
   reducer: {
     doctorsStore: persistReducer(doctorsConfig, doctorsReducer),
-    favoritesStore: (favoritesConfig, favoritesReducer),
+    favoritesStore: persistReducer(favoritesConfig, favoritesReducer),
     auth: persistReducer(authConfig, authReducer),
   },
   middleware: getDefaultMiddleware =>

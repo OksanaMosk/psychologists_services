@@ -20,6 +20,7 @@ const ModalWindow = ({ isOpen, onClose, type }) => {
           const { name, ...loginValues } = values;
           console.log('loginValues:', loginValues);
           const registerResult = await dispatch(registerThunk(values));
+          localStorage.setItem('auth', JSON.stringify(loginValues));
 
           if (
             registerResult.error &&
@@ -42,6 +43,7 @@ const ModalWindow = ({ isOpen, onClose, type }) => {
           console.log('loginValues:', loginValues);
 
           const loginResult = await dispatch(loginThunk(loginValues));
+          localStorage.setItem('auth', JSON.stringify(loginValues));
 
           if (
             loginResult.error &&

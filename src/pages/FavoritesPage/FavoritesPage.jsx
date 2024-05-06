@@ -1,13 +1,15 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import addFavorite from '../../redux/favorites/favorites.reducer';
-import removeFavorite from '../../redux/favorites/favorites.reducer';
+import {
+  addFavorite,
+  removeFavorite,
+} from '../../redux/favorites/favorites.reducer';
 import { PsychologistsElement } from '../../components/PsychologistsElement/PsychologistsElement ';
 import Loader from '../../components/Loader/Loader';
 import Filter from 'components/Filter/Filter';
 import { useDispatch } from 'react-redux';
-
+import Notiflix from 'notiflix';
 import { selectFavorites } from 'redux/favorites/favorites.selector';
 
 import {
@@ -46,6 +48,7 @@ const FavoritesPage = () => {
       navigate('/');
       localStorage.removeItem('favorites');
     }
+    console.log('🚀 ~ FavoritesPage ~ userId :', userId);
   }, [authenticated, navigate, userId]);
 
   useEffect(() => {
@@ -59,6 +62,7 @@ const FavoritesPage = () => {
     } else {
       setLoading(false);
     }
+    console.log('🚀 ~ FavoritesPage ~ userId :', userId);
   }, [userId]);
 
   useEffect(() => {
@@ -77,29 +81,59 @@ const FavoritesPage = () => {
     }
   }, [favoriteDoctorsRedux]);
 
-  const handleAddToFavorites = (doctorsData, userId) => {
-    return dispatch => {
-      dispatch(addFavorite(doctorsData));
+  const handleAddToFavorites = useCallback(
+    (doctorsData, userId) => {
+      console.log('🚀 ~ handleAddToFavorites ~ doctorsData:', doctorsData);
+      console.log('🚀 ~ handleAddToFavorites ~ doctor name:', doctorsData.name);
+
       const storedFavorites =
         JSON.parse(localStorage.getItem(`favorites_${userId}`)) || [];
+
+      const isAlreadyFavorite = storedFavorites.some(
+        doctor => doctor.name === doctorsData.name
+      );
+
+      if (isAlreadyFavorite) {
+        Notiflix.Notify.warning(
+          `This doctor ${doctorsData.name} is already in favorites`
+        );
+        return;
+      }
+
+      dispatch(addFavorite(doctorsData));
+      console.log('🚀 ~ FavoritesPage ~ userId :', userId);
+      console.log('🚀 ~ handleAddToFavorites ~ doctorsData:', doctorsData);
       const updatedFavorites = [...storedFavorites, doctorsData];
       localStorage.setItem(
         `favorites_${userId}`,
         JSON.stringify(updatedFavorites)
       );
-    };
-  };
+    },
+    [dispatch]
+  );
 
   const handleRemoveFromFavorites = (name, userId) => {
-    dispatch(removeFavorite(name));
+    console.log('Name to be removed:', name);
+    console.log('User ID:', userId);
 
+    // Отримуємо список улюблених лікарів з локального сховища
     const storedFavorites =
       JSON.parse(localStorage.getItem(`favorites_${userId}`)) || [];
 
+    console.log('Stored favorites:', storedFavorites);
+
+    // Фільтруємо улюблених лікарів, щоб видалити того, якого ми хочемо
     const updatedFavorites = storedFavorites.filter(
-      doctors => doctors.name !== name
+      doctor => doctor.name !== name
     );
 
+    console.log('Updated favorites after removal:', updatedFavorites);
+
+    // Видаляємо елемент зі стору
+    const favoriteToRemove = { name: name };
+    dispatch(removeFavorite(favoriteToRemove));
+
+    // Оновлюємо улюблені лікарів у локальному сховищі
     localStorage.setItem(
       `favorites_${userId}`,
       JSON.stringify(updatedFavorites)
@@ -167,9 +201,11 @@ const FavoritesPage = () => {
                   <PsychologistsElement
                     key={doctors.name}
                     {...doctors}
-                    onAddToFavorites={() => handleAddToFavorites(doctors)}
+                    onAddToFavorites={() =>
+                      handleAddToFavorites(doctors, userId)
+                    }
                     onRemoveFromFavorites={() =>
-                      handleRemoveFromFavorites(doctors.name)
+                      handleRemoveFromFavorites(doctors.name, userId)
                     }
                   />
                 ))
@@ -192,3 +228,8 @@ const FavoritesPage = () => {
 };
 
 export default FavoritesPage;
+
+// useEffect(() => {
+//   // Видалення всіх елементів зі списку фаворитів у редукторі
+//   dispatch(removeAllFavorites());
+// }, [dispatch]);

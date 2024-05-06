@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
-import { logOutThunk } from 'redux/auth/auth.reducer';
+import { logOutThunk, loginThunk } from 'redux/auth/auth.reducer';
 import { selectUserData, selectAuthenticated } from 'redux/auth/auth.selector';
 import ModalWindow from '../ModalWindow/ModalWindow';
 import { useTheme } from '../Themes/Themes';
@@ -18,9 +18,17 @@ export const Header = removeItem => {
   const authenticated = useSelector(selectAuthenticated);
   const { setTheme } = useTheme();
 
+  useEffect(() => {
+    const authData = localStorage.getItem('auth');
+    if (authData) {
+      const { token, email, uid } = JSON.parse(authData);
+      dispatch(loginThunk.fulfilled({ token, email, uid }));
+    }
+  }, [dispatch]);
+
   const onLogOut = () => {
     dispatch(logOutThunk());
-    localStorage.removeItem('favorites');
+    localStorage.removeItem('auth'); // При виході з системи також видаляємо дані авторизації з локального сховища
     navigate('/');
   };
 

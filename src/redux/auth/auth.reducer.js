@@ -33,6 +33,10 @@ const setToken = token => {
   instance.defaults.headers.common.Authorization = `Bearer ${token}`;
 };
 
+const saveAuthDataToLocalstorage = payload => {
+  localStorage.setItem('auth', JSON.stringify(payload));
+};
+
 export const registerThunk = createAsyncThunk(
   'auth/register',
   async (userData, thunkApi) => {
@@ -69,7 +73,14 @@ export const loginThunk = createAsyncThunk(
       );
       const user = userCredential.user;
 
-      return { email: user.email, password: user.password, uid: user.uid };
+      const payload = {
+        email: user.email,
+        password: user.password,
+        uid: user.uid,
+      };
+      saveAuthDataToLocalstorage(payload);
+
+      return payload;
     } catch (error) {
       return thunkApi.rejectWithValue('Login failed');
     }
@@ -109,6 +120,8 @@ export const logOutThunk = createAsyncThunk(
     try {
       const auth = getAuth();
       await signOut(auth);
+
+      localStorage.removeItem('auth');
 
       return { success: true };
     } catch (error) {

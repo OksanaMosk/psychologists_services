@@ -24,21 +24,22 @@ export const PsychologistsElement = ({
   about,
   data,
   onRemoveFromFavorites,
-  car,
+  doctor,
+  doctorsData,
+  userId,
 }) => {
   const dispatch = useDispatch();
-
   const [imageLoaded, setImageLoaded] = useState(false);
   const [isFavorite, setIsFavorite] = useState(false);
   const [isMakeAnAppointment, setIsMakeAnAppointment] = useState(false);
 
   const authenticated = useSelector(selectAuthenticated);
-
   const favorites = useSelector(selectFavorites);
 
   useEffect(() => {
     if (favorites) {
-      const isAlreadyFavorite = favorites.some(car => car.name === name);
+      console.log('🚀 ~ useEffect ~ favorites:', favorites);
+      const isAlreadyFavorite = favorites.some(doctor => doctor.name === name);
       setIsFavorite(isAlreadyFavorite);
     }
   }, [favorites, name]);
@@ -47,7 +48,7 @@ export const PsychologistsElement = ({
     const storedFavoritesFromLocalStorage =
       JSON.parse(localStorage.getItem('favorites')) || [];
     const isAlreadyFavorite = storedFavoritesFromLocalStorage.some(
-      car => car.name === name
+      doctor => doctor.name === name
     );
     setIsFavorite(isAlreadyFavorite);
   }, [name]);
@@ -58,7 +59,7 @@ export const PsychologistsElement = ({
 
   const handleToggleFavorite = () => {
     if (authenticated) {
-      const carData = {
+      const doctorsData = {
         name,
         avatar_url,
         experience,
@@ -70,16 +71,18 @@ export const PsychologistsElement = ({
         initial_consultation,
         about,
         data,
-        car,
+        doctor,
+        userId,
       };
       if (isFavorite) {
-        dispatch(removeFavorite(name));
+        dispatch(removeFavorite({ name }));
         setIsFavorite(false);
-        if (car && car.name) {
+        if (doctor && doctor.name) {
           onRemoveFromFavorites(name);
         }
       } else {
-        dispatch(addFavorite(carData));
+        dispatch(addFavorite(doctorsData));
+
         setIsFavorite(true);
       }
 
@@ -87,9 +90,9 @@ export const PsychologistsElement = ({
         JSON.parse(localStorage.getItem('favorites')) || [];
 
       const updatedFavorites = isFavorite
-        ? favoritesFromLocalStorage.filter(car => car.name !== name)
-        : [...favoritesFromLocalStorage, carData];
-
+        ? favoritesFromLocalStorage.filter(doctor => doctor.name !== name)
+        : [...favoritesFromLocalStorage, doctorsData];
+      console.log('Updated favorites:', updatedFavorites);
       localStorage.setItem('favorites', JSON.stringify(updatedFavorites));
     } else {
       Notiflix.Notify.warning(
@@ -125,9 +128,9 @@ export const PsychologistsElement = ({
         <img
           className={css.name}
           src={avatar_url}
-          alt={`Car ${name}`}
+          alt={`doctor ${name}`}
           onLoad={handleImageLoad}
-        />{' '}
+        />
         <svg
           className={css.svgName}
           width="10"
@@ -145,7 +148,7 @@ export const PsychologistsElement = ({
             strokeWidth="1"
           />
         </svg>
-      </div>{' '}
+      </div>
       <div className={css.details}>
         <div className={css.titlePart}>
           <span className={css.titleSpan}>Psychologist</span>
@@ -170,10 +173,9 @@ export const PsychologistsElement = ({
               Price / 1 hour:<span> </span>
               <span className={css.priceSpan}>{price_per_hour}$</span>
             </p>
-
             <button
               className={css.imgButton}
-              onClick={handleToggleFavorite}
+              onClick={() => handleToggleFavorite(doctorsData, userId)}
               type="button"
             >
               <svg
@@ -230,10 +232,8 @@ export const PsychologistsElement = ({
                         {review.reviewer.slice(0, 1)}
                       </div>
                       <div className={css.let}>
-                        {' '}
-                        <h4 className={css.reviewName}> {review.reviewer}</h4>
+                        <h4 className={css.reviewName}>{review.reviewer}</h4>
                         <div className={css.letRat}>
-                          {' '}
                           <svg
                             className={css.svgReview}
                             width="16"
@@ -248,12 +248,12 @@ export const PsychologistsElement = ({
                               stroke="#FFC531"
                               strokeWidth="1.2"
                             />
-                          </svg>{' '}
-                          <p className={css.reviewRating}> {review.rating}</p>
+                          </svg>
+                          <p className={css.reviewRating}>{review.rating}</p>
                         </div>
-                      </div>{' '}
+                      </div>
                     </div>
-                    <p className={css.reviewComments}> {review.comment}</p>
+                    <p className={css.reviewComments}>{review.comment}</p>
                   </li>
                 ))}
               </ul>
