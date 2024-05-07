@@ -36,114 +36,106 @@ const FavoritesPage = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const favoriteDoctorsRedux = useSelector(selectFavorites);
-
   const authenticated = useSelector(selectAuthenticated);
-
   const userData = useSelector(selectUserData);
-
   const userId = userData ? userData.uid : null;
 
   useEffect(() => {
     if (!authenticated) {
       navigate('/');
-      localStorage.removeItem('favorites');
+      localStorage.removeItem(`favor_${userId}`);
     }
-    console.log('🚀 ~ FavoritesPage ~ userId :', userId);
   }, [authenticated, navigate, userId]);
 
   useEffect(() => {
-    const storedFavoritesFromLocalStorage = localStorage.getItem(
-      `favorites_${userId}`
-    );
-    if (storedFavoritesFromLocalStorage) {
-      const parsedFavorites = JSON.parse(storedFavoritesFromLocalStorage);
-      setFavoriteDoctors(parsedFavorites);
+    // Перевіряємо, чи є userId і чи є у нас улюблені лікарі для цього userId
+    if (userId && favoriteDoctors.length > 0) {
+      console.log(`Key for local storage: favor_${userId}`);
+
+      // Зберігаємо улюблені лікарі у локальному сховищі
+      localStorage.setItem(`favor_${userId}`, JSON.stringify(favoriteDoctors));
       setLoading(false);
-    } else {
-      setLoading(false);
+      console.log('🚀 ~ FavoritesPage ~ userId :', userId);
     }
-    console.log('🚀 ~ FavoritesPage ~ userId :', userId);
-  }, [userId]);
+    console.log(`Key for local storage: favor_${userId}`);
+    console.log(
+      'Parsed favorites to be saved:',
+      JSON.stringify(favoriteDoctors)
+    );
+  }, [userId, favoriteDoctors]);
 
   useEffect(() => {
+    // Перевіряємо, чи є у нас дані в Redux для улюблених лікарів
     if (favoriteDoctorsRedux && favoriteDoctorsRedux.length > 0) {
-      setLoading(false);
       setFavoriteDoctors(favoriteDoctorsRedux);
     } else {
-      const storedFavoritesFromLocalStorage = localStorage.getItem('favorites');
+      // Якщо у нас немає даних в Redux, перевіряємо локальне сховище
+      const storedFavoritesFromLocalStorage = localStorage.getItem(
+        `favor_${userId}`
+      );
       if (storedFavoritesFromLocalStorage) {
         const parsedFavorites = JSON.parse(storedFavoritesFromLocalStorage);
         setFavoriteDoctors(parsedFavorites);
-        setLoading(false);
-      } else {
-        setLoading(false);
       }
     }
-  }, [favoriteDoctorsRedux]);
+    setLoading(false);
+  }, [favoriteDoctorsRedux, userId]);
 
   const handleAddToFavorites = useCallback(
-    (doctorsData, userId) => {
-      console.log('🚀 ~ handleAddToFavorites ~ doctorsData:', doctorsData);
-      console.log('🚀 ~ handleAddToFavorites ~ doctor name:', doctorsData.name);
-
-      const storedFavorites =
-        JSON.parse(localStorage.getItem(`favorites_${userId}`)) || [];
-
-      const isAlreadyFavorite = storedFavorites.some(
+    doctorsData => {
+      const isAlreadyFavorite = favoriteDoctors.some(
         doctor => doctor.name === doctorsData.name
       );
-
+      console.log('🚀 ~ handleAddToFavorites ~ doctorsData:', doctorsData);
+      console.log('🚀 ~ handleAddToFavorites ~ doctor name:', doctorsData.name);
       if (isAlreadyFavorite) {
         Notiflix.Notify.warning(
           `This doctor ${doctorsData.name} is already in favorites`
         );
+
         return;
       }
 
       dispatch(addFavorite(doctorsData));
-      console.log('🚀 ~ FavoritesPage ~ userId :', userId);
-      console.log('🚀 ~ handleAddToFavorites ~ doctorsData:', doctorsData);
-      const updatedFavorites = [...storedFavorites, doctorsData];
-      localStorage.setItem(
-        `favorites_${userId}`,
-        JSON.stringify(updatedFavorites)
-      );
+
+      const updatedFavorites = [...favoriteDoctors, doctorsData];
+      setFavoriteDoctors(updatedFavorites);
+
+      // Оновлення даних в Redux перед збереженням у localStorage
+      dispatch(addFavorite(doctorsData));
+
+      // Збереження улюблених лікарів у localStorage
+      localStorage.setItem(`favor_${userId}`, JSON.stringify(updatedFavorites));
     },
-    [dispatch]
+    [dispatch, favoriteDoctors, userId]
   );
 
-  const handleRemoveFromFavorites = (name, userId) => {
-    console.log('Name to be removed:', name);
-    console.log('User ID:', userId);
+  const handleRemoveFromFavorites = useCallback(
+    name => {
+      const updatedFavorites = favoriteDoctors.filter(
+        doctor => doctor.name !== name
+      );
 
-    // Отримуємо список улюблених лікарів з локального сховища
-    const storedFavorites =
-      JSON.parse(localStorage.getItem(`favorites_${userId}`)) || [];
+      dispatch(removeFavorite({ name }));
 
-    console.log('Stored favorites:', storedFavorites);
+      console.log('Name to be removed:', name);
+      console.log('User ID:', userId);
 
-    // Фільтруємо улюблених лікарів, щоб видалити того, якого ми хочемо
-    const updatedFavorites = storedFavorites.filter(
-      doctor => doctor.name !== name
-    );
+      setFavoriteDoctors(updatedFavorites);
 
-    console.log('Updated favorites after removal:', updatedFavorites);
+      // Оновлення даних в Redux перед збереженням у localStorage
+      dispatch(removeFavorite({ name }));
 
-    // Видаляємо елемент зі стору
-    const favoriteToRemove = { name: name };
-    dispatch(removeFavorite(favoriteToRemove));
+      // Збереження улюблених лікарів у localStorage
+      localStorage.setItem(`favor_${userId}`, JSON.stringify(updatedFavorites));
+    },
+    [dispatch, favoriteDoctors, userId]
+  );
 
-    // Оновлюємо улюблені лікарів у локальному сховищі
-    localStorage.setItem(
-      `favorites_${userId}`,
-      JSON.stringify(updatedFavorites)
-    );
-  };
-
-  const handleAllFilterChange = newFilters => {
+  const handleAllFilterChange = useCallback(newFilters => {
     setFilters(prevFilters => ({ ...prevFilters, ...newFilters }));
     setCurrentPage(1);
-  };
+  }, []);
 
   let filteredDoctors = favoriteDoctors || [];
 
@@ -197,15 +189,13 @@ const FavoritesPage = () => {
           ) : (
             <>
               {paginatedDoctors.length > 0 ? (
-                paginatedDoctors.map(doctors => (
+                paginatedDoctors.map(doctor => (
                   <PsychologistsElement
-                    key={doctors.name}
-                    {...doctors}
-                    onAddToFavorites={() =>
-                      handleAddToFavorites(doctors, userId)
-                    }
+                    key={doctor.name}
+                    {...doctor}
+                    onAddToFavorites={() => handleAddToFavorites(doctor)}
                     onRemoveFromFavorites={() =>
-                      handleRemoveFromFavorites(doctors.name, userId)
+                      handleRemoveFromFavorites(doctor.name)
                     }
                   />
                 ))
@@ -233,3 +223,13 @@ export default FavoritesPage;
 //   // Видалення всіх елементів зі списку фаворитів у редукторі
 //   dispatch(removeAllFavorites());
 // }, [dispatch]);
+
+// console.log('🚀 ~ FavoritesPage ~ userId :', userId);
+//  console.log('🚀 ~ handleAddToFavorites ~ doctorsData:', doctorsData);
+//  console.log(
+//    '🚀 ~ handleAddToFavorites ~ doctor name:',
+//    doctorsData.name
+//  );
+
+// console.log('Name to be removed:', name);
+// console.log('User ID:', userId);

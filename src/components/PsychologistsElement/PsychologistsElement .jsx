@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { selectAuthenticated } from 'redux/auth/auth.selector';
+import { selectAuthenticated, selectUserData } from 'redux/auth/auth.selector';
 import { selectFavorites } from 'redux/favorites/favorites.selector';
 import ModalMakeAnAppointment from '../ModalMakeAnAppointment/ModalMakeAnAppointment';
 import Notiflix from 'notiflix';
+
 import {
   addFavorite,
   removeFavorite,
@@ -26,7 +27,6 @@ export const PsychologistsElement = ({
   onRemoveFromFavorites,
   doctor,
   doctorsData,
-  userId,
 }) => {
   const dispatch = useDispatch();
   const [imageLoaded, setImageLoaded] = useState(false);
@@ -35,6 +35,9 @@ export const PsychologistsElement = ({
 
   const authenticated = useSelector(selectAuthenticated);
   const favorites = useSelector(selectFavorites);
+
+  const userData = useSelector(selectUserData);
+  const userId = userData ? userData.uid : null;
 
   useEffect(() => {
     if (favorites) {
@@ -46,12 +49,12 @@ export const PsychologistsElement = ({
 
   useEffect(() => {
     const storedFavoritesFromLocalStorage =
-      JSON.parse(localStorage.getItem('favorites')) || [];
+      JSON.parse(localStorage.getItem(`favor_${userId}`)) || [];
     const isAlreadyFavorite = storedFavoritesFromLocalStorage.some(
       doctor => doctor.name === name
     );
     setIsFavorite(isAlreadyFavorite);
-  }, [name]);
+  }, [name, userId]);
 
   const handleImageLoad = () => {
     setImageLoaded(true);
@@ -72,7 +75,6 @@ export const PsychologistsElement = ({
         about,
         data,
         doctor,
-        userId,
       };
       if (isFavorite) {
         dispatch(removeFavorite({ name }));
@@ -85,15 +87,15 @@ export const PsychologistsElement = ({
 
         setIsFavorite(true);
       }
-
+      console.log(`Key for local storage: favor_${userId}`);
       const favoritesFromLocalStorage =
-        JSON.parse(localStorage.getItem('favorites')) || [];
+        JSON.parse(localStorage.getItem(`favor_${userId}`)) || [];
 
       const updatedFavorites = isFavorite
         ? favoritesFromLocalStorage.filter(doctor => doctor.name !== name)
         : [...favoritesFromLocalStorage, doctorsData];
       console.log('Updated favorites:', updatedFavorites);
-      localStorage.setItem('favorites', JSON.stringify(updatedFavorites));
+      localStorage.setItem(`favor_${userId}`, JSON.stringify(updatedFavorites));
     } else {
       Notiflix.Notify.warning(
         'Welcome! Functionality is available only for authorized users.'
