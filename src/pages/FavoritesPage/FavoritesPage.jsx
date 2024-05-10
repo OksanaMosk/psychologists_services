@@ -12,8 +12,6 @@ import { useDispatch } from 'react-redux';
 import Notiflix from 'notiflix';
 import { selectFavorites } from 'redux/favorites/favorites.selector';
 
-import { selectAuthenticated } from '../../redux/auth/auth.selector';
-
 import css from './FavoritesPage.module.css';
 
 const FavoritesPage = () => {
@@ -33,7 +31,6 @@ const FavoritesPage = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const favoriteDoctorsRedux = useSelector(selectFavorites);
-  const authenticated = useSelector(selectAuthenticated);
 
   const localStorageKeys = Object.keys(localStorage);
 
@@ -256,26 +253,26 @@ const FavoritesPage = () => {
 
 export default FavoritesPage;
 
-  // useEffect(() => {
-  //   if (!authenticated) {
-  //     console.log('User is not authenticated. Redirecting to the home page...');
-  //     navigate('/');
-  //     localStorage.removeItem(`favor_${userIdFromLocalStorage}`);
-  //     console.log('Removed favorite doctors from local storage.');
-  //   } else {
-  //     console.log('User is authenticated.');
-  //   }
-  // }, []);
+// useEffect(() => {
+//   if (!authenticated) {
+//     console.log('User is not authenticated. Redirecting to the home page...');
+//     navigate('/');
+//     localStorage.removeItem(`favor_${userIdFromLocalStorage}`);
+//     console.log('Removed favorite doctors from local storage.');
+//   } else {
+//     console.log('User is authenticated.');
+//   }
+// }, []);
 
-  // useEffect(() => {
-  //   // Перевіряємо наявність ідентифікатора користувача у LocalStorage
-  //   if (!userIdFromLocalStorage) {
-  //     localStorage.removeItem(`favor_${userIdFromLocalStorage}`);
-  //     console.log('User is not authenticated. Redirecting to the home page...');
-  //     navigate('/');
-  //     return;
-  //   }
+// useEffect(() => {
+//   // Перевіряємо наявність ідентифікатора користувача у LocalStorage
+//   if (!userIdFromLocalStorage) {
+//     localStorage.removeItem(`favor_${userIdFromLocalStorage}`);
+//     console.log('User is not authenticated. Redirecting to the home page...');
+//     navigate('/');
+//     return;
+//   }
 
-  //   // Додаткові дії, якщо користувача знайдено
-  //   console.log('User is authenticated.');
-  // }, [navigate, userIdFromLocalStorage]);
+//   // Додаткові дії, якщо користувача знайдено
+//   console.log('User is authenticated.');
+// }, [navigate, userIdFromLocalStorage]);
