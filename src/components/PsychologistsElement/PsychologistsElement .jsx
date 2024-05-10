@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { selectAuthenticated, selectUserData } from 'redux/auth/auth.selector';
+import { selectAuthenticated } from 'redux/auth/auth.selector';
 import { selectFavorites } from 'redux/favorites/favorites.selector';
 import ModalMakeAnAppointment from '../ModalMakeAnAppointment/ModalMakeAnAppointment';
 import Notiflix from 'notiflix';
@@ -25,8 +25,8 @@ export const PsychologistsElement = ({
   about,
   data,
   onRemoveFromFavorites,
-  doctor,
   doctorsData,
+  doctor,
 }) => {
   const dispatch = useDispatch();
   const [imageLoaded, setImageLoaded] = useState(false);
@@ -36,25 +36,33 @@ export const PsychologistsElement = ({
   const authenticated = useSelector(selectAuthenticated);
   const favorites = useSelector(selectFavorites);
 
-  const userData = useSelector(selectUserData);
-  const userId = userData ? userData.uid : null;
+  const localStorageKeys = Object.keys(localStorage);
+
+  // Знайти ключ, який містить інформацію про аутентифікацію
+  const authKey = localStorageKeys.find(key => key.startsWith('auth1'));
+  const authData = JSON.parse(localStorage.getItem(authKey));
+  const userIdFromLocalStorage = authData.uid;
 
   useEffect(() => {
-    if (favorites) {
-      console.log('🚀 ~ useEffect ~ favorites:', favorites);
+    if (favorites && userIdFromLocalStorage) {
+      // Перевіряємо, чи є значення uid перед використанням
       const isAlreadyFavorite = favorites.some(doctor => doctor.name === name);
       setIsFavorite(isAlreadyFavorite);
     }
-  }, [favorites, name]);
+  }, [favorites, name, userIdFromLocalStorage]);
 
   useEffect(() => {
-    const storedFavoritesFromLocalStorage =
-      JSON.parse(localStorage.getItem(`favor_${userId}`)) || [];
-    const isAlreadyFavorite = storedFavoritesFromLocalStorage.some(
-      doctor => doctor.name === name
-    );
-    setIsFavorite(isAlreadyFavorite);
-  }, [name, userId]);
+    if (userIdFromLocalStorage) {
+      // Перевіряємо, чи є значення uid перед використанням
+      const storedFavoritesFromLocalStorage =
+        JSON.parse(localStorage.getItem(`favor_${userIdFromLocalStorage}`)) ||
+        [];
+      const isAlreadyFavorite = storedFavoritesFromLocalStorage.some(
+        doctor => doctor.name === name
+      );
+      setIsFavorite(isAlreadyFavorite);
+    }
+  }, [name, userIdFromLocalStorage]);
 
   const handleImageLoad = () => {
     setImageLoaded(true);
@@ -84,18 +92,27 @@ export const PsychologistsElement = ({
         }
       } else {
         dispatch(addFavorite(doctorsData));
-
         setIsFavorite(true);
       }
-      console.log(`Key for local storage: favor_${userId}`);
       const favoritesFromLocalStorage =
-        JSON.parse(localStorage.getItem(`favor_${userId}`)) || [];
+        JSON.parse(localStorage.getItem(`favor_${userIdFromLocalStorage}`)) ||
+        [];
+      console.log(
+        '🚀 ~ handleToggleFavorite ~ userIdFromLocalStorage:',
+        userIdFromLocalStorage
+      );
 
       const updatedFavorites = isFavorite
         ? favoritesFromLocalStorage.filter(doctor => doctor.name !== name)
         : [...favoritesFromLocalStorage, doctorsData];
-      console.log('Updated favorites:', updatedFavorites);
-      localStorage.setItem(`favor_${userId}`, JSON.stringify(updatedFavorites));
+      localStorage.setItem(
+        `favor_${userIdFromLocalStorage}`,
+        JSON.stringify(updatedFavorites)
+      );
+      console.log(
+        '🚀 ~ handleToggleFavorite ~ userIdFromLocalStorage:',
+        userIdFromLocalStorage
+      );
     } else {
       Notiflix.Notify.warning(
         'Welcome! Functionality is available only for authorized users.'
@@ -177,7 +194,9 @@ export const PsychologistsElement = ({
             </p>
             <button
               className={css.imgButton}
-              onClick={() => handleToggleFavorite(doctorsData, userId)}
+              onClick={() =>
+                handleToggleFavorite(doctorsData, userIdFromLocalStorage)
+              }
               type="button"
             >
               <svg

@@ -1,9 +1,10 @@
 import Backdrop from '../Backdrop/Backdrop';
 import React, { useRef, useEffect } from 'react';
 import ReactDOM from 'react-dom';
-import { useDispatch } from 'react-redux';
-import { registerThunk } from 'redux/auth/auth.reducer';
-import { loginThunk } from 'redux/auth/auth.reducer';
+import { useDispatch, useSelector } from 'react-redux';
+import { selectUserData } from '../../redux/auth/auth.selector';
+
+import { registerThunk, loginThunk } from 'redux/auth/auth.reducer';
 import Notiflix from 'notiflix';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 
@@ -12,15 +13,30 @@ import css from './ModalWindow.module.css';
 
 const ModalWindow = ({ isOpen, onClose, type }) => {
   const dispatch = useDispatch();
+  const userData = useSelector(selectUserData);
+  const userId = userData ? userData.uid : null;
 
-  const handleSubmit = async (values, form) => {
+  console.log('🚀 ~ ModalWindow ~ userId:', userId);
+
+  const handleSubmit = async (values, userId, form) => {
     try {
       if (type === 'register') {
         try {
           const { name, ...loginValues } = values;
-          console.log('loginValues:', loginValues);
+          console.log('🚀 ~ handleSubmit ~ loginValues:', loginValues);
+
+          console.log('🚀 ~ handleSubmit ~ userId:', userId);
           const registerResult = await dispatch(registerThunk(values));
-          localStorage.setItem('auth', JSON.stringify(loginValues));
+
+          console.log('Parsed userId:', JSON.stringify({ userId }));
+
+          localStorage.setItem(
+            'auth',
+            JSON.stringify({ ...userData, ...loginValues }),
+            () => {
+              console.log('Updated userId:', userData.uid);
+            }
+          );
 
           if (
             registerResult.error &&
@@ -40,10 +56,19 @@ const ModalWindow = ({ isOpen, onClose, type }) => {
       } else if (type === 'login') {
         try {
           const { name, ...loginValues } = values;
-          console.log('loginValues:', loginValues);
 
+          console.log('loginValues:', loginValues);
+          console.log('🚀 ~ handleSubmit ~ userId:', userId);
           const loginResult = await dispatch(loginThunk(loginValues));
-          localStorage.setItem('auth', JSON.stringify(loginValues));
+          console.log('Parsed userId:', JSON.stringify({ userId }));
+          console.log('🚀 ~ handleSubmit ~ userData:', userData);
+          localStorage.setItem(
+            'auth',
+            JSON.stringify({ ...userData, ...loginValues }),
+            () => {
+              console.log('Updated userId:', userData.uid);
+            }
+          );
 
           if (
             loginResult.error &&
@@ -120,7 +145,7 @@ const ModalWindow = ({ isOpen, onClose, type }) => {
             validationSchema={Yup.object({
               name: type === 'register' ? Yup.string().required() : null,
               email: Yup.string().email('Invalid email format').required(),
-              password: Yup.string().required('more then 8 symbols'),
+              password: Yup.string().required('more then 6 symbols'),
             })}
             onSubmit={(values, formikProps) => {
               handleSubmit(values, formikProps);

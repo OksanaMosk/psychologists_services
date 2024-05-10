@@ -9,7 +9,7 @@ import { useTheme } from '../Themes/Themes';
 import { useNavigate } from 'react-router-dom';
 import css from './Header.module.css';
 
-export const Header = removeItem => {
+export const Header = () => {
   const [isRegisterModalOpen, setIsRegisterModalOpen] = useState(false);
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
   const userData = useSelector(selectUserData);
@@ -21,8 +21,8 @@ export const Header = removeItem => {
   useEffect(() => {
     const authData = localStorage.getItem('auth');
     if (authData) {
-      const { token, email, uid } = JSON.parse(authData);
-      dispatch(loginThunk.fulfilled({ token, email, uid }));
+      const { token, email, password, uid } = JSON.parse(authData);
+      dispatch(loginThunk.fulfilled({ token, email, password, uid }));
     }
   }, [dispatch]);
 

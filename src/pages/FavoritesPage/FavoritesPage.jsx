@@ -12,10 +12,7 @@ import { useDispatch } from 'react-redux';
 import Notiflix from 'notiflix';
 import { selectFavorites } from 'redux/favorites/favorites.selector';
 
-import {
-  selectUserData,
-  selectAuthenticated,
-} from '../../redux/auth/auth.selector';
+import { selectAuthenticated } from '../../redux/auth/auth.selector';
 
 import css from './FavoritesPage.module.css';
 
@@ -37,32 +34,66 @@ const FavoritesPage = () => {
   const dispatch = useDispatch();
   const favoriteDoctorsRedux = useSelector(selectFavorites);
   const authenticated = useSelector(selectAuthenticated);
-  const userData = useSelector(selectUserData);
-  const userId = userData ? userData.uid : null;
+
+  const localStorageKeys = Object.keys(localStorage);
+
+  const authKey = localStorageKeys.find(key => key.startsWith('auth1'));
+  const authData = JSON.parse(localStorage.getItem(authKey));
+  const userIdFromLocalStorage = authData.uid;
 
   useEffect(() => {
-    if (!authenticated) {
+    const authKey = localStorageKeys.find(key => key.startsWith('auth1'));
+    const authData = JSON.parse(localStorage.getItem(authKey));
+    const userIdFromLocalStorage = authData?.uid;
+
+    if (!userIdFromLocalStorage && authKey) {
+      localStorage.removeItem(authKey);
+      console.log('User data is corrupted. Redirecting to the home page...');
       navigate('/');
-      localStorage.removeItem(`favor_${userId}`);
+      return;
     }
-  }, [authenticated, navigate, userId]);
+
+    if (authKey && userIdFromLocalStorage && favoriteDoctors.length > 0) {
+      localStorage.setItem(
+        `favor_${userIdFromLocalStorage}`,
+        JSON.stringify(favoriteDoctors)
+      );
+      setLoading(false);
+      console.log(
+        '🚀 ~ FavoritesPage ~ userIdFromLocalStorage :',
+        userIdFromLocalStorage
+      );
+      console.log(
+        '🚀 ~ FavoritesPage ~ userIdFromLocalStorage):',
+        userIdFromLocalStorage
+      );
+    }
+
+    if (userIdFromLocalStorage && favoriteDoctors.length > 0) {
+      console.log(`Key for local storage: favor_${userIdFromLocalStorage}`);
+      localStorage.setItem(
+        `favor_${userIdFromLocalStorage}`,
+        JSON.stringify(favoriteDoctors)
+      );
+      setLoading(false);
+    }
+    console.log(`Key for local storage: favor_${userIdFromLocalStorage}`);
+  }, [favoriteDoctors, navigate, localStorageKeys]);
 
   useEffect(() => {
-    // Перевіряємо, чи є userId і чи є у нас улюблені лікарі для цього userId
-    if (userId && favoriteDoctors.length > 0) {
-      console.log(`Key for local storage: favor_${userId}`);
+    // Перевіряємо, чи є userIdFromLocalStorageі чи є у нас улюблені лікарі для цього userIdFromLocalStorage
+    if (userIdFromLocalStorage && favoriteDoctors.length > 0) {
+      console.log(`Key for local storage: favor_${userIdFromLocalStorage}`);
 
       // Зберігаємо улюблені лікарі у локальному сховищі
-      localStorage.setItem(`favor_${userId}`, JSON.stringify(favoriteDoctors));
+      localStorage.setItem(
+        `favor_${userIdFromLocalStorage}`,
+        JSON.stringify(favoriteDoctors)
+      );
       setLoading(false);
-      console.log('🚀 ~ FavoritesPage ~ userId :', userId);
     }
-    console.log(`Key for local storage: favor_${userId}`);
-    console.log(
-      'Parsed favorites to be saved:',
-      JSON.stringify(favoriteDoctors)
-    );
-  }, [userId, favoriteDoctors]);
+    console.log(`Key for local storage: favor_${userIdFromLocalStorage}`);
+  }, [userIdFromLocalStorage, favoriteDoctors]);
 
   useEffect(() => {
     // Перевіряємо, чи є у нас дані в Redux для улюблених лікарів
@@ -71,7 +102,7 @@ const FavoritesPage = () => {
     } else {
       // Якщо у нас немає даних в Redux, перевіряємо локальне сховище
       const storedFavoritesFromLocalStorage = localStorage.getItem(
-        `favor_${userId}`
+        `favor_${userIdFromLocalStorage}`
       );
       if (storedFavoritesFromLocalStorage) {
         const parsedFavorites = JSON.parse(storedFavoritesFromLocalStorage);
@@ -79,7 +110,7 @@ const FavoritesPage = () => {
       }
     }
     setLoading(false);
-  }, [favoriteDoctorsRedux, userId]);
+  }, [favoriteDoctorsRedux, userIdFromLocalStorage]);
 
   const handleAddToFavorites = useCallback(
     doctorsData => {
@@ -105,9 +136,12 @@ const FavoritesPage = () => {
       dispatch(addFavorite(doctorsData));
 
       // Збереження улюблених лікарів у localStorage
-      localStorage.setItem(`favor_${userId}`, JSON.stringify(updatedFavorites));
+      localStorage.setItem(
+        `favor_${userIdFromLocalStorage}`,
+        JSON.stringify(updatedFavorites)
+      );
     },
-    [dispatch, favoriteDoctors, userId]
+    [dispatch, favoriteDoctors, userIdFromLocalStorage]
   );
 
   const handleRemoveFromFavorites = useCallback(
@@ -119,7 +153,7 @@ const FavoritesPage = () => {
       dispatch(removeFavorite({ name }));
 
       console.log('Name to be removed:', name);
-      console.log('User ID:', userId);
+      console.log('User ID:', userIdFromLocalStorage);
 
       setFavoriteDoctors(updatedFavorites);
 
@@ -127,9 +161,12 @@ const FavoritesPage = () => {
       dispatch(removeFavorite({ name }));
 
       // Збереження улюблених лікарів у localStorage
-      localStorage.setItem(`favor_${userId}`, JSON.stringify(updatedFavorites));
+      localStorage.setItem(
+        `favor_${userIdFromLocalStorage}`,
+        JSON.stringify(updatedFavorites)
+      );
     },
-    [dispatch, favoriteDoctors, userId]
+    [dispatch, favoriteDoctors, userIdFromLocalStorage]
   );
 
   const handleAllFilterChange = useCallback(newFilters => {
@@ -219,17 +256,26 @@ const FavoritesPage = () => {
 
 export default FavoritesPage;
 
-// useEffect(() => {
-//   // Видалення всіх елементів зі списку фаворитів у редукторі
-//   dispatch(removeAllFavorites());
-// }, [dispatch]);
+  // useEffect(() => {
+  //   if (!authenticated) {
+  //     console.log('User is not authenticated. Redirecting to the home page...');
+  //     navigate('/');
+  //     localStorage.removeItem(`favor_${userIdFromLocalStorage}`);
+  //     console.log('Removed favorite doctors from local storage.');
+  //   } else {
+  //     console.log('User is authenticated.');
+  //   }
+  // }, []);
 
-// console.log('🚀 ~ FavoritesPage ~ userId :', userId);
-//  console.log('🚀 ~ handleAddToFavorites ~ doctorsData:', doctorsData);
-//  console.log(
-//    '🚀 ~ handleAddToFavorites ~ doctor name:',
-//    doctorsData.name
-//  );
+  // useEffect(() => {
+  //   // Перевіряємо наявність ідентифікатора користувача у LocalStorage
+  //   if (!userIdFromLocalStorage) {
+  //     localStorage.removeItem(`favor_${userIdFromLocalStorage}`);
+  //     console.log('User is not authenticated. Redirecting to the home page...');
+  //     navigate('/');
+  //     return;
+  //   }
 
-// console.log('Name to be removed:', name);
-// console.log('User ID:', userId);
+  //   // Додаткові дії, якщо користувача знайдено
+  //   console.log('User is authenticated.');
+  // }, [navigate, userIdFromLocalStorage]);
