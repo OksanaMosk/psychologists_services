@@ -97,6 +97,18 @@ const ModalWindow = ({ isOpen, onClose, type }) => {
   };
 
   const modalRef = useRef(null);
+
+  React.useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'auto';
+    }
+    return () => {
+      document.body.style.overflow = 'auto';
+    };
+  }, [isOpen]);
+
   const closeModal = () => {
     setTimeout(() => {
       onClose();

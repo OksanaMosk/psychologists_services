@@ -3,7 +3,11 @@ import { NavLink } from 'react-router-dom';
 
 import css from './HomePage.module.css';
 
-import hero from '../../images/image (2).png';
+import hero_1x_webp from '../../images/hero_1x_webp.webp';
+import hero_2x_webp from '../../images/hero_2x_webp.webp';
+import hero_1x from '../../images/hero_1x.jpg';
+import hero_2x from '../../images/hero_2x.jpg';
+import hero from '../../images/hero.png';
 
 const HomePage = () => {
   const [randomColor1, setRandomColor1] = useState('');
@@ -60,7 +64,19 @@ const HomePage = () => {
         </NavLink>
       </div>
       <div className={css.right}>
-        <img className={css.hero} src={hero} alt="hero" />
+        <picture>
+          <source
+            srcSet={`${hero_1x_webp} 1x, ${hero_2x_webp} 2x`}
+            type="image/webp"
+          />
+
+          <source
+            srcSet={`${hero_1x} 1x, ${hero_2x} 2x`}
+            media="(min-width:1158px)"
+          />
+
+          <img className={css.hero} src={hero} alt="hero" />
+        </picture>
         <div className={css.heroPart}>
           <div className={css.rightOk}>
             <svg
