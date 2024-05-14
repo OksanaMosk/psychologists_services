@@ -32,35 +32,3 @@ export const favoritesSlice = createSlice({
 export const { addFavorite, removeFavorite } = favoritesSlice.actions;
 
 export default favoritesSlice.reducer;
-
-// import { createSlice } from '@reduxjs/toolkit';
-
-// const initialState = {
-//   favorites: [],
-// };
-
-// export const favoritesSlice = createSlice({
-//   name: 'favorites',
-//   initialState,
-//   reducers: {
-//     addFavorite: (state, action) => {
-//       state.favorites.push(action.payload);
-//     },
-//     removeFavorite: (state, action) => {
-//       const indexToRemove = state.favorites.findIndex(
-//         item => item.name === action.payload.name
-//       );
-//       if (indexToRemove !== -1) {
-//         state.favorites.splice(indexToRemove, 1);
-//       }
-//     },
-//     removeAllFavorites: state => {
-//       state.favorites = [];
-//     },
-//   },
-// });
-
-// export const { addFavorite, removeFavorite, removeAllFavorites } =
-//   favoritesSlice.actions;
-
-// export default favoritesSlice.reducer;

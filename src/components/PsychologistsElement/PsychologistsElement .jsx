@@ -41,11 +41,11 @@ export const PsychologistsElement = ({
   // Знайти ключ, який містить інформацію про аутентифікацію
   const authKey = localStorageKeys.find(key => key.startsWith('auth1'));
   const authData = JSON.parse(localStorage.getItem(authKey));
-  const userIdFromLocalStorage = authData.uid;
+  const userIdFromLocalStorage = authData?.uid;
 
   useEffect(() => {
     if (favorites && userIdFromLocalStorage) {
-      // Перевіряємо, чи є значення uid перед використанням
+      // Перевіряємо, чи фаворити до uid перед використанням
       const isAlreadyFavorite = favorites.some(doctor => doctor.name === name);
       setIsFavorite(isAlreadyFavorite);
     }

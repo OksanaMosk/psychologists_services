@@ -83,7 +83,7 @@ const ModalWindow = ({ isOpen, onClose, type }) => {
               form.resetForm();
             }
 
-            Notiflix.Notify.success(`Welcome back ${values.name}!`);
+            Notiflix.Notify.success(`Welcome back ${values.email}!`);
           }
         } catch (error) {
           Notiflix.Notify.failure('Something went wrong... ');

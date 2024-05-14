@@ -18,6 +18,18 @@ export const Header = () => {
   const authenticated = useSelector(selectAuthenticated);
   const { setTheme } = useTheme();
 
+  let email;
+
+  if (userData !== null) {
+    console.log('🚀 ~ Header ~ userData :', userData);
+    if (userData.users && userData.users.length > 0) {
+      const { email: userEmail } = userData.users[0];
+      email = userEmail;
+    }
+  }
+
+  console.log(email);
+
   useEffect(() => {
     const authData = localStorage.getItem('auth');
     if (authData) {
@@ -28,7 +40,8 @@ export const Header = () => {
 
   const onLogOut = () => {
     dispatch(logOutThunk());
-    localStorage.removeItem('auth'); // При виході з системи також видаляємо дані авторизації з локального сховища
+    localStorage.removeItem('auth');
+    localStorage.removeItem('auth1');
     navigate('/');
   };
 
@@ -125,7 +138,7 @@ export const Header = () => {
             </svg>
 
             {authenticated && (
-              <span className={css.nameLogOutButton}>{userData.name}</span>
+              <span className={css.nameLogOutButton}>{email}</span>
             )}
             <button className={css.logOutButton} onClick={onLogOut}>
               Log out
