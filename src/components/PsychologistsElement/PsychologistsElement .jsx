@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { selectAuthenticated } from 'redux/auth/auth.selector';
 import { selectFavorites } from 'redux/favorites/favorites.selector';
+
 import ModalMakeAnAppointment from '../ModalMakeAnAppointment/ModalMakeAnAppointment';
 import Notiflix from 'notiflix';
 
@@ -33,8 +34,9 @@ export const PsychologistsElement = ({
   const [isFavorite, setIsFavorite] = useState(false);
   const [isMakeAnAppointment, setIsMakeAnAppointment] = useState(false);
 
-  const authenticated = useSelector(selectAuthenticated);
   const favorites = useSelector(selectFavorites);
+
+  const authenticated = useSelector(selectAuthenticated);
 
   const localStorageKeys = Object.keys(localStorage);
 
@@ -43,9 +45,13 @@ export const PsychologistsElement = ({
   const authData = JSON.parse(localStorage.getItem(authKey));
   const userIdFromLocalStorage = authData?.uid;
 
+  const collectionName = `favor_${userIdFromLocalStorage}`;
+  const userIdFromCollection = collectionName.slice(6); // Обрізаємо перші 6 символів ("favor_")
+
+  const userIdRedux = userIdFromCollection;
+
   useEffect(() => {
     if (favorites && userIdFromLocalStorage) {
-      // Перевіряємо, чи фаворити до uid перед використанням
       const isAlreadyFavorite = favorites.some(doctor => doctor.name === name);
       setIsFavorite(isAlreadyFavorite);
     }
@@ -53,7 +59,6 @@ export const PsychologistsElement = ({
 
   useEffect(() => {
     if (userIdFromLocalStorage) {
-      // Перевіряємо, чи є значення uid перед використанням
       const storedFavoritesFromLocalStorage =
         JSON.parse(localStorage.getItem(`favor_${userIdFromLocalStorage}`)) ||
         [];
@@ -85,23 +90,20 @@ export const PsychologistsElement = ({
         doctor,
       };
       if (isFavorite) {
-        dispatch(removeFavorite({ name }));
+        dispatch(removeFavorite({ userId: userIdRedux, doctorName: name }));
         setIsFavorite(false);
+        console.log('🚀 ~ handleToggleFavorite ~ name:', name);
         if (doctor && doctor.name) {
           onRemoveFromFavorites(name);
         }
       } else {
-        dispatch(addFavorite(doctorsData));
+        dispatch(addFavorite({ userId: userIdRedux, doctor: doctorsData }));
         setIsFavorite(true);
+        console.log('🚀 ~ handleToggleFavorite ~ doctorsData :', doctorsData);
       }
       const favoritesFromLocalStorage =
         JSON.parse(localStorage.getItem(`favor_${userIdFromLocalStorage}`)) ||
         [];
-      console.log(
-        '🚀 ~ handleToggleFavorite ~ userIdFromLocalStorage:',
-        userIdFromLocalStorage
-      );
-      console.log('🚀 ~ handleToggleFavorite ~ name:', name);
 
       const updatedFavorites = isFavorite
         ? favoritesFromLocalStorage.filter(doctor => doctor.name !== name)
@@ -110,27 +112,12 @@ export const PsychologistsElement = ({
         `favor_${userIdFromLocalStorage}`,
         JSON.stringify(updatedFavorites)
       );
-      console.log(
-        '🚀 ~ handleToggleFavorite ~ userIdFromLocalStorage:',
-        userIdFromLocalStorage
-      );
-      console.log('🚀 ~ handleToggleFavorite ~ name:', name);
     } else {
       Notiflix.Notify.warning(
         'Welcome! Functionality is available only for authorized users.'
       );
     }
   };
-
-  // useEffect(() => {
-  //   console.log('Before dispatch:', name);
-
-  //   // Оновлення стану в Redux store
-
-  //   dispatch(removeFavorite(name));
-
-  //   console.log('After dispatch:', name);
-  // }, [dispatch, name]);
 
   const [showFullDescription, setShowFullDescription] = useState(false);
 

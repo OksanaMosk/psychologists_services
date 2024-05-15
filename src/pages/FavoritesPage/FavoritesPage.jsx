@@ -5,7 +5,6 @@ import { removeFavorite } from '../../redux/favorites/favorites.reducer';
 import { PsychologistsElement } from '../../components/PsychologistsElement/PsychologistsElement ';
 import Loader from '../../components/Loader/Loader';
 import Filter from 'components/Filter/Filter';
-import { useDispatch } from 'react-redux';
 
 import { selectFavorites } from 'redux/favorites/favorites.selector';
 
@@ -13,7 +12,7 @@ import css from './FavoritesPage.module.css';
 
 const FavoritesPage = () => {
   const [loading, setLoading] = useState(true);
-  const dispatch = useDispatch();
+
   const [favoriteDoctors, setFavoriteDoctors] = useState([]);
 
   const [currentPage, setCurrentPage] = useState(1);
@@ -96,12 +95,8 @@ const FavoritesPage = () => {
   }, [favoriteDoctorsRedux, userIdFromLocalStorage]);
 
   const handleRemoveFromFavorites = name => {
-    dispatch(removeFavorite(name));
+    removeFavorite({ doctorName: name });
   };
-
-  // useEffect(() => {
-  //   dispatch(favorites());
-  // }, [favorites, dispatch]);
 
   const handleAllFilterChange = useCallback(newFilters => {
     setFilters(prevFilters => ({ ...prevFilters, ...newFilters }));
