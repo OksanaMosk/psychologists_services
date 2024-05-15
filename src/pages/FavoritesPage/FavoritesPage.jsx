@@ -1,22 +1,21 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import {
-  addFavorite,
-  removeFavorite,
-} from '../../redux/favorites/favorites.reducer';
+import { removeFavorite } from '../../redux/favorites/favorites.reducer';
 import { PsychologistsElement } from '../../components/PsychologistsElement/PsychologistsElement ';
 import Loader from '../../components/Loader/Loader';
 import Filter from 'components/Filter/Filter';
 import { useDispatch } from 'react-redux';
-import Notiflix from 'notiflix';
+
 import { selectFavorites } from 'redux/favorites/favorites.selector';
 
 import css from './FavoritesPage.module.css';
 
 const FavoritesPage = () => {
   const [loading, setLoading] = useState(true);
+  const dispatch = useDispatch();
   const [favoriteDoctors, setFavoriteDoctors] = useState([]);
+
   const [currentPage, setCurrentPage] = useState(1);
   const limit = 3;
   const [filters, setFilters] = useState({
@@ -29,11 +28,8 @@ const FavoritesPage = () => {
   });
 
   const navigate = useNavigate();
-  const dispatch = useDispatch();
   const favoriteDoctorsRedux = useSelector(selectFavorites);
-
   const localStorageKeys = Object.keys(localStorage);
-
   const authKey = localStorageKeys.find(key => key.startsWith('auth1'));
   const authData = JSON.parse(localStorage.getItem(authKey));
   const userIdFromLocalStorage = authData?.uid;
@@ -42,10 +38,8 @@ const FavoritesPage = () => {
     const authKey = localStorageKeys.find(key => key.startsWith('auth1'));
     const authData = JSON.parse(localStorage.getItem(authKey));
     const userIdFromLocalStorage = authData?.uid;
-
     if (!userIdFromLocalStorage && authKey) {
       localStorage.removeItem(authKey);
-      console.log('User data is corrupted. Redirecting to the home page...');
       navigate('/');
       return;
     }
@@ -56,92 +50,62 @@ const FavoritesPage = () => {
         JSON.stringify(favoriteDoctors)
       );
       setLoading(false);
-      console.log(
-        '🚀 ~ FavoritesPage ~ userIdFromLocalStorage :',
-        userIdFromLocalStorage
-      );
-      console.log(
-        '🚀 ~ FavoritesPage ~ userIdFromLocalStorage):',
-        userIdFromLocalStorage
-      );
     }
 
     if (userIdFromLocalStorage && favoriteDoctors.length > 0) {
-      console.log(`Key for local storage: favor_${userIdFromLocalStorage}`);
       localStorage.setItem(
         `favor_${userIdFromLocalStorage}`,
+
         JSON.stringify(favoriteDoctors)
       );
+
       setLoading(false);
     }
-    console.log(`Key for local storage: favor_${userIdFromLocalStorage}`);
   }, [favoriteDoctors, navigate, localStorageKeys]);
 
   useEffect(() => {
-    // Перевіряємо, чи є userIdFromLocalStorageі чи є у нас улюблені лікарі для цього userIdFromLocalStorage
     if (userIdFromLocalStorage && favoriteDoctors.length > 0) {
-      console.log(`Key for local storage: favor_${userIdFromLocalStorage}`);
-
-      // Зберігаємо улюблені лікарі у локальному сховищі
       localStorage.setItem(
         `favor_${userIdFromLocalStorage}`,
+
         JSON.stringify(favoriteDoctors)
       );
+
       setLoading(false);
     }
+
     console.log(`Key for local storage: favor_${userIdFromLocalStorage}`);
   }, [userIdFromLocalStorage, favoriteDoctors]);
 
   useEffect(() => {
-    // Перевіряємо, чи є у нас дані в Redux для улюблених лікарів
     if (favoriteDoctorsRedux && favoriteDoctorsRedux.length > 0) {
       setFavoriteDoctors(favoriteDoctorsRedux);
     } else {
-      // Якщо у нас немає даних в Redux, перевіряємо локальне сховище
       const storedFavoritesFromLocalStorage = localStorage.getItem(
         `favor_${userIdFromLocalStorage}`
       );
+
       if (storedFavoritesFromLocalStorage) {
         const parsedFavorites = JSON.parse(storedFavoritesFromLocalStorage);
+
         setFavoriteDoctors(parsedFavorites);
       }
     }
+
     setLoading(false);
   }, [favoriteDoctorsRedux, userIdFromLocalStorage]);
 
-  const handleAddToFavorites = useCallback(
-    doctorsData => {
-      const isAlreadyFavorite = favoriteDoctors.some(
-        doctor => doctor.name === doctorsData.name
-      );
-      console.log('🚀 ~ handleAddToFavorites ~ doctorsData:', doctorsData);
-      console.log('🚀 ~ handleAddToFavorites ~ doctor name:', doctorsData.name);
-      if (isAlreadyFavorite) {
-        Notiflix.Notify.warning(
-          `This doctor ${doctorsData.name} is already in favorites`
-        );
+  const handleRemoveFromFavorites = name => {
+    dispatch(removeFavorite(name));
+  };
 
-        return;
-      }
-
-      const updatedFavorites = [...favoriteDoctors, doctorsData];
-      setFavoriteDoctors(updatedFavorites);
-    },
-    [favoriteDoctors]
-  );
-
-  const handleRemoveFromFavorites = useCallback(
-    name => {
-      const updatedFavorites = favoriteDoctors.filter(
-        doctor => doctor.name !== name
-      );
-      setFavoriteDoctors(updatedFavorites); // Оновлення відображення
-    },
-    [favoriteDoctors]
-  );
+  // useEffect(() => {
+  //   dispatch(favorites());
+  // }, [favorites, dispatch]);
 
   const handleAllFilterChange = useCallback(newFilters => {
     setFilters(prevFilters => ({ ...prevFilters, ...newFilters }));
+
     setCurrentPage(1);
   }, []);
 
@@ -177,8 +141,10 @@ const FavoritesPage = () => {
   const handleLoadMore = () => {
     if (currentPage < totalPages) {
       setCurrentPage(prevPage => prevPage + 1);
+
       window.scrollTo({
         top: document.documentElement.scrollHeight,
+
         behavior: 'smooth',
       });
     }
@@ -191,6 +157,7 @@ const FavoritesPage = () => {
           allDoctors={filteredDoctors}
           onAllFilterChange={handleAllFilterChange}
         />
+
         <div className={css.homeList}>
           {loading ? (
             <Loader />
@@ -201,10 +168,7 @@ const FavoritesPage = () => {
                   <PsychologistsElement
                     key={doctor.name}
                     {...doctor}
-                    onAddToFavorites={() => handleAddToFavorites(doctor)}
-                    onRemoveFromFavorites={() =>
-                      handleRemoveFromFavorites(doctor.name)
-                    }
+                    onRemoveFromFavorites={handleRemoveFromFavorites}
                   />
                 ))
               ) : (
@@ -212,6 +176,7 @@ const FavoritesPage = () => {
                   Your favorites are currently empty...
                 </p>
               )}
+
               {currentPage < totalPages && (
                 <button className={css.button} onClick={handleLoadMore}>
                   Load More

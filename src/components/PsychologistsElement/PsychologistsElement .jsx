@@ -101,6 +101,7 @@ export const PsychologistsElement = ({
         '🚀 ~ handleToggleFavorite ~ userIdFromLocalStorage:',
         userIdFromLocalStorage
       );
+      console.log('🚀 ~ handleToggleFavorite ~ name:', name);
 
       const updatedFavorites = isFavorite
         ? favoritesFromLocalStorage.filter(doctor => doctor.name !== name)
@@ -113,12 +114,23 @@ export const PsychologistsElement = ({
         '🚀 ~ handleToggleFavorite ~ userIdFromLocalStorage:',
         userIdFromLocalStorage
       );
+      console.log('🚀 ~ handleToggleFavorite ~ name:', name);
     } else {
       Notiflix.Notify.warning(
         'Welcome! Functionality is available only for authorized users.'
       );
     }
   };
+
+  // useEffect(() => {
+  //   console.log('Before dispatch:', name);
+
+  //   // Оновлення стану в Redux store
+
+  //   dispatch(removeFavorite(name));
+
+  //   console.log('After dispatch:', name);
+  // }, [dispatch, name]);
 
   const [showFullDescription, setShowFullDescription] = useState(false);
 

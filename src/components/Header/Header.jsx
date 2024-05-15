@@ -21,14 +21,11 @@ export const Header = () => {
   let email;
 
   if (userData !== null) {
-    console.log('🚀 ~ Header ~ userData :', userData);
     if (userData.users && userData.users.length > 0) {
       const { email: userEmail } = userData.users[0];
       email = userEmail;
     }
   }
-
-  console.log(email);
 
   useEffect(() => {
     const authData = localStorage.getItem('auth');

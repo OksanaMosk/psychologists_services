@@ -57,11 +57,8 @@ const ModalWindow = ({ isOpen, onClose, type }) => {
         try {
           const { name, ...loginValues } = values;
 
-          console.log('loginValues:', loginValues);
-          console.log('🚀 ~ handleSubmit ~ userId:', userId);
           const loginResult = await dispatch(loginThunk(loginValues));
-          console.log('Parsed userId:', JSON.stringify({ userId }));
-          console.log('🚀 ~ handleSubmit ~ userData:', userData);
+
           localStorage.setItem(
             'auth',
             JSON.stringify({ ...userData, ...loginValues }),
