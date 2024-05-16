@@ -16,21 +16,45 @@ export const Header = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const authenticated = useSelector(selectAuthenticated);
+  console.log('TCL: Header -> authenticated', authenticated);
   const { setTheme } = useTheme();
 
-  let email;
+  const userRegisterName = JSON.parse(localStorage.getItem('auth'));
 
-  if (userData !== null) {
-    if (userData.users && userData.users.length > 0) {
-      const { email: userEmail } = userData.users[0];
-      email = userEmail;
+  const [userValue, setUserValue] = useState('');
+
+  useEffect(() => {
+    if (userData !== null) {
+      console.log('TCL: Header -> userData', userData);
+
+      // Використання значення name з authData, якщо воно існує
+      if (userRegisterName && userRegisterName.name) {
+        setUserValue(userRegisterName.name);
+      } else if (userData.email) {
+        // Якщо name відсутній, використовуємо email
+        setUserValue(userData.email);
+      }
     }
-  }
+
+    // Зберегти значення userValue в локальному сховищі
+    localStorage.setItem('userValue', userValue);
+  }, [userData, userValue, userRegisterName]);
+
+  useEffect(() => {
+    // Отримання значення userValue з локального сховища при завантаженні компоненту
+    const storedUserValue = localStorage.getItem('userValue');
+    if (storedUserValue) {
+      setUserValue(storedUserValue);
+    }
+  }, []);
+
+  console.log('TCL: Header -> userValue', userValue);
 
   useEffect(() => {
     const authData = localStorage.getItem('auth');
     if (authData) {
       const { token, email, password, uid } = JSON.parse(authData);
+      console.log('TCL: Header -> authData', authData);
       dispatch(loginThunk.fulfilled({ token, email, password, uid }));
     }
   }, [dispatch]);
@@ -135,7 +159,7 @@ export const Header = () => {
             </svg>
 
             {authenticated && (
-              <span className={css.nameLogOutButton}>{email}</span>
+              <span className={css.nameLogOutButton}>{userValue}</span>
             )}
             <button className={css.logOutButton} onClick={onLogOut}>
               Log out

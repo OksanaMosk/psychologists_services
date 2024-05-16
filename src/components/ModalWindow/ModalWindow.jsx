@@ -22,14 +22,13 @@ const ModalWindow = ({ isOpen, onClose, type }) => {
     try {
       if (type === 'register') {
         try {
-          const { name, ...loginValues } = values;
+          const { ...loginValues } = values;
           console.log('🚀 ~ handleSubmit ~ loginValues:', loginValues);
 
           console.log('🚀 ~ handleSubmit ~ userId:', userId);
           const registerResult = await dispatch(registerThunk(values));
 
           console.log('Parsed userId:', JSON.stringify({ userId }));
-
           localStorage.setItem(
             'auth',
             JSON.stringify({ ...userData, ...loginValues }),
@@ -37,7 +36,6 @@ const ModalWindow = ({ isOpen, onClose, type }) => {
               console.log('Updated userId:', userData.uid);
             }
           );
-
           if (
             registerResult.error &&
             (registerResult.error.code = 'auth/email-already-in-use')
@@ -48,7 +46,11 @@ const ModalWindow = ({ isOpen, onClose, type }) => {
             if (form && form.resetForm) {
               form.resetForm();
             }
-            Notiflix.Notify.success(`Welcome ${values.name}!`);
+            Notiflix.Notify.success(`Welcome ${values.name}!`, {
+              css: {
+                color: 'black', // Зміна кольору тексту на червоний
+              },
+            });
           }
         } catch (error) {
           Notiflix.Notify.failure('Something went wrong ');
@@ -59,18 +61,14 @@ const ModalWindow = ({ isOpen, onClose, type }) => {
 
           const loginResult = await dispatch(loginThunk(loginValues));
 
-          localStorage.setItem(
-            'auth',
-            JSON.stringify({ ...userData, ...loginValues }),
-            () => {
-              console.log('Updated userId:', userData.uid);
-            }
-          );
-
           if (
             loginResult.error &&
             (loginResult.error.code = 'auth/invalid-credential')
           ) {
+            console.log(
+              'TCL: handleSubmit -> loginResult.error.code',
+              loginResult.error.code
+            );
             Notiflix.Notify.failure(
               'Incorrect email or password. Please try again.'
             );
@@ -79,6 +77,13 @@ const ModalWindow = ({ isOpen, onClose, type }) => {
             if (form && form.resetForm) {
               form.resetForm();
             }
+            localStorage.setItem(
+              'auth',
+              JSON.stringify({ ...userData, ...loginValues }),
+              () => {
+                console.log('Updated userId:', userData.uid);
+              }
+            );
 
             Notiflix.Notify.success(`Welcome back ${values.email}!`);
           }
