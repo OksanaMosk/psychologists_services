@@ -32,6 +32,12 @@ const HomePage = () => {
     setRandomColor2(randomColor2);
   }, []);
 
+  const screenWidth = window.innerWidth;
+  const screenHeight = window.innerHeight;
+
+  console.log('Ширина екрану:', screenWidth);
+  console.log('Висота екрану:', screenHeight);
+
   return (
     <div className={css.homeContainer}>
       <div className={css.left}>

@@ -1,178 +1,179 @@
 @import '../../index.css';
 .header {
-    display: flex;
-    align-items: center;
-    cursor: pointer;
-    height: 96px;
-    width: 100vw;
-    justify-content: space-evenly;
-    border-bottom: 2px solid rgba(25, 26, 21, 0.1);
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  height: 96px;
+  width: 100vw;
+  justify-content: space-evenly;
+  border-bottom: 2px solid rgba(25, 26, 21, 0.1);
 }
 
 .mainTit {
-    font-weight: 700;
-    font-size: 20px;
-    line-height: 120%;
-    letter-spacing: -0.02em;
+  font-weight: 700;
+  /* font-size: 20px; */
+  line-height: 120%;
+  letter-spacing: -0.02em;
+  font-size: clamp(8px, 2vw, 20px);
 }
 
 .mainTitleSpan {
-    color: var(--button-background-color);
+  color: var(--button-background-color);
 }
 
 .links {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    justify-content: space-evenly;
-    width: 330px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: space-evenly;
+  width: 330px;
 }
 
 .toLink {
-    position: relative;
-    width: auto;
-    font-weight: 400;
-    font-size: 16px;
-    letter-spacing: -0.01em;
-    color: var(--primary-text-color);
-    cursor: pointer;
+  position: relative;
+  width: auto;
+  font-weight: 400;
+  font-size: 16px;
+  letter-spacing: -0.01em;
+  color: var(--primary-text-color);
+  cursor: pointer;
 }
 
 .toLink:hover,
 .toLink:focus,
 .toLink:active {
-    transition: all 0.3s allow-discrete;
+  transition: all 0.3s allow-discrete;
 }
 
 .activeLink::after {
-    content: '';
-    display: block;
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    background: var(--button-background-color);
-    position: absolute;
-    top: 120%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+  content: '';
+  display: block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--button-background-color);
+  position: absolute;
+  top: 120%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
 .activeLink {
-    position: relative;
-    width: auto;
-    font-weight: 400;
-    font-size: 16px;
-    letter-spacing: -0.01em;
-    color: var(--primary-text-color);
-    cursor: pointer;
-    color: var(--button-background-color);
+  position: relative;
+  width: auto;
+  font-weight: 400;
+  font-size: 16px;
+  letter-spacing: -0.01em;
+  color: var(--primary-text-color);
+  cursor: pointer;
+  color: var(--button-background-color);
 }
 
 .authorization {
-    display: flex;
-    gap: 8px;
+  display: flex;
+  gap: 8px;
 }
 
 .login {
-    color: var(--primary-text-color);
-    width: 124px;
-    height: 48px;
-    background: inherit;
-    border: 1px solid rgba(25, 26, 21, 0.2);
-    font-size: 16px;
-    line-height: 125%;
-    letter-spacing: -0.01em;
-    border-radius: 30px;
+  color: var(--primary-text-color);
+  width: 124px;
+  height: 48px;
+  background: inherit;
+  border: 1px solid rgba(25, 26, 21, 0.2);
+  font-size: 16px;
+  line-height: 125%;
+  letter-spacing: -0.01em;
+  border-radius: 30px;
 }
 
 .register {
-    background: var(--button-background-color);
-    color: #fbfbfb;
-    width: 171px;
-    border: 1px solid rgba(25, 26, 21, 0.2);
-    font-size: 16px;
-    line-height: 125%;
-    letter-spacing: -0.01em;
-    border-radius: 30px;
-    height: 48px;
+  background: var(--button-background-color);
+  color: #fbfbfb;
+  width: 171px;
+  border: 1px solid rgba(25, 26, 21, 0.2);
+  font-size: 16px;
+  line-height: 125%;
+  letter-spacing: -0.01em;
+  border-radius: 30px;
+  height: 48px;
 }
 
 .login:hover,
 .login:focus,
 .register:hover,
 .register:focus {
-    background: var(--button-background-color-active);
+  background: var(--button-background-color-active);
 }
 
 .login:hover,
 .login:focus {
-    color: #fbfbfb;
+  color: #fbfbfb;
 }
 
 .left {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: flex-end;
-    width: 280px;
-    gap: 3%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-end;
+  width: 280px;
+  gap: 3%;
 }
 
 .greenTheme,
 .blueTheme,
 .orangeTheme {
-    position: relative;
-    width: 20px;
-    height: 20px;
-    border: 2px solid rgba(25, 26, 21, 0.1);
-    border-radius: 50%;
+  position: relative;
+  width: 20px;
+  height: 20px;
+  border: 2px solid rgba(25, 26, 21, 0.1);
+  border-radius: 50%;
 }
 
 .themes {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
 .greenTheme {
-    background: rgba(84, 190, 150, 0.2);
+  background: rgba(84, 190, 150, 0.2);
 }
 
 .blueTheme {
-    background: rgba(52, 112, 255, 0.2);
+  background: rgba(52, 112, 255, 0.2);
 }
 
 .orangeTheme {
-    background: rgba(252, 131, 44, 0.2);
+  background: rgba(252, 131, 44, 0.2);
 }
 
 .log {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background: var(--button-background-color);
-    width: 40px;
-    height: 40px;
-    border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: var(--button-background-color);
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
 }
 
 .logOutButton {
-    border: 1px solid rgba(25, 26, 21, 0.2);
-    border-radius: 30px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 125px;
-    height: 48px;
+  border: 1px solid rgba(25, 26, 21, 0.2);
+  border-radius: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 125px;
+  height: 48px;
 }
 
 .auth {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    gap: 1%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 1%;
 }
 
 .body-no-scroll {
-    overflow: hidden;
+  overflow: hidden;
 }

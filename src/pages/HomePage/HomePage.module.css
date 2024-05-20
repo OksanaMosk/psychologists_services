@@ -15,11 +15,10 @@
 }
 .about {
   font-weight: 600;
-  font-size: 80px;
+  font-size: 5em;
   line-height: 1.02;
   letter-spacing: -0.02em;
   color: var(--primary-text-color);
-
   width: 595px;
   height: auto;
 }
@@ -62,8 +61,8 @@ span {
 .hero {
   border-radius: 10px;
   margin-top: 78px;
-  width: 464px;
-  height: 526px;
+  width: calc(464px / 1536 * 100%);
+  height: auto;
 }
 .heroPart {
   position: relative;
