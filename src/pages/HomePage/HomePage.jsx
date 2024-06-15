@@ -43,7 +43,7 @@ const HomePage = () => {
       <div className={css.left}>
         <p className={css.about}>
           The road to the
-          <span>
+          <span className={css.aboutSpan}>
             {''} depths {''}
           </span>
           of the human soul
@@ -70,7 +70,7 @@ const HomePage = () => {
         </NavLink>
       </div>
       <div className={css.right}>
-        <picture>
+        <picture className={css.picture}>
           <source
             srcSet={`${hero_1x_webp} 1x, ${hero_2x_webp} 2x`}
             type="image/webp"
@@ -106,7 +106,19 @@ const HomePage = () => {
           </div>
         </div>
         <div style={{ background: randomColor1 }} className={css.heroImgDet}>
-          ?
+          <svg
+            className={css.heroImgDetSvg}
+            width="10"
+            height="15"
+            viewBox="0 0 10 15"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M2.5 4.3125C2.5 3.14043 3.39687 2.1875 4.5 2.1875H5.5C6.60313 2.1875 7.5 3.14043 7.5 4.3125V4.43203C7.5 5.15586 7.15313 5.82988 6.58125 6.21836L5.2625 7.11817C4.8753 7.38268 4.5568 7.74625 4.33622 8.17554C4.11564 8.60483 4.00003 9.0861 4 9.5752V9.625C4 10.2127 4.44688 10.6875 5 10.6875C5.55312 10.6875 6 10.2127 6 9.625V9.57852C6 9.30625 6.13125 9.05391 6.34375 8.90781L7.6625 8.00801C8.80625 7.22442 9.5 5.87969 9.5 4.43203V4.3125C9.5 1.96504 7.70937 0.0625 5.5 0.0625H4.5C2.29063 0.0625 0.5 1.96504 0.5 4.3125C0.5 4.9002 0.946875 5.375 1.5 5.375C2.05313 5.375 2.5 4.9002 2.5 4.3125ZM5 14.9375C5.33152 14.9375 5.64946 14.7976 5.88388 14.5485C6.1183 14.2994 6.25 13.9616 6.25 13.6094C6.25 13.2571 6.1183 12.9193 5.88388 12.6703C5.64946 12.4212 5.33152 12.2813 5 12.2813C4.66848 12.2813 4.35054 12.4212 4.11612 12.6703C3.8817 12.9193 3.75 13.2571 3.75 13.6094C3.75 13.9616 3.8817 14.2994 4.11612 14.5485C4.35054 14.7976 4.66848 14.9375 5 14.9375Z"
+              fill="#FBFBFB"
+            />
+          </svg>
         </div>
         <div style={{ background: randomColor2 }} className={css.heroImgDet2}>
           <svg

@@ -16,23 +16,6 @@ const ModalMakeAnAppointment = ({ isOpen, onClose, avatar_url, name }) => {
 
   const modalRef = useRef(null);
 
-  React.useEffect(() => {
-    if (isOpen) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = 'auto';
-    }
-    return () => {
-      document.body.style.overflow = 'auto';
-    };
-  }, [isOpen]);
-
-  const closeModal = () => {
-    setTimeout(() => {
-      onClose();
-    }, 300);
-  };
-
   useEffect(() => {
     const handleKeyPress = event => {
       if (event.key === 'Escape') {
@@ -55,15 +38,17 @@ const ModalMakeAnAppointment = ({ isOpen, onClose, avatar_url, name }) => {
     };
   }, [onClose]);
 
+  if (!isOpen) return null;
+
   return ReactDOM.createPortal(
     <>
-      {isOpen && <Backdrop onClick={onClose} />}
+      <Backdrop onClick={onClose} />
       <div className={css.modalContainer}>
         <div
           className={`${css.modal} ${isOpen ? css.open : ''}`}
           ref={modalRef}
         >
-          <button className={css.closeButton} onClick={closeModal}>
+          <button className={css.closeButton} onClick={onClose}>
             &times;
           </button>
           <h3 className={css.formTitle}>
@@ -112,7 +97,6 @@ const ModalMakeAnAppointment = ({ isOpen, onClose, avatar_url, name }) => {
                   name="comment"
                   component="div"
                 />
-
                 <Field
                   placeholder="Name"
                   className={css.formInput}
@@ -129,7 +113,6 @@ const ModalMakeAnAppointment = ({ isOpen, onClose, avatar_url, name }) => {
                   id="phone"
                   name="phone"
                 />
-
                 <div className={css.formSelect}>
                   <select
                     className={css.select}
@@ -193,7 +176,6 @@ const ModalMakeAnAppointment = ({ isOpen, onClose, avatar_url, name }) => {
                   </svg>
                 </div>
               </div>
-
               <div>
                 <Field
                   placeholder="Email"
@@ -219,7 +201,7 @@ const ModalMakeAnAppointment = ({ isOpen, onClose, avatar_url, name }) => {
             </Form>
           </Formik>
         </div>
-        <div onClick={closeModal}></div>
+        <div onClick={onClose}></div>
       </div>
     </>,
     document.getElementById('modal-root')

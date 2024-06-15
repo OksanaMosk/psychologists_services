@@ -3,10 +3,11 @@
   display: flex;
   align-items: center;
   cursor: pointer;
-  height: 96px;
+  height: 13vh;
   width: 100vw;
   justify-content: space-evenly;
   border-bottom: 2px solid rgba(25, 26, 21, 0.1);
+  box-sizing: border-box;
 }
 
 .mainTit {
@@ -71,31 +72,31 @@
 
 .authorization {
   display: flex;
-  gap: 8px;
+  gap: 0.5vw;
 }
 
 .login {
   color: var(--primary-text-color);
-  width: 124px;
-  height: 48px;
+  width: 8vw;
+  height: 6.5vh;
   background: inherit;
   border: 1px solid rgba(25, 26, 21, 0.2);
-  font-size: 16px;
+  font-size: 1.04vw;
   line-height: 125%;
   letter-spacing: -0.01em;
-  border-radius: 30px;
+  border-radius: 2vw;
 }
 
 .register {
   background: var(--button-background-color);
   color: #fbfbfb;
-  width: 171px;
+  width: 11.13vw;
   border: 1px solid rgba(25, 26, 21, 0.2);
-  font-size: 16px;
+  font-size: 1.04vw;
   line-height: 125%;
   letter-spacing: -0.01em;
-  border-radius: 30px;
-  height: 48px;
+  border-radius: 2vw;
+  height: 6.5vh;
 }
 
 .login:hover,
@@ -123,8 +124,8 @@
 .blueTheme,
 .orangeTheme {
   position: relative;
-  width: 20px;
-  height: 20px;
+  width: 1.3vw;
+  height: 2.7vh;
   border: 2px solid rgba(25, 26, 21, 0.1);
   border-radius: 50%;
 }
@@ -132,7 +133,7 @@
 .themes {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 1.3vh;
 }
 
 .greenTheme {
@@ -152,19 +153,20 @@
   justify-content: center;
   align-items: center;
   background: var(--button-background-color);
-  width: 40px;
-  height: 40px;
-  border-radius: 10px;
+  width: 2.6vw;
+  height: 5.35vh;
+  border-radius: 0.65vw;
 }
 
 .logOutButton {
   border: 1px solid rgba(25, 26, 21, 0.2);
-  border-radius: 30px;
+  border-radius: 2vw;
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 125px;
-  height: 48px;
+  width: 8.1vw;
+  height: 6.5vh;
+  font-size: 1.04vw;
 }
 
 .auth {
