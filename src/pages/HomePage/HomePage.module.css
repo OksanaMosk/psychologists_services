@@ -1,7 +1,7 @@
 .homeContainer {
   display: flex;
   flex-wrap: wrap;
-  gap: 20em;
+  gap: 15em;
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
@@ -17,11 +17,11 @@
 }
 .about {
   font-weight: 600;
-  font-size: 5.2vw;
+  font-size: 6vw;
   line-height: 1.02;
   letter-spacing: -0.02em;
   color: var(--primary-text-color);
-  max-width: 38.7vw;
+  max-width: 270px;
   height: auto;
 }
 .aboutSpan {
@@ -29,13 +29,14 @@
   font-style: italic;
 }
 .aboutDetails {
-  margin-top: 3.4%;
+  margin-top: 20px;
   font-weight: 500;
-  font-size: 1.17vw;
+  font-size: 18px;
   line-height: 1.33;
   letter-spacing: -0.02em;
   color: var(--primary-text-color);
-  max-width: 33.2vw;
+  max-width: 270px;
+  text-align: justify;
 }
 .toLink {
   display: flex;
@@ -67,7 +68,7 @@
 }
 .hero {
   border-radius: 8.2px;
-  width: 380px;
+  width: 300px;
   height: auto;
 }
 .picture {
@@ -80,22 +81,22 @@
   margin-bottom: 10%;
   position: relative;
   display: flex;
-  top: 7.9em;
-  right: 5.5em;
+  top: 7em;
+  right: 4em;
   flex-direction: row;
   justify-content: center;
   align-items: center;
   gap: 16px;
-  border-radius: 16px;
-  width: 254.7px;
-  height: 96.6px;
+  border-radius: 10px;
+  width: 150px;
+  height: 57px;
   background: var(--button-background-color);
 }
 
 .rightOk {
   border-radius: 10.5px;
-  width: 43.8px;
-  height: 43.8px;
+  width: 35px;
+  height: 35px;
   background: #fbfbfb;
   display: flex;
   justify-content: center;
@@ -120,13 +121,13 @@
 
 .heroImgDet {
   border-radius: 8.1px;
-  width: 39px;
-  height: 39px;
+  width: 26px;
+  height: 26px;
   background: var(--button-background-color);
   transform: rotate(-15deg);
   position: relative;
-  bottom: 3em;
-  right: 19.4em;
+  bottom: 2.3em;
+  right: 13.6em;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -135,17 +136,19 @@
 
 .heroImgDetSvg {
   transform: rotate(15deg);
+  width: 6.5px;
+  height: 11.5px;
 }
 
 .heroImgDet2 {
   border-radius: 8.1px;
-  width: 39px;
-  height: 39px;
+  width: 31px;
+  height: 31px;
   background: var(--button-background-color);
   transform: rotate(15deg);
   position: relative;
-  bottom: 9.9em;
-  left: 3.4em;
+  bottom: 8em;
+  left: 4.3em;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -184,7 +187,7 @@
   .aboutDetails {
     margin-top: 3.4%;
     font-weight: 500;
-    font-size: 1.17vw;
+
     line-height: 1.33;
     letter-spacing: -0.02em;
     color: var(--primary-text-color);
@@ -287,6 +290,8 @@
   }
   .heroImgDetSvg {
     transform: rotate(15deg);
+    width: 10px;
+    height: 17px;
   }
 
   .heroImgDet2 {
@@ -339,7 +344,7 @@
   .aboutDetails {
     margin-top: 3.4%;
     font-weight: 500;
-    font-size: 1.17vw;
+
     line-height: 1.33;
     letter-spacing: -0.02em;
     color: var(--primary-text-color);

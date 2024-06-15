@@ -5,9 +5,11 @@
   cursor: pointer;
   height: 13vh;
   width: 100vw;
-  justify-content: space-evenly;
+  justify-content: center;
   border-bottom: 2px solid rgba(25, 26, 21, 0.1);
   box-sizing: border-box;
+  margin: 0 30px;
+  gap: 30px;
 }
 
 .mainTit {
@@ -34,7 +36,7 @@
   position: relative;
   width: auto;
   font-weight: 400;
-  font-size: 16px;
+  font-size: clamp(8px, 2vw, 16px);
   letter-spacing: -0.01em;
   color: var(--primary-text-color);
   cursor: pointer;
@@ -49,8 +51,8 @@
 .activeLink::after {
   content: '';
   display: block;
-  width: 8px;
-  height: 8px;
+  width: 0.5em;
+  height: 0.5em;
   border-radius: 50%;
   background: var(--button-background-color);
   position: absolute;
@@ -63,7 +65,7 @@
   position: relative;
   width: auto;
   font-weight: 400;
-  font-size: 16px;
+  font-size: clamp(8px, 2vw, 16px);
   letter-spacing: -0.01em;
   color: var(--primary-text-color);
   cursor: pointer;
@@ -77,8 +79,8 @@
 
 .login {
   color: var(--primary-text-color);
-  width: 8vw;
-  height: 6.5vh;
+  width: 7.75em;
+  height: 3em;
   background: inherit;
   border: 1px solid rgba(25, 26, 21, 0.2);
   font-size: 1.04vw;
@@ -95,8 +97,8 @@
   font-size: 1.04vw;
   line-height: 125%;
   letter-spacing: -0.01em;
-  border-radius: 2vw;
-  height: 6.5vh;
+  border-radius: 10.7em;
+  height: 3em;
 }
 
 .login:hover,
@@ -119,13 +121,16 @@
   width: 280px;
   gap: 3%;
 }
-
+.theme {
+  display: flex;
+  flex-direction: column;
+}
 .greenTheme,
 .blueTheme,
 .orangeTheme {
   position: relative;
-  width: 1.3vw;
-  height: 2.7vh;
+  width: 15px;
+  height: 15px;
   border: 2px solid rgba(25, 26, 21, 0.1);
   border-radius: 50%;
 }
@@ -178,4 +183,19 @@
 
 .body-no-scroll {
   overflow: hidden;
+}
+@media (min-width: 768px) {
+  .header {
+    margin: 0;
+    justify-content: space-evenly;
+  }
+  .greenTheme,
+  .blueTheme,
+  .orangeTheme {
+    position: relative;
+    width: 20px;
+    height: 20px;
+    border: 2px solid rgba(25, 26, 21, 0.1);
+    border-radius: 50%;
+  }
 }
