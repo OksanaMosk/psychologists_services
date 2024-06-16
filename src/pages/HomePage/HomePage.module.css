@@ -1,11 +1,11 @@
 .homeContainer {
   display: flex;
   flex-wrap: wrap;
-  gap: 15em;
+  gap: 8em;
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
-  min-height: min(100vh + 300px, 1050px);
+  min-height: 100vh;
 
   background: var(--background-home);
 }
@@ -60,8 +60,9 @@
   padding-left: 8px;
 }
 .right {
-  margin-bottom: 0;
+  margin-bottom: 8em;
   min-width: 380px;
+  min-height: 340px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -159,7 +160,7 @@
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
-    min-height: min(100vh + 480px, 1280px);
+    min-height: 100vh;
     background: var(--background-home);
   }
 
@@ -214,9 +215,11 @@
   }
   .right {
     min-width: 464px;
+    min-height: 526px;
     display: flex;
     align-items: center;
     justify-content: center;
+    margin-bottom: 8em;
   }
   .hero {
     border-radius: 10px;

@@ -15,7 +15,6 @@
 .mainTit {
   padding-left: 20px;
   font-weight: 700;
-
   line-height: 120%;
   letter-spacing: -0.02em;
   font-size: clamp(8px, 2vw, 20px);
@@ -125,7 +124,7 @@
   align-items: center;
   justify-content: flex-end;
   width: 280px;
-  gap: 3%;
+  gap: 3px;
 }
 .theme {
   padding-right: 20px;
@@ -195,7 +194,9 @@
   .header {
     justify-content: space-evenly;
   }
-
+  .left {
+    gap: 3%;
+  }
   .mainTit {
     padding-left: 0;
   }
