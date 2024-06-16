@@ -1,13 +1,14 @@
 body {
-    margin: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-weight: 400;
-    font-family: 'Inter', sans-serif;
-    font-style: normal;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
+  margin: 0;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: 400;
+  font-family: 'Inter', sans-serif;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 h1,
@@ -17,48 +18,60 @@ h4,
 h5,
 h6,
 p {
-    margin: 0;
+  margin: 0;
 }
 
 a {
-    text-decoration: none;
-    text-decoration-color: var(--primary-text-color);
+  text-decoration: none;
+  text-decoration-color: var(--primary-text-color);
 }
 
 img {
-    display: block;
+  display: block;
 }
 
 button {
-    cursor: pointer;
+  cursor: pointer;
 }
 
 code {
-    font-family: 'Manrope', sans-serif;
+  font-family: 'Manrope', sans-serif;
 }
 
 :root {
-    --primary-text-color: #191a15;
-    --secondary-text-color: rgba(25, 26, 21, 0.5);
+  --primary-text-color: #191a15;
+  --secondary-text-color: rgba(25, 26, 21, 0.5);
 }
 
 html[data-theme='green'] {
-    --background-home: linear-gradient( to bottom right, #fbfbfb, rgba(84, 190, 150, 0.2));
-    --button-background-color: #54be96;
-    --button-background-color-active: #36a379;
-    --light: rgba(84, 190, 150, 0.2);
+  --background-home: linear-gradient(
+    to bottom right,
+    #fbfbfb,
+    rgba(84, 190, 150, 0.2)
+  );
+  --button-background-color: #54be96;
+  --button-background-color-active: #36a379;
+  --light: rgba(84, 190, 150, 0.2);
 }
 
 html[data-theme='blue'] {
-    --background-home: linear-gradient( to bottom right, #fff, rgba(52, 112, 255, 0.2));
-    --button-background-color: #3470ff;
-    --button-background-color-active: #255ee8;
-    --light: rgba(52, 112, 255, 0.2);
+  --background-home: linear-gradient(
+    to bottom right,
+    #fff,
+    rgba(52, 112, 255, 0.2)
+  );
+  --button-background-color: #3470ff;
+  --button-background-color-active: #255ee8;
+  --light: rgba(52, 112, 255, 0.2);
 }
 
 html[data-theme='orange'] {
-    --background-home: linear-gradient( to bottom right, #fff, rgba(252, 131, 44, 0.2));
-    --button-background-color: #fc832c;
-    --button-background-color-active: #f37113;
-    --light: rgba(252, 131, 44, 0.2);
+  --background-home: linear-gradient(
+    to bottom right,
+    #fff,
+    rgba(252, 131, 44, 0.2)
+  );
+  --button-background-color: #fc832c;
+  --button-background-color-active: #f37113;
+  --light: rgba(252, 131, 44, 0.2);
 }
