@@ -1,15 +1,16 @@
 .homeContainer {
   display: flex;
   flex-wrap: wrap;
-  gap: 20em;
+  gap: 15em;
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
-  min-height: 100vh;
+  min-height: min(100vh + 300px, 1050px);
+
   background: var(--background-home);
 }
 .left {
-  margin-top: 20%;
+  margin-top: 10%;
   display: flex;
   flex-direction: column;
 }
@@ -158,7 +159,7 @@
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
-    min-height: 100vh;
+    min-height: min(100vh + 480px, 1280px);
     background: var(--background-home);
   }
 
