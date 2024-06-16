@@ -5,8 +5,7 @@
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
-  min-height: 200vh;
-
+  min-height: 100vh;
   background: var(--background-home);
 }
 .left {
@@ -63,7 +62,6 @@
   margin-bottom: 0;
   min-width: 380px;
   display: flex;
-
   align-items: center;
   justify-content: center;
 }
@@ -160,7 +158,7 @@
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
-    min-height: 200vh;
+    min-height: 100vh;
     background: var(--background-home);
   }
 
