@@ -1,7 +1,7 @@
 .homeContainer {
   display: flex;
   flex-wrap: wrap;
-  gap: 8em;
+  gap: 5em;
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
@@ -9,6 +9,7 @@
 
   background: var(--background-home);
 }
+
 .left {
   margin-top: 10%;
   display: flex;
@@ -28,7 +29,7 @@
   font-style: italic;
 }
 .aboutDetails {
-  margin-top: 30%;
+  margin-top: 10%;
   font-weight: 500;
   font-size: 18px;
   line-height: 1.33;
@@ -44,7 +45,7 @@
   flex-direction: row;
   border-radius: 30px;
   margin-bottom: auto;
-  margin-top: 30%;
+  margin-top: 10%;
   width: 235px;
   height: 60px;
   color: #fbfbfb;
@@ -60,7 +61,7 @@
   padding-left: 8px;
 }
 .right {
-  margin-bottom: 8em;
+  margin-bottom: 5em;
   min-width: 380px;
   min-height: 340px;
   display: flex;
@@ -81,12 +82,12 @@
 .heroPart {
   position: relative;
   display: flex;
-  top: 7em;
+  top: 5.8em;
   right: 4em;
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  gap: 16px;
+  gap: 4px;
   border-radius: 10px;
   width: 150px;
   height: 57px;
@@ -110,7 +111,7 @@
 }
 .heroImgTitle {
   font-weight: 400;
-  font-size: 0.92vw;
+  font-size: 8px;
   color: rgba(251, 251, 251, 0.5);
 }
 .heroImgP {
@@ -175,7 +176,7 @@
     line-height: 1.02;
     letter-spacing: -0.02em;
     color: var(--primary-text-color);
-    max-width: 38.7vw;
+    max-width: 464px;
     height: auto;
   }
   .aboutSpan {
@@ -185,11 +186,10 @@
   .aboutDetails {
     margin-top: 10%;
     font-weight: 500;
-
     line-height: 1.33;
     letter-spacing: -0.02em;
     color: var(--primary-text-color);
-    max-width: 33.2vw;
+    max-width: 464px;
   }
   .toLink {
     display: flex;
@@ -219,7 +219,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-bottom: 8em;
+    margin-bottom: 4em;
   }
   .hero {
     border-radius: 10px;
@@ -262,7 +262,7 @@
   }
   .heroImgTitle {
     font-weight: 400;
-    font-size: 0.92vw;
+    font-size: 14px;
     color: rgba(251, 251, 251, 0.5);
   }
   .heroImgP {
