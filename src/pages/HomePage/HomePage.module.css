@@ -21,7 +21,7 @@
   line-height: 1.02;
   letter-spacing: -0.02em;
   color: var(--primary-text-color);
-  max-width: 270px;
+  width: 270px;
   height: auto;
 }
 .aboutSpan {

@@ -147,11 +147,11 @@ const Psychologists = (handleRemoveFromFavorites, handleAddToFavorites) => {
       {error !== null && <Navigate to="psychologists/404" replace={true} />}
 
       <Filter
+        className={css.filter}
         allDoctors={filteredDoctors}
         onAllFilterChange={handleAllFilterChange}
       />
       <PsychologistsList
-        className={css.filter}
         doctors={filteredPaginatedDoctors}
         handleAddToFavorites={handleAddToFavorites}
         handleRemoveFromFavorites={handleRemoveFromFavorites}

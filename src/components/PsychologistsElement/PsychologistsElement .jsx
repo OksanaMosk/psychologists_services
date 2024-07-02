@@ -199,7 +199,7 @@ export const PsychologistsElement = ({
               type="button"
             >
               <svg
-                className={`${isFavorite ? css.favorIcon : ''}`}
+                className={`${isFavorite ? css.favorIcon : css.nofavorIcon}`}
                 width="26"
                 height="22"
                 viewBox="0 0 26 22"
