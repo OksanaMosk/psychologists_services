@@ -4,11 +4,37 @@
   justify-content: center;
   flex-direction: column;
   min-height: 100vh;
-  margin: 0 auto;
-  padding: 0;
   overflow-y: hidden;
+  box-sizing: border-box;
 }
 
+.buttonNot {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 125%;
+  letter-spacing: -0.01em;
+  color: #fbfbfb;
+  border-radius: 5px;
+  width: 120px;
+  height: 30px;
+  background: var(--button-background-color);
+  border: none;
+  outline: none;
+  outline-offset: 0;
+  margin-top: 32px;
+  margin-bottom: 7%;
+  position: relative;
+  left: calc(87% - 120px);
+  bottom: 0;
+  box-sizing: border-box;
+}
+
+.filterLink {
+  box-sizing: border-box;
+}
 .loader {
   display: flex;
   text-align: center;
@@ -32,33 +58,18 @@
   border: none;
   outline: none;
   outline-offset: 0;
-  margin: 5% auto 7%;
+  margin-top: 32px;
+  margin-bottom: 7%;
+  position: relative;
+  left: calc(50% - 5.72vw);
+  bottom: 0;
+  box-sizing: border-box;
 }
 .button:hover,
 .button:focus {
   background: var(--button-background-color-active);
 }
-.buttonNot {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-weight: 500;
-  font-size: 12px;
-  line-height: 125%;
-  letter-spacing: -0.01em;
-  color: #fbfbfb;
-  border-radius: 5px;
-  width: 120px;
-  height: 30px;
-  background: var(--button-background-color);
-  border: none;
-  outline: none;
-  outline-offset: 0;
-  margin: 5% auto 7%;
-  position: relative;
-  left: 44em;
-  bottom: 5em;
-}
+
 .buttonNot:hover,
 .buttonNot:focus {
   background: var(--button-background-color-active);

@@ -6,7 +6,6 @@
   justify-content: flex-start;
   align-items: center;
   min-height: 100vh;
-
   background: var(--background-home);
 }
 
@@ -176,7 +175,7 @@
     line-height: 1.02;
     letter-spacing: -0.02em;
     color: var(--primary-text-color);
-    max-width: 464px;
+    width: 464px;
     height: auto;
   }
   .aboutSpan {
@@ -331,7 +330,7 @@
     line-height: 1.02;
     letter-spacing: -0.02em;
     color: var(--primary-text-color);
-    max-width: 38.7vw;
+    width: 38.7vw;
     height: auto;
   }
   .aboutSpan {

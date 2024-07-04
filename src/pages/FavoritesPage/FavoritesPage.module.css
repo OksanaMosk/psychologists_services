@@ -21,10 +21,11 @@
   flex-direction: column;
 }
 .empty {
+  margin-top: 5vw;
   display: flex;
   align-items: center;
   font-weight: 500;
-  font-size: 54px;
+  font-size: 3.5vw;
   color: var(--button-background-color);
 }
 .button {
