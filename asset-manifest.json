@@ -1,6 +1,6 @@
 {
   "files": {
-    "main.css": "/psychologists_services/static/css/main.12325546.css",
+    "main.css": "/psychologists_services/static/css/main.386e6bac.css",
     "main.js": "/psychologists_services/static/js/main.1aaeabdb.js",
     "static/media/hero_2x.jpg": "/psychologists_services/static/media/hero_2x.20b91823f06e65d7488b.jpg",
     "static/media/hero.png": "/psychologists_services/static/media/hero.d97da6f5268a561563be.png",
@@ -8,11 +8,11 @@
     "static/media/hero_2x_webp.webp": "/psychologists_services/static/media/hero_2x_webp.4ebed485e3308ec622b2.webp",
     "static/media/hero_1x_webp.webp": "/psychologists_services/static/media/hero_1x_webp.4315c26356bc9e1abd15.webp",
     "index.html": "/psychologists_services/index.html",
-    "main.12325546.css.map": "/psychologists_services/static/css/main.12325546.css.map",
+    "main.386e6bac.css.map": "/psychologists_services/static/css/main.386e6bac.css.map",
     "main.1aaeabdb.js.map": "/psychologists_services/static/js/main.1aaeabdb.js.map"
   },
   "entrypoints": [
-    "static/css/main.12325546.css",
+    "static/css/main.386e6bac.css",
     "static/js/main.1aaeabdb.js"
   ]
 }
