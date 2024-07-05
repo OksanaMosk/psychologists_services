@@ -12,7 +12,7 @@
 }
 .board {
   position: relative;
-  border: 1px solid rgba(84, 190, 150, 0.2);
+  border: 2px solid rgba(84, 190, 150, 0.2);
   border-radius: 2vw;
   width: 7.8vw;
   height: 7.8vw;
@@ -46,6 +46,7 @@
   justify-content: space-between;
 }
 .titleSpan {
+  font-size: 1.5vw;
   font-style: normal;
   color: var(--secondary-text-color);
 }
@@ -173,7 +174,7 @@
 }
 .article {
   font-weight: 400;
-  font-size: 1.04vw;
+  font-size: 1.5vw;
   line-height: 125%;
   color: var(--secondary-text-color);
   margin-top: 1.56vw;
@@ -283,6 +284,13 @@
 }
 
 @media (min-width: 1440px) {
+  .titleSpan {
+    font-size: 1.04vw;
+  }
+  .article {
+    font-weight: 400;
+    font-size: 1.04vw;
+  }
   .favorIcon {
     fill: var(--button-background-color);
     width: 1.7vw;
@@ -292,6 +300,7 @@
     width: 1.7vw;
     height: 1.4vw;
   }
+
   .imgButton {
     border: none;
     position: relative;

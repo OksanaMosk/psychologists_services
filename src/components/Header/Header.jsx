@@ -107,6 +107,12 @@ export const Header = () => {
     setCurrentPath(location.pathname);
   }, [location]);
 
+  const [isOpen, setIsOpen] = useState(false);
+
+  const toggleMenu = () => {
+    setIsOpen(!isOpen);
+  };
+
   return (
     <div className={css.header}>
       <div className={css.mainTit}>
@@ -115,31 +121,50 @@ export const Header = () => {
         </h3>
       </div>
       <div className={css.links}>
-        <NavLink
-          to="/"
-          className={`${currentPath === '/' ? css.activeLink : css.toLink}`}
+        <div
+          className={`${css.burgerMenu} ${isOpen ? css.open : ''}`}
+          onClick={toggleMenu}
         >
-          Home
-        </NavLink>
-        <NavLink
-          className={`${
-            currentPath === '/psychologists' ? css.activeLink : css.toLink
-          }`}
-          to="/psychologists"
-        >
-          Psychologists
-        </NavLink>
+          <div className={css.line}></div>
+          <div className={css.line}></div>
+          <div className={css.line}></div>
+        </div>
+        <ul className={`${css.menu} ${isOpen ? css.active : ''}`}>
+          <li className={css.link}>
+            <NavLink
+              to="/"
+              className={`${currentPath === '/' ? css.active : css.toLink}`}
+              onClick={() => setIsOpen(false)}
+            >
+              Home
+            </NavLink>
+          </li>
+          <li className={css.link}>
+            <NavLink
+              className={`${
+                currentPath === '/psychologists' ? css.active : css.toLink
+              }`}
+              to="/psychologists"
+              onClick={() => setIsOpen(false)}
+            >
+              Psychologists
+            </NavLink>
+          </li>
 
-        {authenticated && (
-          <NavLink
-            className={`${
-              currentPath === '/favorites' ? css.activeLink : css.toLink
-            }`}
-            to="/favorites"
-          >
-            Faforites
-          </NavLink>
-        )}
+          {authenticated && (
+            <li className={css.link}>
+              <NavLink
+                className={`${
+                  currentPath === '/favorites' ? css.active : css.toLink
+                }`}
+                to="/favorites"
+                onClick={() => setIsOpen(false)}
+              >
+                Faforites
+              </NavLink>
+            </li>
+          )}
+        </ul>
       </div>
       <div className={css.left}>
         {authenticated ? (
