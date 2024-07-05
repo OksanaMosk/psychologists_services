@@ -12,7 +12,7 @@
 }
 .board {
   position: relative;
-  border: 2px solid rgba(84, 190, 150, 0.2);
+  border: 1px solid rgba(84, 190, 150, 0.2);
   border-radius: 2vw;
   width: 7.8vw;
   height: 7.8vw;
@@ -124,8 +124,8 @@
 
 .favorIcon {
   fill: var(--button-background-color);
-  width: 26px;
-  height: 22px;
+  width: 2.5vw;
+  height: 2.3vw;
 }
 .nofavorIcon {
   width: 2.5vw;
